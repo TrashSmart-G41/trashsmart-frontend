@@ -70,6 +70,13 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/bins')).default,
         }),
       },
+      {
+        path: 'cleaners',
+        lazy: async () => ({
+          Component: (await import('@/pages/cleaners')).default,
+        }),
+      },
+
 
       {
         path: 'auctions',

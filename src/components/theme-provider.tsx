@@ -34,7 +34,7 @@ export function ThemeProvider({
     const root = window.document.documentElement
 
     root.classList.remove('light', 'dark')
-    root.classList.add('transition-colors', 'duration-300', 'ease-in-out')
+    root.classList.add('transition-colors', 'duration-2000', 'ease-in')
 
     if (theme === 'system') {
       const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
