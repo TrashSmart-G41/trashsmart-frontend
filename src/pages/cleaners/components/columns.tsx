@@ -2,12 +2,12 @@ import { ColumnDef } from '@tanstack/react-table'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Badge } from '@/components/ui/badge'
+// import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
-import { statuses } from '../data/data'
+// import { statuses, regions } from '../data/data'
 import { Cleaner } from '../data/schema'
 import { Button } from '@/components/custom/button'
 import {
@@ -94,20 +94,24 @@ export const columns: ColumnDef<Cleaner>[] = [
     ),
     cell: ({ row }) => <div>{row.getValue('region')}</div>,
     // enableSorting: true,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   },
   {
     accessorKey: 'status',
     header: ({ column }) => (
       <div className="flex">
+        {/* <DataTableColumnHeader column={column} title='Status' /> */}
         <DataTableColumnHeader column={column} title='Status' />
       </div>
     ),
     cell: ({ row }) => {
       const status = row.getValue('status');
-      const fillColor = status === 'Active' 
-        ? 'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]' 
+      const fillColor = status === 'Active'
+        ? 'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
         : 'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]';
-  
+
       return (
         <div className="flex ">
           <Button variant="scale_btn" size="scale_btn_sm" className={`text-[11px] ${fillColor}`}>
@@ -119,32 +123,57 @@ export const columns: ColumnDef<Cleaner>[] = [
         </div>
       );
     },
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
   },
+  // {
+  //   id: 'actions',
+  //   header: () => null,
+  //   cell: ({ row }: { row: { getValue: (key: string) => string; employee_id?: string } }) => {
+  //     const navigate = useNavigate()
+
+  //     const handleButtonClick = () => {
+  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
+  //     }
+
+  //     return (
+  //       <div className='mr-4 text-right'>
+  //         <Button
+  //           variant='ghost'
+  //           className='flex h-8  px-2 text-[12px] text-primary/80 hover:text-primary'
+  //           onClick={handleButtonClick}
+  //         >
+  //           View
+  //         </Button>
+  //       </div>
+  //     )
+  //   },
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     id: 'actions',
-    header: () => null,
     cell: ({ row }) => {
       const navigate = useNavigate()
 
       const handleButtonClick = () => {
-        navigate(`/cleaners/${row.id}`)
+        navigate(`/cleaners/${row.getValue('employee_id')}`)
       }
 
+  
       return (
-        <div className='mr-4 text-right'>
+        <div className='mr-4 flex justify-end items-center'>
           <Button
-            variant='outline'
-            size='sm'
-            className=' h-8 text-[12px] text-primary/80 hover:text-primary'
+            variant='ghost'
+            className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
             onClick={handleButtonClick}
           >
-            Assign
+            View
           </Button>
-
+          <DataTableRowActions row={row} />
         </div>
-      )
+      );
     },
-    enableSorting: false,
-    enableHiding: false,
   },
 ]

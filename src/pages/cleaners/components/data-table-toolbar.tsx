@@ -1,14 +1,14 @@
+import { CleanerForm } from '@/pages/cleaners/components/add-cleaner-form'
+
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
 import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
-import { DataTableViewOptions } from './data-table-view-options'
+// import { DataTableViewOptions } from '../components/data-table-view-options'
 
-import { statuses } from '../data/data'
+import { statuses, regions } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
-
-import { CleanerForm } from '@/pages/cleaners/components/add-cleaner-form'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -25,27 +25,26 @@ export function DataTableToolbar<TData>({
         <Input
           placeholder='Filter Cleaning Personnel...'
           value={(table.getColumn('full_name')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => {
-            const filterValue = event.target.value
-            table.getColumn('full_name')?.setFilterValue(filterValue)
-          }}
+          onChange={(event) =>
+            table.getColumn('full_name')?.setFilterValue(event.target.value)
+          }
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('sclae') && (
+          {table.getColumn('status') && (
             <DataTableFacetedFilter
-              column={table.getColumn('scale')}
-              title='Scale'
+              column={table.getColumn('status')}
+              title='Status'
               options={statuses}
             />
           )}
-          {/* {table.getColumn('priority') && (
+          {table.getColumn('region') && (
             <DataTableFacetedFilter
-              column={table.getColumn('priority')}
-              title='Priority'
-              options={priorities}
+              column={table.getColumn('region')}
+              title='Region'
+              options={regions}
             />
-          )} */}
+          )}
         </div>
         {isFiltered && (
           <Button
@@ -58,8 +57,9 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+      {/* <DataTableViewOptions table={table} /> */}
       <CleanerForm />
     </div>
   )
 }
+

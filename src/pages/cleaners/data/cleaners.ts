@@ -10,7 +10,7 @@ export const cleaners = [
         employee_id: 'EMP002',
         full_name: 'Jane Doe',
         contact_number: '09123456789',
-        region: 'Metro Manila',
+        region: 'Central Luzon',
         status: 'Unavailable',
     },
     {

@@ -22,7 +22,7 @@ export default function Tasks() {
 
       <Layout.Body>
 
-        <Card className='rounded-xl bg-card p-4'>
+        <Card className='rounded-xl bg-card p-4 mt-2'>
           <div className='mb-2 flex items-center justify-between space-y-2'>
             <div>
               <h2 className='text-2xl font-bold tracking-tight'>Cleaning Personnel</h2>

@@ -76,6 +76,13 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/cleaners')).default,
         }),
       },
+      {
+        path: 'cleaners/:employee_id',
+        lazy: async () => ({
+          Component: (await import('@/pages/cleaners/cleaner')).default,
+        }),
+      },
+
 
 
       {

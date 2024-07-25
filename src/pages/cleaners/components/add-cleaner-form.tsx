@@ -2,7 +2,7 @@ import { Button } from '@/components/custom/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  // DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -48,19 +48,19 @@ export function CleanerForm() {
               <Label htmlFor='full_name' className='col-span-4'>
                 Full Name
               </Label>
-              <Input id='full_name' value='' className='col-span-4 mt-1' />
+              <Input id='full_name'  className='col-span-4 mt-1' />
             </div>
             <div className='grid grid-cols-4 items-center'>
               <Label htmlFor='contact_number' className='col-span-4'>
                 Contact Number
               </Label>
-              <Input id='contact_number' value='' className='col-span-4 mt-1' />
+              <Input id='contact_number'  className='col-span-4 mt-1' />
             </div>
             <div className='grid grid-cols-4 items-center'>
               <Label htmlFor='address' className='col-span-4'>
                 Address
               </Label>
-              <Input id='address' value='' className='col-span-4 mt-1' />
+              <Input id='address' className='col-span-4 mt-1' />
             </div>
             <div className='grid grid-cols-4 items-center'>
               <Label htmlFor='dob' className='col-span-4'>
