@@ -6,6 +6,7 @@ import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
 import { tasks } from './data/tasks'
 
+
 export default function Tasks() {
   return (
     <Layout>

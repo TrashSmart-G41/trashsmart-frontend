@@ -1,7 +1,4 @@
-import { Layout } from '@/components/custom/layout'
-import { Search } from '@/components/search'
-import ThemeSwitch from '@/components/theme-switch'
-import { UserNav } from '@/components/user-nav'
+
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
 import { cleaners } from './data/cleaners'
