@@ -1,17 +1,18 @@
 import { ColumnDef } from '@tanstack/react-table'
-import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Badge } from '@/components/ui/badge'
+// import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { DataTableRowActions } from './data-table-row-actions'
 
-import { scales } from '../data/data'
-import { Task } from '../data/schema'
+// import { statuses, regions } from '../data/data'
+import { Organization } from '../data/schema'
 import { Button } from '@/components/custom/button'
 
-export const columns: ColumnDef<Task>[] = [
+
+
+export const columns: ColumnDef<Organization>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -37,83 +38,103 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: 'id',
+    header: ({ column }) => (
+      <DataTableColumnHeader className='text-[14px]' column={column} title='Id' />
+    ),
+    cell: ({ row }) => <div>{row.getValue('id')}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Name' />
+      <DataTableColumnHeader
+        column={column}
+        title='Name'
+        className='text-center text-[14px]'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('name')}</div>,
-    enableSorting: false,
+    enableSorting: true,
     enableHiding: false,
   },
   {
     accessorKey: 'scale',
     header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title='Scale'
-        className='text-center'
-      />
+      <DataTableColumnHeader className='text-[14px]' column={column} title='Scale' />
     ),
-    cell: ({ row }) => {
-      const scale = scales.find(
-        (scale) => scale.value === row.getValue('scale')
-      )
-
-      if (!scale) {
-        return null
-      }
-
-      return (
-        <div className='flex items-center text-center'>
-          {/* {scale.icon && (
-            <scale.icon className='mr-2 h-4 w-4 text-muted-foreground' />
-          )} */}
-          <span>{scale.label}</span>
-        </div>
-      )
+    cell: ({ row }) => <div>{row.getValue('scale')}</div>,
+    enableSorting: false,
+    // enableHiding: false,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
     },
   },
   {
     accessorKey: 'address',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Address' />
+      <DataTableColumnHeader className='text-[14px]' column={column} title='Address' />
     ),
     cell: ({ row }) => <div>{row.getValue('address')}</div>,
-    enableSorting: false,
-    // enableHiding: false,
+    // enableSorting: true,
   },
   {
     accessorKey: 'waste_volume',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Waste Volume' />
+      <DataTableColumnHeader className='text-[14px]' column={column} title='Waste Volume' />
     ),
     cell: ({ row }) => <div>{row.getValue('waste_volume')}</div>,
-    enableSorting: true,
+    // enableSorting: true,
   },
+
+  // {
+  //   id: 'actions',
+  //   header: () => null,
+  //   cell: ({ row }: { row: { getValue: (key: string) => string; employee_id?: string } }) => {
+  //     const navigate = useNavigate()
+
+  //     const handleButtonClick = () => {
+  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
+  //     }
+
+  //     return (
+  //       <div className='mr-4 text-right'>
+  //         <Button
+  //           variant='ghost'
+  //           className='flex h-8  px-2 text-[12px] text-primary/80 hover:text-primary'
+  //           onClick={handleButtonClick}
+  //         >
+  //           View
+  //         </Button>
+  //       </div>
+  //     )
+  //   },
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     id: 'actions',
-    header: () => null,
     cell: ({ row }) => {
       const navigate = useNavigate()
 
       const handleButtonClick = () => {
-        navigate(`/organizations/${row.id}`)
+        navigate(`/organizations/${row.getValue('id')}`)
       }
 
+  
       return (
-        <div className='mr-4 text-right'>
+        <div className='mr-4 flex justify-end items-center'>
           <Button
-            variant='outline'
-            size='sm'
-            className='hidden h-8 text-[12px] text-primary/80 hover:text-primary lg:flex'
+            variant='ghost'
+            className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
             onClick={handleButtonClick}
           >
-            Manage
+            View
           </Button>
+          <DataTableRowActions row={row} />
         </div>
-      )
+      );
     },
-    enableSorting: false,
-    enableHiding: false,
   },
 ]

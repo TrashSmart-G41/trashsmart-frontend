@@ -32,7 +32,7 @@ export default function Sidebar({
   return (
     <aside
       className={cn(
-        `fixed left-0 right-0 top-0 z-50 w-full border-r-2 border-r-muted transition-[width] md:bottom-0 md:right-auto md:h-svh ${isCollapsed ? 'md:w-20' : 'md:w-64'}`,
+        `fixed left-0 right-0 top-0 z-50 w-full border-r transition-[width] md:bottom-0 md:right-auto md:h-svh ${isCollapsed ? 'md:w-20' : 'md:w-64'}`,
         className
       )}
     >
@@ -122,7 +122,7 @@ export default function Sidebar({
           onClick={() => setIsCollapsed((prev) => !prev)}
           size='icon'
           variant='ghost'
-          className='absolute -right-2 z-50 mt-[14px] hidden rounded-full bg-accent/70 font-bold md:inline-flex'
+          className='absolute -right-1.5 z-50 mt-[14px] hidden rounded-full bg-background border hover:border-0 font-bold md:inline-flex'
         >
           <IconChevronsLeft
             stroke={1.5}

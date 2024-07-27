@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
+  // CardFooter,
 } from '@/components/ui/card'
 import { Search } from '@/components/search'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
@@ -72,15 +72,15 @@ export default function Dashboard() {
       {/* ===== Main ===== */}
       {/* <Layout.Body className='bg-muted'> */}
       <Layout.Body>
-        <div className='mb-6 flex items-center justify-between space-y-2'>
+        {/* <div className='mb-6 flex items-center justify-between space-y-1'>
           <h1 className='text-2xl font-bold tracking-tight'>Dashboard</h1>
-        </div>
+        </div> */}
         <Tabs
           orientation='vertical'
           defaultValue='overview'
-          className='space-y-4'
+          className='space-b-1'
         >
-          <TabsContent value='overview' className='space-y-4'>
+          <TabsContent value='overview' className='space-b-1'>
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
@@ -184,7 +184,7 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
             </div>
-            <div className='grid grid-cols-1 gap-4 lg:grid-cols-6'>
+            <div className='grid grid-cols-1 gap-4 lg:grid-cols-6 mt-4'>
               <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
                   <CardTitle>Line Chart - Multiple</CardTitle>

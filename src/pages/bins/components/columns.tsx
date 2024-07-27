@@ -1,11 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table'
-import React from 'react'
+// import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Badge } from '@/components/ui/badge'
+// import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
+// import { DataTableRowActions } from './data-table-row-actions'
 
 import { scales } from '../data/data'
 import { Task } from '../data/schema'
@@ -39,7 +39,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Name' />
+      <DataTableColumnHeader className='text-[14px]' column={column} title='Name' />
     ),
     cell: ({ row }) => <div>{row.getValue('name')}</div>,
     enableSorting: false,
@@ -51,7 +51,7 @@ export const columns: ColumnDef<Task>[] = [
       <DataTableColumnHeader
         column={column}
         title='Scale'
-        className='text-center'
+        className='text-center text-[14px]'
       />
     ),
     cell: ({ row }) => {
@@ -76,7 +76,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'address',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Address' />
+      <DataTableColumnHeader className='text-[14px]' column={column} title='Address' />
     ),
     cell: ({ row }) => <div>{row.getValue('address')}</div>,
     enableSorting: false,
@@ -85,7 +85,7 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'waste_volume',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Waste Volume' />
+      <DataTableColumnHeader className='text-[14px]' column={column} title='Waste Volume' />
     ),
     cell: ({ row }) => <div>{row.getValue('waste_volume')}</div>,
     enableSorting: true,

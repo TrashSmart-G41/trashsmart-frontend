@@ -70,6 +70,34 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/bins')).default,
         }),
       },
+      {
+        path: 'cleaners',
+        lazy: async () => ({
+          Component: (await import('@/pages/cleaners')).default,
+        }),
+      },
+      {
+        path: 'cleaners/:employee_id',
+        lazy: async () => ({
+          Component: (await import('@/pages/cleaners/cleaner')).default,
+        }),
+      },
+      {
+        path: 'trucks',
+        lazy: async () => ({
+          Component: (await import('@/pages/trucks')).default,
+        }),
+      },
+      {
+        path: 'trucks/:truck_id',
+        lazy: async () => ({
+          Component: (await import('@/pages/trucks/truck')).default,
+        }),
+      },
+
+
+
+
 
       {
         path: 'auctions',
@@ -158,6 +186,12 @@ const router = createBrowserRouter([
       },
     ],
   },
+  // {
+  //   path: 'home',
+  //   lazy: async () => ({
+  //     Component: (await import('@/pages/home')).default,
+  //   }),
+  // },
 
   // Error routes
   { path: '/500', Component: GeneralError },
