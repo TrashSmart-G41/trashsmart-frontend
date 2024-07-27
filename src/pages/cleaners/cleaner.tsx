@@ -101,7 +101,7 @@ export default function Cleaner() {
 
 
                     <div className='grid grid-cols-1 gap-4 lg:grid-cols-6 mt-4'>
-                        <div className='col-span-1 lg:col-span-3 p-4 pt-0 pb-0'>
+                        <div className='col-span-1 lg:col-span-3 p-4 pt-0 pb-0 '>
                             <CardHeader className='p-0'>
                                 <div className='flex flex-row justify-start items-center'>
                                     <CardTitle className='text-2xl font-bold'>John Smith</CardTitle>
@@ -121,41 +121,41 @@ export default function Cleaner() {
 
                     <Separator className=' my-2' />
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 m-4">
-                        <div className="flex justify-center items-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-7 gap-4 m-4 my-8">
+                        <div className="flex justify-center items-center max-w-fit">
                             <Avatar className='w-28 h-28 rounded-sm'>
                                 <AvatarImage src="https://github.com/shadcn.png" />
                                 <AvatarFallback>CN</AvatarFallback>
                             </Avatar>
                         </div>
-                        <div>
+                        <div className='lg:col-span-2'>
                             <div>
                                 <CardDescription className='text-[13px]'>Employee ID</CardDescription>
                                 <div className='font-medium text-muted-foreground'>EMP10001</div>
                             </div>
-                            <div className='mt-2'>
+                            <div className='mt-3'>
                                 <CardDescription className='text-[13px]'>Full Name</CardDescription>
                                 <div className='font-medium text-muted-foreground'>Mudiyanselage John Smith Wijesiri</div>
                             </div>
                         </div>
 
-                        <div>
+                        <div className='lg:col-span-2'>
                             <div>
                                 <CardDescription className='text-[13px]'>Contact Number</CardDescription>
                                 <div className='font-medium text-muted-foreground'>0774936421</div>
                             </div>
-                            <div className='mt-2'>
+                            <div className='mt-3'>
                                 <CardDescription className='text-[13px]'>Address</CardDescription>
                                 <div className='font-medium text-muted-foreground'>123/4, Galle Road, Colombo 03</div>
                             </div>
                         </div>
 
-                        <div>
+                        <div className='lg:col-span-2'>
                             <div>
                                 <CardDescription className='text-[13px]'>Date of Birth</CardDescription>
                                 <div className='font-medium text-muted-foreground'>14-06-1968</div>
                             </div>
-                            <div className='mt-2'>
+                            <div className='mt-3'>
                                 <CardDescription className='text-[13px]'>NIC</CardDescription>
                                 <div className='font-medium text-muted-foreground'>19686860163v</div>
                             </div>

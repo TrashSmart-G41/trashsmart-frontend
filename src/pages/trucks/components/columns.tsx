@@ -92,7 +92,7 @@ export const columns: ColumnDef<Truck>[] = [
       }
       else
       {
-        var fillColor = 'bg-[#c0c0c0] text-[#0f1b2b] dark:bg-[#0f1b2b] dark:text-[#c0c0c0]';
+        var fillColor = 'bg-[#ebebeb] text-[#0f1b2b] dark:bg-[#0f1b2b] dark:text-[#ebebeb]';
       }
 
       return (
