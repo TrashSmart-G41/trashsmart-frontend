@@ -70,7 +70,16 @@ export default function Cleaner() {
             </Layout.Header>
 
             <Layout.Body>
-                <Card className='mt-2'>
+                <Card className='mt-2 relative'>
+                <Button
+                    variant='outline'
+                    size='sm'
+                    className='ml-auto hidde absolute top-2 right-2 n h-8 lg:flex'
+                >
+                    {/* <MixerHorizontalIcon className='mr-2 h-4 w-4' /> */}
+                    <svg className='mr-2 h-4 w-4' xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M3.548 20.938h16.9a.5.5 0 0 0 0-1h-16.9a.5.5 0 0 0 0 1M9.71 17.18a2.6 2.6 0 0 0 1.12-.65l9.54-9.54a1.75 1.75 0 0 0 0-2.47l-.94-.93a1.79 1.79 0 0 0-2.47 0l-9.54 9.53a2.5 2.5 0 0 0-.64 1.12L6.04 17a.74.74 0 0 0 .19.72a.77.77 0 0 0 .53.22Zm.41-1.36a1.47 1.47 0 0 1-.67.39l-.97.26l-1-1l.26-.97a1.5 1.5 0 0 1 .39-.67l.38-.37l1.99 1.99Zm1.09-1.08l-1.99-1.99l6.73-6.73l1.99 1.99Zm8.45-8.45L18.65 7.3l-1.99-1.99l1.01-1.02a.75.75 0 0 1 1.06 0l.93.94a.754.754 0 0 1 0 1.06" /></svg>
+                    Edit
+                </Button>
 
                     <div className='pt-4 px-4'>
                         <Breadcrumb>
@@ -105,19 +114,7 @@ export default function Cleaner() {
                                 </div>
                                 <CardDescription>789 University Avenue, Cambridge, MA, USA</CardDescription>
                             </CardHeader>
-                        </div>
-
-                        <div className='col-span-1 lg:col-span-3 p-4 pt-0 pb-0'>
-                            <Button
-                                variant='outline'
-                                size='sm'
-                                className='ml-auto hidden h-8 lg:flex'
-                            >
-                                {/* <MixerHorizontalIcon className='mr-2 h-4 w-4' /> */}
-                                <svg className='mr-2 h-4 w-4' xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M3.548 20.938h16.9a.5.5 0 0 0 0-1h-16.9a.5.5 0 0 0 0 1M9.71 17.18a2.6 2.6 0 0 0 1.12-.65l9.54-9.54a1.75 1.75 0 0 0 0-2.47l-.94-.93a1.79 1.79 0 0 0-2.47 0l-9.54 9.53a2.5 2.5 0 0 0-.64 1.12L6.04 17a.74.74 0 0 0 .19.72a.77.77 0 0 0 .53.22Zm.41-1.36a1.47 1.47 0 0 1-.67.39l-.97.26l-1-1l.26-.97a1.5 1.5 0 0 1 .39-.67l.38-.37l1.99 1.99Zm1.09-1.08l-1.99-1.99l6.73-6.73l1.99 1.99Zm8.45-8.45L18.65 7.3l-1.99-1.99l1.01-1.02a.75.75 0 0 1 1.06 0l.93.94a.754.754 0 0 1 0 1.06" /></svg>
-                                Edit
-                            </Button>
-                        </div>
+                        </div>            
 
 
                     </div>
@@ -133,33 +130,33 @@ export default function Cleaner() {
                         </div>
                         <div>
                             <div>
-                                <CardDescription className='text-[12px]'>Employee ID</CardDescription>
+                                <CardDescription className='text-[13px]'>Employee ID</CardDescription>
                                 <div className='font-medium text-muted-foreground'>EMP10001</div>
                             </div>
                             <div className='mt-2'>
-                                <CardDescription className='text-[12px]'>Full Name</CardDescription>
+                                <CardDescription className='text-[13px]'>Full Name</CardDescription>
                                 <div className='font-medium text-muted-foreground'>Mudiyanselage John Smith Wijesiri</div>
                             </div>
                         </div>
 
                         <div>
                             <div>
-                                <CardDescription className='text-[12px]'>Contact Number</CardDescription>
+                                <CardDescription className='text-[13px]'>Contact Number</CardDescription>
                                 <div className='font-medium text-muted-foreground'>0774936421</div>
                             </div>
                             <div className='mt-2'>
-                                <CardDescription className='text-[12px]'>Address</CardDescription>
+                                <CardDescription className='text-[13px]'>Address</CardDescription>
                                 <div className='font-medium text-muted-foreground'>123/4, Galle Road, Colombo 03</div>
                             </div>
                         </div>
 
                         <div>
                             <div>
-                                <CardDescription className='text-[12px]'>Date of Birth</CardDescription>
+                                <CardDescription className='text-[13px]'>Date of Birth</CardDescription>
                                 <div className='font-medium text-muted-foreground'>14-06-1968</div>
                             </div>
                             <div className='mt-2'>
-                                <CardDescription className='text-[12px]'>NIC</CardDescription>
+                                <CardDescription className='text-[13px]'>NIC</CardDescription>
                                 <div className='font-medium text-muted-foreground'>19686860163v</div>
                             </div>
                         </div>
@@ -171,7 +168,7 @@ export default function Cleaner() {
                         <div>
                             <div className='font-normal text-muted-foreground'>Total Collections </div>
                             <div className='flex items-center text-[25px] font-semibold text-muted-foreground'>
-                                112 <TrendingUp className="h-4 w-4 mx-2 text-primary" /> <span className='font-normal text-[12px] text-primary'>1.7%</span>
+                                112 <TrendingUp className="h-4 w-4 mx-2 text-primary" /> <span className='font-normal text-[13px] text-primary'>1.7%</span>
                             </div>
                         </div>
                         <div className='mt-4'>

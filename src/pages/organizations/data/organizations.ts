@@ -1,4 +1,4 @@
-export const tasks = [
+export const organizations = [
   {
     id: '1',
     name: 'Task 1',
@@ -72,7 +72,7 @@ export const tasks = [
   },
   {
     id: '11',
-    name: 'Task 11',
+    name: 'Task 12',
     scale: 'Medium',
     address: '1234 Street, City, State',
     waste_volume: '11000 lbs',

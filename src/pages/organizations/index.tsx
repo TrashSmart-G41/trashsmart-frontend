@@ -4,14 +4,14 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { tasks } from './data/tasks'
+import { organizations } from './data/organizations'
 import {
   Card,
   CardContent,
-  CardDescription,
+  // CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
+  // CardFooter,
 } from '@/components/ui/card'
 
 export default function Tasks() {
@@ -143,7 +143,7 @@ export default function Tasks() {
             </div>
 
             <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-              <DataTable data={tasks} columns={columns} />
+              <DataTable data={organizations} columns={columns} />
             </div>
           </div>
         </Card>

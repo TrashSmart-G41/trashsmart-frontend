@@ -4,11 +4,11 @@ import ThemeSwitch from '@/components/theme-switch'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/dashtabs"
 import {
   Card,
-  CardContent,
+  // CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
+  // CardFooter,
 } from '@/components/ui/card'
 import { UserNav } from '@/components/user-nav'
 // import { DataTable } from './components/data-table'
@@ -16,8 +16,12 @@ import { UserNav } from '@/components/user-nav'
 // import { tasks } from './data/tasks'
 import mapImg from '@/assets/map.jpg'
 import { Button } from '../../components/custom/button'
+import Info from './info'
+import Requests from './requests'
+import SmartBins from './smart_bins'
+import Collections from './collections'
 
-export default function Tasks() {
+export default function Organization() {
   return (
     <>
       <Layout>
@@ -62,17 +66,17 @@ export default function Tasks() {
 
           </Card>
 
-          <Tabs defaultValue="collections" className="w-full p-4">
-            <TabsList className="flex w-full">
+          <Tabs defaultValue="collections" className="w-full py-4">
+            <TabsList className="flex w-full mb-4">
               <TabsTrigger value="collections" className="flex-1 text-center">Collections</TabsTrigger>
               <TabsTrigger value="smartbins" className="flex-1 text-center">Smart Bins</TabsTrigger>
               <TabsTrigger value="requests" className="flex-1 text-center">Requests</TabsTrigger>
               <TabsTrigger value="info" className="flex-1 text-center">Info</TabsTrigger>
             </TabsList>
-            <TabsContent value="collections">Collections</TabsContent>
-            <TabsContent value="smartbins">Smart Bins</TabsContent>
-            <TabsContent value="requests">Requests</TabsContent>
-            <TabsContent value="info">Info</TabsContent>
+            <TabsContent value="collections"><Collections/></TabsContent>
+            <TabsContent value="smartbins"><SmartBins/></TabsContent>
+            <TabsContent value="requests"><Requests/></TabsContent>
+            <TabsContent value="info"><Info/></TabsContent>
           </Tabs>
 
         </Layout.Body>
