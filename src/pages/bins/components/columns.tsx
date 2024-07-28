@@ -39,7 +39,11 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='Name' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Name'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('name')}</div>,
     enableSorting: false,
@@ -76,7 +80,11 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'address',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='Address' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Address'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('address')}</div>,
     enableSorting: false,
@@ -85,7 +93,11 @@ export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'waste_volume',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='Waste Volume' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Waste Volume'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('waste_volume')}</div>,
     enableSorting: true,

@@ -24,7 +24,9 @@ export function DataTableToolbar<TData>({
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
           placeholder='Filter Cleaning Personnel...'
-          value={(table.getColumn('full_name')?.getFilterValue() as string) ?? ''}
+          value={
+            (table.getColumn('full_name')?.getFilterValue() as string) ?? ''
+          }
           onChange={(event) =>
             table.getColumn('full_name')?.setFilterValue(event.target.value)
           }
@@ -62,4 +64,3 @@ export function DataTableToolbar<TData>({
     </div>
   )
 }
-

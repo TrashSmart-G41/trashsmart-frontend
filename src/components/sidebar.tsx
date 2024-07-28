@@ -122,7 +122,7 @@ export default function Sidebar({
           onClick={() => setIsCollapsed((prev) => !prev)}
           size='icon'
           variant='ghost'
-          className='absolute -right-1.5 z-50 mt-[14px] hidden rounded-xl bg-background border hover:border-0 font-bold md:inline-flex'
+          className='absolute -right-1.5 z-50 mt-[14px] hidden rounded-xl border bg-background font-bold hover:border-0 md:inline-flex'
         >
           <IconChevronsLeft
             stroke={1.5}

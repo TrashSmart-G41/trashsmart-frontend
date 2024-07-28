@@ -10,12 +10,7 @@ import { DataTableRowActions } from './data-table-row-actions'
 // import { statuses, regions } from '../data/data'
 import { Cleaner } from '../data/schema'
 import { Button } from '@/components/custom/button'
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar"
-
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export const columns: ColumnDef<Cleaner>[] = [
   {
@@ -45,7 +40,11 @@ export const columns: ColumnDef<Cleaner>[] = [
   {
     accessorKey: 'employee_id',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='Employee Id' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Employee Id'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('employee_id')}</div>,
     enableSorting: false,
@@ -61,19 +60,24 @@ export const columns: ColumnDef<Cleaner>[] = [
       />
     ),
     cell: ({ row }: { row: { getValue: (key: string) => string } }) => {
-      const fullName = row.getValue('full_name');
-      const fallbackInitials = fullName ? fullName.slice(0, 2).toUpperCase() : 'CN';
+      const fullName = row.getValue('full_name')
+      const fallbackInitials = fullName
+        ? fullName.slice(0, 2).toUpperCase()
+        : 'CN'
 
       return (
-        <div className="flex items-center space-x-2">
+        <div className='flex items-center space-x-2'>
           {/* avatar */}
-          <Avatar className='h-7 w-7 mr-2'>
-            <AvatarImage src="https://github.com/shadcn.png" alt={`@${fullName}`} />
+          <Avatar className='mr-2 h-7 w-7'>
+            <AvatarImage
+              src='https://github.com/shadcn.png'
+              alt={`@${fullName}`}
+            />
             <AvatarFallback>{fallbackInitials}</AvatarFallback>
           </Avatar>
           {fullName}
         </div>
-      );
+      )
     },
     enableSorting: true,
     enableHiding: false,
@@ -81,7 +85,11 @@ export const columns: ColumnDef<Cleaner>[] = [
   {
     accessorKey: 'contact_number',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='Contact Number' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Contact Number'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('contact_number')}</div>,
     enableSorting: false,
@@ -90,7 +98,11 @@ export const columns: ColumnDef<Cleaner>[] = [
   {
     accessorKey: 'region',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='Region' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Region'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('region')}</div>,
     // enableSorting: true,
@@ -101,27 +113,42 @@ export const columns: ColumnDef<Cleaner>[] = [
   {
     accessorKey: 'status',
     header: ({ column }) => (
-      <div className="flex">
+      <div className='flex'>
         {/* <DataTableColumnHeader column={column} title='Status' /> */}
-        <DataTableColumnHeader className='text-[14px]' column={column} title='Status' />
+        <DataTableColumnHeader
+          className='text-[14px]'
+          column={column}
+          title='Status'
+        />
       </div>
     ),
     cell: ({ row }) => {
-      const status = row.getValue('status');
-      const fillColor = status === 'Active'
-        ? 'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
-        : 'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]';
+      const status = row.getValue('status')
+      const fillColor =
+        status === 'Active'
+          ? 'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
+          : 'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]'
 
       return (
-        <div className="flex ">
-          <Button variant="scale_btn" size="scale_btn_sm" className={`text-[11px] ${fillColor}`}>
-            <svg className='inline-block mr-2' xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="12" fill="currentColor" />
+        <div className='flex '>
+          <Button
+            variant='scale_btn'
+            size='scale_btn_sm'
+            className={`text-[11px] ${fillColor}`}
+          >
+            <svg
+              className='mr-2 inline-block'
+              xmlns='http://www.w3.org/2000/svg'
+              width='6'
+              height='6'
+              viewBox='0 0 24 24'
+            >
+              <circle cx='12' cy='12' r='12' fill='currentColor' />
             </svg>
             {status as React.ReactNode}
           </Button>
         </div>
-      );
+      )
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
@@ -161,9 +188,8 @@ export const columns: ColumnDef<Cleaner>[] = [
         navigate(`/cleaners/${row.getValue('employee_id')}`)
       }
 
-  
       return (
-        <div className='mr-4 flex justify-end items-center'>
+        <div className='mr-4 flex items-center justify-end'>
           <Button
             variant='ghost'
             className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
@@ -173,7 +199,7 @@ export const columns: ColumnDef<Cleaner>[] = [
           </Button>
           <DataTableRowActions row={row} />
         </div>
-      );
+      )
     },
   },
 ]

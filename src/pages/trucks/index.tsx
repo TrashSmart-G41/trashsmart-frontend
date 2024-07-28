@@ -7,7 +7,6 @@ import { columns } from './components/columns'
 import { trucks } from './data/trucks'
 import { Card } from '@/components/ui/card'
 
-
 export default function Tasks() {
   return (
     <Layout>
@@ -21,8 +20,7 @@ export default function Tasks() {
       </Layout.Header>
 
       <Layout.Body>
-
-        <Card className='rounded-xl bg-card p-4 mt-2'>
+        <Card className='mt-2 rounded-xl bg-card p-4'>
           <div className='mb-2 flex items-center justify-between space-y-2'>
             <div>
               <h2 className='text-2xl font-bold tracking-tight'>Trucks</h2>
@@ -33,10 +31,7 @@ export default function Tasks() {
             <DataTable data={trucks} columns={columns} />
           </div>
         </Card>
-
-
-
       </Layout.Body>
-    </Layout >
+    </Layout>
   )
 }

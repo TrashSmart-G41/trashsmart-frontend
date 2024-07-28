@@ -44,6 +44,7 @@
     "cmdk": "^0.2.1",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
     "embla-carousel-react": "^8.1.7",
     "google-map-react": "^2.2.1",
     "lucide-react": "^0.407.0",

@@ -95,10 +95,6 @@ const router = createBrowserRouter([
         }),
       },
 
-
-
-
-
       {
         path: 'auctions',
         lazy: async () => ({

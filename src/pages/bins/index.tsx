@@ -6,7 +6,12 @@ import { UserNav } from '@/components/user-nav'
 // import { columns } from './components/columns'
 // import { tasks } from './data/tasks'
 // import { Card } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/dashtabs"
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/dashtabs'
 import Insights from './insights'
 import CommunalBins from './communal'
 import CommercialBins from './commercial'
@@ -25,14 +30,22 @@ export default function Tasks() {
       </Layout.Header>
 
       <Layout.Body>
-        <Tabs defaultValue="communal" className="w-full py-4 pt-0">
-          <TabsList className="flex w-full mb-4">
-            <TabsTrigger value="communal" className="flex-1 text-center">Communal Bins</TabsTrigger>
-            <TabsTrigger value="commercial" className="flex-1 text-center">Commercial Bins</TabsTrigger>
-            <TabsTrigger value="maintenance" className="flex-1 text-center">Maintenance</TabsTrigger>
-            <TabsTrigger value="insights" className="flex-1 text-center">Insights</TabsTrigger>
+        <Tabs defaultValue='communal' className='w-full py-4 pt-0'>
+          <TabsList className='mb-4 flex w-full'>
+            <TabsTrigger value='communal' className='flex-1 text-center'>
+              Communal Bins
+            </TabsTrigger>
+            <TabsTrigger value='commercial' className='flex-1 text-center'>
+              Commercial Bins
+            </TabsTrigger>
+            <TabsTrigger value='maintenance' className='flex-1 text-center'>
+              Maintenance
+            </TabsTrigger>
+            <TabsTrigger value='insights' className='flex-1 text-center'>
+              Insights
+            </TabsTrigger>
           </TabsList>
-          <TabsContent value="communal">
+          <TabsContent value='communal'>
             {/* <Card className='rounded-xl bg-card p-4'>
               <div className='mb-2 flex items-center justify-between space-y-2'>
                 <div>
@@ -44,14 +57,19 @@ export default function Tasks() {
                 <DataTable data={tasks} columns={columns} />
               </div>
             </Card> */}
-            <CommunalBins/>
+            <CommunalBins />
           </TabsContent>
-          <TabsContent value="commercial"><CommercialBins/></TabsContent>
-          <TabsContent value="maintenance"><Maintenance/></TabsContent>
-          <TabsContent value="insights"><Insights/></TabsContent>
+          <TabsContent value='commercial'>
+            <CommercialBins />
+          </TabsContent>
+          <TabsContent value='maintenance'>
+            <Maintenance />
+          </TabsContent>
+          <TabsContent value='insights'>
+            <Insights />
+          </TabsContent>
         </Tabs>
-
       </Layout.Body>
-    </Layout >
+    </Layout>
   )
 }

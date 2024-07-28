@@ -184,7 +184,7 @@ export default function Dashboard() {
                 </CardContent>
               </Card>
             </div>
-            <div className='grid grid-cols-1 gap-4 lg:grid-cols-6 mt-4'>
+            <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-6'>
               <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
                   <CardTitle>Line Chart - Multiple</CardTitle>

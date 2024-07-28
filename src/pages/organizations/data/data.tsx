@@ -1,5 +1,3 @@
-
-
 export const scales = [
   {
     label: 'Large',
