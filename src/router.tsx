@@ -6,19 +6,13 @@ import MaintenanceError from './pages/errors/maintenance-error'
 const router = createBrowserRouter([
   // Auth routes
   {
-    path: '/sign-in',
+    path: '/login',
     lazy: async () => ({
       Component: (await import('./pages/auth/sign-in')).default,
     }),
   },
   {
-    path: '/sign-in-2',
-    lazy: async () => ({
-      Component: (await import('./pages/auth/sign-in-2')).default,
-    }),
-  },
-  {
-    path: '/sign-up',
+    path: '/signup',
     lazy: async () => ({
       Component: (await import('./pages/auth/sign-up')).default,
     }),
@@ -30,7 +24,7 @@ const router = createBrowserRouter([
     }),
   },
   {
-    path: '/otp',
+    path: '/reset-password',
     lazy: async () => ({
       Component: (await import('./pages/auth/otp')).default,
     }),

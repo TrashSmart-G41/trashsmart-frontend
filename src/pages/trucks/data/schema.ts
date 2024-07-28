@@ -5,7 +5,7 @@ export const truckSchema = z.object({
   licence_plate_number: z.string(),
   max_load_capacity: z.number(),
   status: z.string(),
-  next_shift: z.number().int().positive(),
+  next_shift: z.string(),
   milage: z.number().int().positive(),
 })
 
