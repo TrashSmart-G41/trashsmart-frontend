@@ -106,6 +106,19 @@ const router = createBrowserRouter([
           Component: (await import('@/pages/trucks/truck')).default,
         }),
       },
+      {
+        path: 'requests',
+        lazy: async () => ({
+          Component: (await import('@/pages/requests')).default,
+        }),
+      },
+      {
+        path: 'dispatches',
+        lazy: async () => ({
+          Component: (await import('@/pages/dispatches')).default,
+        }),
+      },
+
 
       {
         path: 'auctions',

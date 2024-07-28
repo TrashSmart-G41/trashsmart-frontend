@@ -98,7 +98,7 @@ function NavLink({
           variant: checkActiveNav(href) ? 'nav_selected' : 'ghost',
           size: 'lg',
         }),
-        'mx-2 h-10  justify-start text-wrap rounded-sm px-6',
+        'mx-2 h-10 justify-start text-wrap rounded-sm px-6',
         subLink && 'h-10 w-full border-l border-l-slate-500 px-2'
       )}
       aria-current={checkActiveNav(href) ? 'page' : undefined}
