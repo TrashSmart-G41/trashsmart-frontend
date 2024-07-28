@@ -1,105 +1,86 @@
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { cleaners } from './data/cleaners'
+import { collectionHistory } from './data/collectionHistory'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+import { TrendingDown, TrendingUp } from 'lucide-react'
 
 export default function Collections() {
   return (
     <>
       <div className='mb-4 mt-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
         <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Total Revenue</CardTitle>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              className='h-4 w-4 text-muted-foreground'
-            >
-              <path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' />
-            </svg>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+            <CardTitle className='text-md font-medium text-muted-foreground/70'>
+              TOTAL VOLUME
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>$45,231.89</div>
-            <p className='text-xs text-muted-foreground'>
-              +20.1% from last month
-            </p>
+            <div className='flex flex-row items-center'>
+              <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                1200 MT
+              </div>
+              {/* <div className='flex flex-row text-primary'>
+                      <TrendingUp className='pr-1' />
+                      1.7%
+                    </div> */}
+            </div>
           </CardContent>
         </Card>
+
         <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Subscriptions</CardTitle>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              className='h-4 w-4 text-muted-foreground'
-            >
-              <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
-              <circle cx='9' cy='7' r='4' />
-              <path d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' />
-            </svg>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+            <CardTitle className='text-md font-medium text-primary'>
+              WEEKLY WASTE
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>+2350</div>
-            <p className='text-xs text-muted-foreground'>
-              +180.1% from last month
-            </p>
+            <div className='flex flex-row items-center'>
+              <div className='pr-2 text-4xl font-semibold text-primary'>
+                190 MT
+              </div>
+              <div className='flex flex-row text-primary'>
+                <TrendingUp className='pr-1' />
+                1.7%
+              </div>
+            </div>
           </CardContent>
         </Card>
+
         <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Sales</CardTitle>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              className='h-4 w-4 text-muted-foreground'
-            >
-              <rect width='20' height='14' x='2' y='5' rx='2' />
-              <path d='M2 10h20' />
-            </svg>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+            <CardTitle className='text-md font-medium text-muted-foreground/70'>
+              WEEKLY REQUESTS
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>+12,234</div>
-            <p className='text-xs text-muted-foreground'>
-              +19% from last month
-            </p>
+            <div className='flex flex-row items-center'>
+              <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                03
+              </div>
+              <div className='flex flex-row text-destructive'>
+                <TrendingDown className='pr-1' />
+                1.7%
+              </div>
+            </div>
           </CardContent>
         </Card>
+
         <Card>
-          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>Active Now</CardTitle>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth='2'
-              className='h-4 w-4 text-muted-foreground'
-            >
-              <path d='M22 12h-4l-3 9L9 3l-3 9H2' />
-            </svg>
+          <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+            <CardTitle className='text-md font-medium text-muted-foreground/70'>
+              RECYCLABLE VOLUME
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className='text-2xl font-bold'>+573</div>
-            <p className='text-xs text-muted-foreground'>
-              +201 since last hour
-            </p>
+            <div className='flex flex-row items-center'>
+              <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                238 MT
+              </div>
+              {/* <div className='flex flex-row text-destructive'>
+                      <TrendingDown className='pr-1' />
+                      0.8%
+                    </div> */}
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -107,12 +88,14 @@ export default function Collections() {
       <Card className='mt-2 rounded-xl bg-card p-4'>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <div>
-            <h2 className='text-xl font-bold tracking-tight'>Collections</h2>
+            <h2 className='text-xl font-bold tracking-tight text-muted-foreground'>
+              Collection History
+            </h2>
           </div>
         </div>
 
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={cleaners} columns={columns} />
+          <DataTable data={collectionHistory} columns={columns} />
         </div>
       </Card>
     </>

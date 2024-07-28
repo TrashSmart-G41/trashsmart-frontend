@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
-export const cleanerSchema = z.object({
-  employee_id: z.string(),
-  full_name: z.string(),
-  contact_number: z.string(),
-  region: z.string(),
-  status: z.string(),
+export const BinSchema = z.object({
+  bin_id: z.string(),
+  type: z.string(),
+  purchase_date: z.string(),
+  last_maintenance_date: z.string(),
+  other_notes: z.string(),
 })
 
-export type Cleaner = z.infer<typeof cleanerSchema>
+export type Bin = z.infer<typeof BinSchema>

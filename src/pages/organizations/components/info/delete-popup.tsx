@@ -9,9 +9,21 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import { useToast } from '@/components/ui/use-toast'
 import { Button } from '@/components/custom/button'
+import { useNavigate } from 'react-router-dom'
 
 export function DeleteOrg() {
+  const navigate = useNavigate()
+  const handleContinue = () => {
+    navigate('/organizations')
+    toast({
+      description: 'Organization deleted successfully!',
+      // className: 'bg-card text-destructive',
+    })
+  }
+
+  const { toast } = useToast()
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -27,7 +39,10 @@ export function DeleteOrg() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className='bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90'>
+          <AlertDialogAction
+            onClick={handleContinue}
+            className='bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90'
+          >
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>
