@@ -1,16 +1,16 @@
 import { ColumnDef } from '@tanstack/react-table'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+// import React from 'react'
+// import { useNavigate } from 'react-router-dom'
 
 // import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
+// import { DataTableRowActions } from './data-table-row-actions'
 
 // import { statuses, regions } from '../data/data'
 import { Bin } from '../data/schema'
-import { Button } from '@/components/custom/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+// import { Button } from '@/components/custom/button'
+// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export const columns: ColumnDef<Bin>[] = [
   {
