@@ -74,8 +74,8 @@ export const columns: ColumnDef<Truck>[] = [
         title='MAX. LOAD CAPACITY'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('max_load_capacity')}</div>,
-    enableSorting: false,
+    cell: ({ row }) => <div>{row.getValue('max_load_capacity')} MT</div>,
+    enableSorting: true,
     // enableHiding: false,
   },
   {
@@ -148,7 +148,7 @@ export const columns: ColumnDef<Truck>[] = [
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='Milage'
+        title='Milage (KM)'
       />
     ),
     cell: ({ row }) => <div>{row.getValue('milage')}</div>,

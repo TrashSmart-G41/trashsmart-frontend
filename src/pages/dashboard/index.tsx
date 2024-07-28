@@ -25,35 +25,35 @@ import {
 } from '@/components/ui/chart'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 },
+  { month: 'January', Organizations: 186, CommunalBins: 80 },
+  { month: 'February', Organizations: 305, CommunalBins: 200 },
+  { month: 'March', Organizations: 237, CommunalBins: 120 },
+  { month: 'April', Organizations: 73, CommunalBins: 190 },
+  { month: 'May', Organizations: 209, CommunalBins: 130 },
+  { month: 'June', Organizations: 214, CommunalBins: 140 },
 ]
 const chartConfig = {
-  desktop: {
-    label: 'Desktop',
+  Organizations: {
+    label: 'Organizations',
     color: 'hsl(var(--chart-1))',
   },
-  mobile: {
-    label: 'Mobile',
+  CommunalBins: {
+    label: 'Communal Bins',
     color: 'hsl(var(--chart-2))',
   },
 } satisfies ChartConfig
 
 const chartData2 = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
+  { month: 'January', Volume: 186 },
+  { month: 'February', Volume: 305 },
+  { month: 'March', Volume: 237 },
+  { month: 'April', Volume: 73 },
+  { month: 'May', Volume: 209 },
+  { month: 'June', Volume: 214 },
 ]
 const chartConfig2 = {
-  desktop: {
-    label: 'Desktop',
+  Volume: {
+    label: 'Volume (MT)',
     color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig
@@ -222,16 +222,16 @@ export default function Dashboard() {
                         content={<ChartTooltipContent />}
                       />
                       <Line
-                        dataKey='desktop'
+                        dataKey='Organizations'
                         type='monotone'
-                        stroke='var(--color-desktop)'
+                        stroke='var(--color-Organizations)'
                         strokeWidth={2}
                         dot={false}
                       />
                       <Line
-                        dataKey='mobile'
+                        dataKey='CommunalBins'
                         type='monotone'
-                        stroke='var(--color-mobile)'
+                        stroke='var(--color-CommunalBins)'
                         strokeWidth={2}
                         dot={false}
                       />
@@ -294,9 +294,9 @@ export default function Dashboard() {
                         content={<ChartTooltipContent hideLabel />}
                       />
                       <Line
-                        dataKey='desktop'
+                        dataKey='Volume'
                         type='linear'
-                        stroke='var(--color-desktop)'
+                        stroke='var(--color-Volume)'
                         strokeWidth={2}
                         dot={false}
                       />
