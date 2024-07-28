@@ -71,7 +71,7 @@ export const columns: ColumnDef<Truck>[] = [
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='MAX. LOAD CAPACITY'
+        title='MAX. CAPACITY'
       />
     ),
     cell: ({ row }) => <div>{row.getValue('max_load_capacity')} MT</div>,

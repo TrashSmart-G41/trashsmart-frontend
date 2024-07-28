@@ -116,6 +116,7 @@ export const columns: ColumnDef<CommunalBin>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status') as string
       const textColor = status === 'Full' ? 'text-destructive' : ''
+      
 
       return <div className={textColor}>{status}</div>
     },

@@ -97,9 +97,9 @@ export function DataTable<TData, TValue>({
                   <TableRow
                     key={row.id}
                     className={` 
-    ${status === 'Full' ? 'h-11 bg-[#fef2f2]/90 hover:bg-[#fef2f2] dark:bg-[#5f1f1f]/80 dark:hover:bg-[#5f1f1f]' : ''}
-    ${status === 'Almost Full' ? 'h-11 bg-[#fff4e5]/90 hover:bg-[#fff4e5] dark:bg-[#5f3f1f]/80 dark:hover:bg-[#5f3f1f]' : ''}
-    ${status === 'Empty' ? 'h-11 bg-[#f2f9ff]/90 hover:bg-[#f2f9ff] dark:bg-[#1f3f5f]/80 dark:hover:bg-[#1f3f5f]' : ''}
+    ${status === 'Full' ? 'h-11 bg-[#fef2f2]/90 hover:bg-[#fef2f2] dark:bg-[#5f1f1f]/20 dark:hover:bg-[#5f1f1f]/40' : ''}
+    ${status === 'Almost Full' ? 'h-11 bg-[#fff4e5]/90 hover:bg-[#fff4e5] dark:bg-[#5f3f1f]/20 dark:hover:bg-[#5f3f1f]/40' : ''}
+    ${status === 'Empty' ? 'h-11 bg-[#f2f9ff]/90 hover:bg-[#f2f9ff] dark:bg-[#1f3f5f]/20 dark:hover:bg-[#1f3f5f]/40' : ''}
   `}
                   >
                     {row.getVisibleCells().map((cell) => (
