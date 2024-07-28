@@ -35,19 +35,19 @@ export const columns: ColumnDef<Organization>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-  // {
-  //   accessorKey: 'id',
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader
-  //       className='text-[14px]'
-  //       column={column}
-  //       title='Organization Id'
-  //     />
-  //   ),
-  //   cell: ({ row }) => <div>{row.getValue('id')}</div>,
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
+  {
+    accessorKey: 'id',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Id'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('id')}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
   {
     accessorKey: 'name',
     header: ({ column }) => (

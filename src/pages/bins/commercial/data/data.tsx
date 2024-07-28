@@ -1,85 +1,26 @@
-export const statuses = [
+export const types = [
   {
-    label: 'Active',
-    value: 'Active',
+    label: 'Recyclable-20 liters',
+    value: 'Recyclable-20 liters',
   },
   {
-    label: 'Unavailable',
-    value: 'Unavailable',
-  },
-]
-
-export const regions = [
-  {
-    label: 'Metro Manila',
-    value: 'Metro Manila',
+    label: 'General-20 liters',
+    value: 'General-20 liters',
   },
   {
-    label: 'Cebu',
-    value: 'Cebu',
+    label: 'Recyclable-50 liters',
+    value: 'Recyclable-50 liters',
   },
   {
-    label: 'Davao',
-    value: 'Davao',
+    label: 'General-50 liters',
+    value: 'General-50 liters',
   },
   {
-    label: 'Bicol',
-    value: 'Bicol',
+    label: 'Recyclable-150 liters',
+    value: 'Recyclable-150 liters',
   },
   {
-    label: 'Ilocos',
-    value: 'Ilocos',
-  },
-  {
-    label: 'Cagayan Valley',
-    value: 'Cagayan Valley',
-  },
-  {
-    label: 'Central Luzon',
-    value: 'Central Luzon',
-  },
-  {
-    label: 'Calabarzon',
-    value: 'Calabarzon',
-  },
-  {
-    label: 'Mimaropa',
-    value: 'Mimaropa',
-  },
-  {
-    label: 'Western Visayas',
-    value: 'Western Visayas',
-  },
-  {
-    label: 'Central Visayas',
-    value: 'Central Visayas',
-  },
-  {
-    label: 'Eastern Visayas',
-    value: 'Eastern Visayas',
-  },
-  {
-    label: 'Zamboanga Peninsula',
-    value: 'Zamboanga Peninsula',
-  },
-  {
-    label: 'Northern Mindanao',
-    value: 'Northern Mindanao',
-  },
-  {
-    label: 'Davao Region',
-    value: 'Davao Region',
-  },
-  {
-    label: 'Soccsksargen',
-    value: 'Soccsksargen',
-  },
-  {
-    label: 'Caraga',
-    value: 'Caraga',
-  },
-  {
-    label: 'Bangsamoro',
-    value: 'Bangsamoro',
+    label: 'General-150 liters',
+    value: 'General-150 liters',
   },
 ]
