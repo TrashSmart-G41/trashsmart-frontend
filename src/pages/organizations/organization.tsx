@@ -20,6 +20,7 @@ import Info from './info'
 import Requests from './requests'
 import SmartBins from './smart_bins'
 import Collections from './collections'
+import GoogleMap from '../../components/custom/map'
 
 export default function Organization() {
   return (
@@ -37,7 +38,10 @@ export default function Organization() {
         <Layout.Body>
           <Card className='mt-2'>
             <div>
-              <img className='rounded-t-xl max-h-[200px] w-full object-cover' src={mapImg} alt="Map" />
+              {/* <img className='rounded-t-xl max-h-[200px] w-full object-cover' src={mapImg} alt="Map" /> */}
+              <div className='rounded-t-xl overflow-hidden'>
+                <GoogleMap className="w-full h-full rounded-t-xl" height={200} />
+              </div>
             </div>
             <div className='grid grid-cols-1 gap-4 lg:grid-cols-6 mt-4'>
               <div className='col-span-1 lg:col-span-3 p-4 pt-0'>
@@ -73,10 +77,10 @@ export default function Organization() {
               <TabsTrigger value="requests" className="flex-1 text-center">Requests</TabsTrigger>
               <TabsTrigger value="info" className="flex-1 text-center">Info</TabsTrigger>
             </TabsList>
-            <TabsContent value="collections"><Collections/></TabsContent>
-            <TabsContent value="smartbins"><SmartBins/></TabsContent>
-            <TabsContent value="requests"><Requests/></TabsContent>
-            <TabsContent value="info"><Info/></TabsContent>
+            <TabsContent value="collections"><Collections /></TabsContent>
+            <TabsContent value="smartbins"><SmartBins /></TabsContent>
+            <TabsContent value="requests"><Requests /></TabsContent>
+            <TabsContent value="info"><Info /></TabsContent>
           </Tabs>
 
         </Layout.Body>

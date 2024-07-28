@@ -23,18 +23,18 @@ const Info = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <CardDescription className='text-[13px]'>Organization Name</CardDescription>
-                        <div className='font-medium text-muted-foreground'>Infinite Education Network Pvt Ltd.</div>
+                        <div className='font-medium text-muted-foreground mt-1'>Infinite Education Network Pvt Ltd.</div>
                     </div>
                     <div>
                         <CardDescription className='text-[13px]'>Organization Type</CardDescription>
-                        <div className='font-medium text-muted-foreground'>Education</div>
+                        <div className='font-medium text-muted-foreground mt-1'>Education</div>
                     </div>
                 </div>
             </div>
 
             {/*  */}
 
-            <div className="relative p-4 border-md border rounded-md mt-4">
+            <div className="relative p-4 border-md border rounded-md mt-5">
                 <Button
                     variant='outline'
                     size='sm'
@@ -53,26 +53,26 @@ const Info = () => {
                     <div>
                         <div>
                             <CardDescription className='text-[13px]'>Primary Contact Person's Name</CardDescription>
-                            <div className='font-medium text-muted-foreground'>Ranil Wickramasinghe</div>
+                            <div className='font-medium text-muted-foreground mt-1'>Ranil Wickramasinghe</div>
                         </div>
-                        <div className="my-2">
+                        <div className="my-3">
                             <CardDescription className='text-[13px]'>Phone Number</CardDescription>
-                            <div className='font-medium text-muted-foreground'>077-4936420</div>
+                            <div className='font-medium text-muted-foreground mt-1'>077-4936420</div>
                         </div>
-                        <div className="my-2">
+                        <div className="my-3">
                             <CardDescription className='text-[13px]'>Address</CardDescription>
-                            <div className='font-medium text-muted-foreground'>789 University Avenue, Cambridge, MA, USA</div>
+                            <div className='font-medium text-muted-foreground mt-1'>789 University Avenue, Cambridge, MA, USA</div>
                         </div>
                     </div>
 
                     <div>
                         <div>
                             <CardDescription className='text-[13px]'>Title/Position</CardDescription>
-                            <div className='font-medium text-muted-foreground'>Cleaning Personnel Supervisor</div>
+                            <div className='font-medium text-muted-foreground mt-1'>Cleaning Personnel Supervisor</div>
                         </div>
-                        <div className="my-2">
+                        <div className="my-3">
                             <CardDescription className='text-[13px]'>Email Address</CardDescription>
-                            <div className='font-medium text-muted-foreground'>supervisor@infiniteed.com</div>
+                            <div className='font-medium text-muted-foreground mt-1'>supervisor@infiniteed.com</div>
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@ const Info = () => {
             </div>
 
             {/*  */}
-            <div className="relative p-4 border-md border rounded-md mt-4">
+            <div className="relative p-4 border-md border rounded-md mt-5">
                 <Button
                     variant='outline'
                     size='sm'
@@ -100,26 +100,26 @@ const Info = () => {
                     <div>
                         <div>
                             <CardDescription className='text-[13px]'>Primary Contact Person's Name</CardDescription>
-                            <div className='font-medium text-muted-foreground'>Ranil Wickramasinghe</div>
+                            <div className='font-medium text-muted-foreground mt-1'>Ranil Wickramasinghe</div>
                         </div>
-                        <div className="my-2">
+                        <div className="my-3">
                             <CardDescription className='text-[13px]'>Phone Number</CardDescription>
-                            <div className='font-medium text-muted-foreground'>077-4936420</div>
+                            <div className='font-medium text-muted-foreground mt-1'>077-4936420</div>
                         </div>
-                        <div className="my-2">
+                        <div className="my-3">
                             <CardDescription className='text-[13px]'>Address</CardDescription>
-                            <div className='font-medium text-muted-foreground'>789 University Avenue, Cambridge, MA, USA</div>
+                            <div className='font-medium text-muted-foreground mt-1'>789 University Avenue, Cambridge, MA, USA</div>
                         </div>
                     </div>
 
                     <div>
                         <div>
                             <CardDescription className='text-[13px]'>Title/Position</CardDescription>
-                            <div className='font-medium text-muted-foreground'>Cleaning Personnel Supervisor</div>
+                            <div className='font-medium text-muted-foreground mt-1'>Cleaning Personnel Supervisor</div>
                         </div>
-                        <div className="my-2">
+                        <div className="my-3">
                             <CardDescription className='text-[13px]'>Email Address</CardDescription>
-                            <div className='font-medium text-muted-foreground'>supervisor@infiniteed.com</div>
+                            <div className='font-medium text-muted-foreground mt-1'>supervisor@infiniteed.com</div>
                         </div>
                     </div>
 
