@@ -85,13 +85,15 @@ export default function Dashboard() {
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-                  <CardTitle className='text-md text-muted-foreground/70 font-medium'>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
                     TOTAL USERS
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className='flex flex-row items-center'>
-                    <div className='text-4xl text-muted-foreground font-semibold pr-2'>72,540</div>
+                    <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                      72,540
+                    </div>
                     <div className='flex flex-row text-primary'>
                       <TrendingUp className='pr-1' />
                       1.7%
@@ -102,24 +104,28 @@ export default function Dashboard() {
 
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-                  <CardTitle className='text-md text-muted-foreground/70 font-medium'>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
                     TOTAL COLLECTIONS
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-4xl text-muted-foreground font-semibold'>72,540</div>
+                  <div className='text-4xl font-semibold text-muted-foreground'>
+                    72,540
+                  </div>
                 </CardContent>
               </Card>
 
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-                  <CardTitle className='text-md text-primary font-medium'>
+                  <CardTitle className='text-md font-medium text-primary'>
                     WEEKLY WASTE
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className='flex flex-row items-center'>
-                    <div className='text-4xl text-primary font-semibold pr-2'>45 MT</div>
+                    <div className='pr-2 text-4xl font-semibold text-primary'>
+                      45 MT
+                    </div>
                     <div className='flex flex-row text-primary'>
                       <TrendingUp className='pr-1' />
                       1.7%
@@ -130,13 +136,15 @@ export default function Dashboard() {
 
               <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-                  <CardTitle className='text-md text-muted-foreground/70 font-medium'>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
                     WEEKLY REQUESTS
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className='flex flex-row items-center'>
-                    <div className='text-4xl text-muted-foreground font-semibold pr-2'>104</div>
+                    <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                      104
+                    </div>
                     <div className='flex flex-row text-destructive'>
                       <TrendingDown className='pr-1' />
                       0.8%
@@ -144,8 +152,6 @@ export default function Dashboard() {
                   </div>
                 </CardContent>
               </Card>
-
-
 
               {/* <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
@@ -176,14 +182,16 @@ export default function Dashboard() {
             <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-6'>
               <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
-                  <CardTitle className='text-md text-muted-foreground/70 font-medium'>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
                     ACCUMULATED WASTE
                   </CardTitle>
                   <CardDescription>
                     <CardContent className='px-0'>
                       <div className='flex flex-row items-center'>
-                        <div className='text-4xl text-muted-foreground font-semibold pr-2'>2570 Metric Tons</div>
-                        <div className='flex flex-row text-primary items-center'>
+                        <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                          2570 Metric Tons
+                        </div>
+                        <div className='flex flex-row items-center text-primary'>
                           <TrendingUp className='pr-1' />
                           0.8%
                         </div>
@@ -246,14 +254,16 @@ export default function Dashboard() {
 
               <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
-                  <CardTitle className='text-md text-muted-foreground/70 font-medium'>
-                  TOTAL RECYCLED VOLUME
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
+                    TOTAL RECYCLED VOLUME
                   </CardTitle>
                   <CardDescription>
                     <CardContent className='px-0'>
                       <div className='flex flex-row items-center'>
-                        <div className='text-4xl text-muted-foreground font-semibold pr-2'>698 Metric Tons</div>
-                        <div className='flex flex-row text-primary items-center'>
+                        <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                          698 Metric Tons
+                        </div>
+                        <div className='flex flex-row items-center text-primary'>
                           <TrendingUp className='pr-1' />
                           0.8%
                         </div>

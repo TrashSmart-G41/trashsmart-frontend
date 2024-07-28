@@ -28,16 +28,18 @@ export default function Tasks() {
       </Layout.Header>
 
       <Layout.Body>
-        <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4 pt-2'>
+        <div className='grid gap-4 pt-2 sm:grid-cols-2 lg:grid-cols-4'>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-              <CardTitle className='text-md text-muted-foreground/70 font-medium'>
+              <CardTitle className='text-md font-medium text-muted-foreground/70'>
                 TOTAL USERS
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className='flex flex-row items-center'>
-                <div className='text-4xl text-muted-foreground font-semibold pr-2'>72,540</div>
+                <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                  72,540
+                </div>
                 <div className='flex flex-row text-primary'>
                   <TrendingUp className='pr-1' />
                   1.7%
@@ -48,24 +50,28 @@ export default function Tasks() {
 
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-              <CardTitle className='text-md text-muted-foreground/70 font-medium'>
+              <CardTitle className='text-md font-medium text-muted-foreground/70'>
                 TOTAL COLLECTIONS
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className='text-4xl text-muted-foreground font-semibold'>72,540</div>
+              <div className='text-4xl font-semibold text-muted-foreground'>
+                72,540
+              </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-              <CardTitle className='text-md text-primary font-medium'>
+              <CardTitle className='text-md font-medium text-primary'>
                 WEEKLY WASTE
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className='flex flex-row items-center'>
-                <div className='text-4xl text-primary font-semibold pr-2'>45 MT</div>
+                <div className='pr-2 text-4xl font-semibold text-primary'>
+                  45 MT
+                </div>
                 <div className='flex flex-row text-primary'>
                   <TrendingUp className='pr-1' />
                   1.7%
@@ -76,13 +82,15 @@ export default function Tasks() {
 
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-              <CardTitle className='text-md text-muted-foreground/70 font-medium'>
+              <CardTitle className='text-md font-medium text-muted-foreground/70'>
                 WEEKLY REQUESTS
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className='flex flex-row items-center'>
-                <div className='text-4xl text-muted-foreground font-semibold pr-2'>104</div>
+                <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                  104
+                </div>
                 <div className='flex flex-row text-destructive'>
                   <TrendingDown className='pr-1' />
                   0.8%
@@ -90,8 +98,6 @@ export default function Tasks() {
               </div>
             </CardContent>
           </Card>
-
-
 
           {/* <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
