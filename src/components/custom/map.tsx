@@ -1,9 +1,7 @@
-import Map from // Popup, // Marker,
-  // NavigationControl,
-  // FullscreenControl,
-  // ScaleControl,
-  // GeolocateControl
-  'react-map-gl'
+import Map from // FullscreenControl, // NavigationControl, // Popup, // Marker,
+// ScaleControl,
+// GeolocateControl
+'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useState } from 'react'
 // import { cn } from '@/lib/utils';
@@ -17,8 +15,6 @@ import { useEffect, useState } from 'react'
 //   },
 //   // Add more city objects here if needed
 // ];
-
-
 
 const GoogleMap = ({ width = '100%', height = 400, className = '' }) => {
   const [mapStyle, setMapStyle] = useState<string>('')
@@ -65,16 +61,15 @@ const GoogleMap = ({ width = '100%', height = 400, className = '' }) => {
     }
   }, [])
 
-  const mapboxAccessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
+  const mapboxAccessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN
 
   if (!mapboxAccessToken) {
-    throw new Error('Mapbox access token is not defined');
+    throw new Error('Mapbox access token is not defined')
   }
-  
+
   // Use the mapboxAccessToken in your code
 
   return (
-
     <>
       <div className={className}>
         <Map
