@@ -24,9 +24,15 @@ export function DataTableToolbar<TData>({
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
           placeholder='Filter Trucks...'
-          value={(table.getColumn('licence_plate_number')?.getFilterValue() as string) ?? ''}
+          value={
+            (table
+              .getColumn('licence_plate_number')
+              ?.getFilterValue() as string) ?? ''
+          }
           onChange={(event) =>
-            table.getColumn('licence_plate_number')?.setFilterValue(event.target.value)
+            table
+              .getColumn('licence_plate_number')
+              ?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
@@ -62,4 +68,3 @@ export function DataTableToolbar<TData>({
     </div>
   )
 }
-

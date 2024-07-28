@@ -88,7 +88,7 @@ export const trucks = [
     next_shift: 11,
     milage: 1000,
   },
- 
+
   {
     truck_id: 'TRK011',
     licence_plate_number: 'EFG-7891',

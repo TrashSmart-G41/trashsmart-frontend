@@ -1,18 +1,15 @@
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
 import { cleaners } from './data/cleaners'
-import { Card,CardHeader,CardTitle,CardContent } from '@/components/ui/card'
-
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 
 export default function Collections() {
   return (
     <>
-      <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mt-2 mb-4'>
+      <div className='mb-4 mt-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>
-              Total Revenue
-            </CardTitle>
+            <CardTitle className='text-sm font-medium'>Total Revenue</CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -35,9 +32,7 @@ export default function Collections() {
         </Card>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>
-              Subscriptions
-            </CardTitle>
+            <CardTitle className='text-sm font-medium'>Subscriptions</CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -86,9 +81,7 @@ export default function Collections() {
         </Card>
         <Card>
           <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-            <CardTitle className='text-sm font-medium'>
-              Active Now
-            </CardTitle>
+            <CardTitle className='text-sm font-medium'>Active Now</CardTitle>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -111,8 +104,7 @@ export default function Collections() {
         </Card>
       </div>
 
-
-      <Card className='rounded-xl bg-card p-4 mt-2'>
+      <Card className='mt-2 rounded-xl bg-card p-4'>
         <div className='mb-2 flex items-center justify-between space-y-2'>
           <div>
             <h2 className='text-xl font-bold tracking-tight'>Collections</h2>
@@ -124,6 +116,5 @@ export default function Collections() {
         </div>
       </Card>
     </>
-
   )
 }

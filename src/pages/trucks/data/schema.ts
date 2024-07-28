@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-
 export const truckSchema = z.object({
   truck_id: z.string(),
   licence_plate_number: z.string(),

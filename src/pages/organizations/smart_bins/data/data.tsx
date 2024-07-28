@@ -7,7 +7,6 @@ export const statuses = [
     label: 'Unavailable',
     value: 'Unavailable',
   },
-
 ]
 
 export const regions = [

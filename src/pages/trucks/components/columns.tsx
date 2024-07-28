@@ -16,7 +16,6 @@ import { Button } from '@/components/custom/button'
 //   AvatarImage,
 // } from "@/components/ui/avatar"
 
-
 export const columns: ColumnDef<Truck>[] = [
   {
     id: 'select',
@@ -45,7 +44,11 @@ export const columns: ColumnDef<Truck>[] = [
   {
     accessorKey: 'truck_id',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='Truck ID' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Truck ID'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('truck_id')}</div>,
     enableSorting: false,
@@ -65,7 +68,11 @@ export const columns: ColumnDef<Truck>[] = [
   {
     accessorKey: 'max_load_capacity',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='MAX. LOAD CAPACITY' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='MAX. LOAD CAPACITY'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('max_load_capacity')}</div>,
     enableSorting: false,
@@ -74,37 +81,51 @@ export const columns: ColumnDef<Truck>[] = [
   {
     accessorKey: 'status',
     header: ({ column }) => (
-      <div className="flex">
+      <div className='flex'>
         {/* <DataTableColumnHeader column={column} title='Status' /> */}
-        <DataTableColumnHeader className='text-[14px]' column={column} title='Status' />
+        <DataTableColumnHeader
+          className='text-[14px]'
+          column={column}
+          title='Status'
+        />
       </div>
     ),
     cell: ({ row }) => {
-      const status = row.getValue('status');
-       if (status === 'En Route') {
-        var fillColor = 'bg-[#c0dbfe] text-[#1f40af] dark:bg-[#1f40af] dark:text-[#c0dbfe]';
-      }
-      else if (status === 'Returning') {
-        var fillColor = 'bg-[#ffdcb1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#ffdcb1]';
-      }
-      else if (status === 'Collecting') {
-        var fillColor = 'bg-[#ccfbf1] text-[#0f5e59] dark:bg-[#0f5e59] dark:text-[#ccfbf1]';
-      }
-      else
-      {
-        var fillColor = 'bg-[#c0c0c0] text-[#0f1b2b] dark:bg-[#0f1b2b] dark:text-[#c0c0c0]';
+      const status = row.getValue('status')
+      if (status === 'En Route') {
+        var fillColor =
+          'bg-[#c0dbfe] text-[#1f40af] dark:bg-[#1f40af] dark:text-[#c0dbfe]'
+      } else if (status === 'Returning') {
+        var fillColor =
+          'bg-[#ffdcb1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#ffdcb1]'
+      } else if (status === 'Collecting') {
+        var fillColor =
+          'bg-[#ccfbf1] text-[#0f5e59] dark:bg-[#0f5e59] dark:text-[#ccfbf1]'
+      } else {
+        var fillColor =
+          'bg-[#ebebeb] text-[#0f1b2b] dark:bg-[#0f1b2b] dark:text-[#ebebeb]'
       }
 
       return (
-        <div className="flex ">
-          <Button variant="scale_btn" size="scale_btn_sm" className={`text-[11px] ${fillColor}`}>
-            <svg className='inline-block mr-2' xmlns="http://www.w3.org/2000/svg" width="6" height="6" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="12" fill="currentColor" />
+        <div className='flex '>
+          <Button
+            variant='scale_btn'
+            size='scale_btn_sm'
+            className={`text-[11px] ${fillColor}`}
+          >
+            <svg
+              className='mr-2 inline-block'
+              xmlns='http://www.w3.org/2000/svg'
+              width='6'
+              height='6'
+              viewBox='0 0 24 24'
+            >
+              <circle cx='12' cy='12' r='12' fill='currentColor' />
             </svg>
             {status as React.ReactNode}
           </Button>
         </div>
-      );
+      )
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
@@ -113,17 +134,24 @@ export const columns: ColumnDef<Truck>[] = [
   {
     accessorKey: 'next_shift',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='NEXT SHIFT' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='NEXT SHIFT'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('next_shift')}</div>,
   },
   {
     accessorKey: 'milage',
     header: ({ column }) => (
-      <DataTableColumnHeader className='text-[14px]' column={column} title='Milage' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Milage'
+      />
     ),
     cell: ({ row }) => <div>{row.getValue('milage')}</div>,
-    
   },
 
   // {
@@ -160,9 +188,8 @@ export const columns: ColumnDef<Truck>[] = [
         navigate(`/trucks/${row.getValue('truck_id')}`)
       }
 
-  
       return (
-        <div className='mr-4 flex justify-end items-center'>
+        <div className='mr-4 flex items-center justify-end'>
           <Button
             variant='ghost'
             className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
@@ -172,7 +199,7 @@ export const columns: ColumnDef<Truck>[] = [
           </Button>
           <DataTableRowActions row={row} />
         </div>
-      );
+      )
     },
   },
 ]

@@ -27,7 +27,7 @@ export default function Tasks() {
       </Layout.Header>
 
       <Layout.Body>
-        <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mt-2 mb-4'>
+        <div className='mb-4 mt-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
               <CardTitle className='text-sm font-medium'>
@@ -106,9 +106,7 @@ export default function Tasks() {
           </Card>
           <Card>
             <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-              <CardTitle className='text-sm font-medium'>
-                Active Now
-              </CardTitle>
+              <CardTitle className='text-sm font-medium'>Active Now</CardTitle>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
                 viewBox='0 0 24 24'
@@ -135,7 +133,9 @@ export default function Tasks() {
           <div className='rounded-xl  bg-card p-4'>
             <div className='mb-2 flex items-center justify-between space-y-2 '>
               <div>
-                <h2 className='text-2xl font-bold tracking-tight'>Organizations</h2>
+                <h2 className='text-2xl font-bold tracking-tight'>
+                  Organizations
+                </h2>
                 {/* <p className='text-muted-foreground'>
               Here&apos;s a list of your tasks for this month!
             </p> */}

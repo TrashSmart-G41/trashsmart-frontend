@@ -8,7 +8,7 @@ import { DataTableViewOptions } from './data-table-view-options'
 import { scales } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 
-import { OrganizationsForm } from '@/pages/organizations/components/add-organizations-form'
+// import { OrganizationsForm } from '@/pages/organizations/components/add-organizations-form'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -59,7 +59,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <DataTableViewOptions table={table} />
-      <OrganizationsForm />
+      {/* <OrganizationsForm /> */}
     </div>
   )
 }
