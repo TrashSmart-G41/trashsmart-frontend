@@ -4,7 +4,7 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { drivers } from './data/driver'
+import { requests } from './data/requests'
 import { Card } from '@/components/ui/card'
 
 export default function Tasks() {
@@ -23,12 +23,14 @@ export default function Tasks() {
         <Card className='mt-2 rounded-xl bg-card p-4'>
           <div className='mb-2 flex items-center justify-between space-y-2'>
             <div>
-              <h2 className='text-2xl font-bold tracking-tight'>Requests</h2>
+              <h2 className='text-2xl font-bold tracking-tight text-muted-foreground'>
+                Requests
+              </h2>
             </div>
           </div>
 
           <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-            <DataTable data={drivers} columns={columns} />
+            <DataTable data={requests} columns={columns} />
           </div>
         </Card>
       </Layout.Body>

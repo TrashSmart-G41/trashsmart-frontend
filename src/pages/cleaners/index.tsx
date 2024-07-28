@@ -23,7 +23,7 @@ export default function Tasks() {
         <Card className='mt-2 rounded-xl bg-card p-4'>
           <div className='mb-2 flex items-center justify-between space-y-2'>
             <div>
-              <h2 className='text-2xl font-bold tracking-tight'>
+              <h2 className='text-2xl font-bold tracking-tight text-muted-foreground'>
                 Cleaning Personnel
               </h2>
             </div>

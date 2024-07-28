@@ -66,7 +66,9 @@ export default function Truck() {
             <div className='col-span-1 p-4 pb-0 pt-0 lg:col-span-3'>
               <CardHeader className='p-0'>
                 <div className='flex flex-row items-center justify-start'>
-                  <CardTitle className='text-2xl font-bold'>ABC-1234</CardTitle>
+                  <CardTitle className='text-2xl font-bold text-muted-foreground'>
+                    ABC-1234
+                  </CardTitle>
                   <Button
                     variant='scale_btn'
                     size='scale_btn_sm'
@@ -99,7 +101,8 @@ export default function Truck() {
                   Departed at 13:30 P.M
                 </CardDescription>
                 <div className='p-4 pt-0 text-lg text-muted-foreground'>
-                  Next stop: <span className='text-foreground'>Akbar Lane</span>
+                  Next stop:{' '}
+                  <span className='text-foreground/70'>Akbar Lane</span>
                 </div>
               </div>
             </div>

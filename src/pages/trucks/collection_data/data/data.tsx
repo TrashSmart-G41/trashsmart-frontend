@@ -1,85 +1,29 @@
 export const statuses = [
   {
-    label: 'Active',
-    value: 'Active',
+    label: 'Collected',
+    value: 'Collected',
   },
   {
-    label: 'Unavailable',
-    value: 'Unavailable',
+    label: 'To do',
+    value: 'To do',
+  },
+  {
+    label: 'Cancelled',
+    value: 'Cancelled',
   },
 ]
 
-export const regions = [
+export const scales = [
   {
-    label: 'Metro Manila',
-    value: 'Metro Manila',
+    label: 'Small',
+    value: 'Small',
   },
   {
-    label: 'Cebu',
-    value: 'Cebu',
+    label: 'Medium',
+    value: 'Medium',
   },
   {
-    label: 'Davao',
-    value: 'Davao',
-  },
-  {
-    label: 'Bicol',
-    value: 'Bicol',
-  },
-  {
-    label: 'Ilocos',
-    value: 'Ilocos',
-  },
-  {
-    label: 'Cagayan Valley',
-    value: 'Cagayan Valley',
-  },
-  {
-    label: 'Central Luzon',
-    value: 'Central Luzon',
-  },
-  {
-    label: 'Calabarzon',
-    value: 'Calabarzon',
-  },
-  {
-    label: 'Mimaropa',
-    value: 'Mimaropa',
-  },
-  {
-    label: 'Western Visayas',
-    value: 'Western Visayas',
-  },
-  {
-    label: 'Central Visayas',
-    value: 'Central Visayas',
-  },
-  {
-    label: 'Eastern Visayas',
-    value: 'Eastern Visayas',
-  },
-  {
-    label: 'Zamboanga Peninsula',
-    value: 'Zamboanga Peninsula',
-  },
-  {
-    label: 'Northern Mindanao',
-    value: 'Northern Mindanao',
-  },
-  {
-    label: 'Davao Region',
-    value: 'Davao Region',
-  },
-  {
-    label: 'Soccsksargen',
-    value: 'Soccsksargen',
-  },
-  {
-    label: 'Caraga',
-    value: 'Caraga',
-  },
-  {
-    label: 'Bangsamoro',
-    value: 'Bangsamoro',
+    label: 'Large',
+    value: 'Large',
   },
 ]

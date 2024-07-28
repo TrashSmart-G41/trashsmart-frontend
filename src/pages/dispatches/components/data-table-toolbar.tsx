@@ -7,7 +7,7 @@ import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
 // import { DataTableViewOptions } from '../components/data-table-view-options'
 
-import { statuses, regions } from '../data/data'
+import { statuses } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 
 interface DataTableToolbarProps<TData> {
@@ -23,12 +23,12 @@ export function DataTableToolbar<TData>({
     <div className='flex items-center justify-between'>
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
-          placeholder='Filter Cleaning Personnel...'
+          placeholder='Search by dispatch ID...'
           value={
-            (table.getColumn('full_name')?.getFilterValue() as string) ?? ''
+            (table.getColumn('dispatch_id')?.getFilterValue() as string) ?? ''
           }
           onChange={(event) =>
-            table.getColumn('full_name')?.setFilterValue(event.target.value)
+            table.getColumn('dispatch_id')?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
@@ -40,13 +40,13 @@ export function DataTableToolbar<TData>({
               options={statuses}
             />
           )}
-          {table.getColumn('region') && (
+          {/* {table.getColumn('region') && (
             <DataTableFacetedFilter
               column={table.getColumn('region')}
               title='Region'
               options={regions}
             />
-          )}
+          )} */}
         </div>
         {isFiltered && (
           <Button

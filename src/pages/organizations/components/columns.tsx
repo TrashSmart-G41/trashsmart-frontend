@@ -41,7 +41,7 @@ export const columns: ColumnDef<Organization>[] = [
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='Id'
+        title='ID'
       />
     ),
     cell: ({ row }) => <div>{row.getValue('id')}</div>,

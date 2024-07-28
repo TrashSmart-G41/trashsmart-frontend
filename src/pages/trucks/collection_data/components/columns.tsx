@@ -1,18 +1,18 @@
 import { ColumnDef } from '@tanstack/react-table'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 // import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
+// import { DataTableRowActions } from './data-table-row-actions'
 
 // import { statuses, regions } from '../data/data'
-import { Cleaner } from '../data/schema'
-import { Button } from '@/components/custom/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { CollectionData } from '../data/schema'
+// import { Button } from '@/components/custom/button'
+// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-export const columns: ColumnDef<Cleaner>[] = [
+export const columns: ColumnDef<CollectionData>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -38,126 +38,98 @@ export const columns: ColumnDef<Cleaner>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'employee_id',
+    accessorKey: 'name',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='Employee Id'
+        title='Name'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('employee_id')}</div>,
+    cell: ({ row }) => <div>{row.getValue('name')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'full_name',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        column={column}
-        title='Full Name'
-        className='text-center text-[14px]'
-      />
-    ),
-    cell: ({ row }: { row: { getValue: (key: string) => string } }) => {
-      const fullName = row.getValue('full_name')
-      const fallbackInitials = fullName
-        ? fullName.slice(0, 2).toUpperCase()
-        : 'CN'
-
-      return (
-        <div className='flex items-center space-x-2'>
-          {/* avatar */}
-          <Avatar className='mr-2 h-7 w-7'>
-            <AvatarImage
-              src='https://github.com/shadcn.png'
-              alt={`@${fullName}`}
-            />
-            <AvatarFallback>{fallbackInitials}</AvatarFallback>
-          </Avatar>
-          {fullName}
-        </div>
-      )
-    },
-    enableSorting: true,
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'contact_number',
+    accessorKey: 'scale',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='Contact Number'
+        title='Scale'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('contact_number')}</div>,
-    enableSorting: false,
-    // enableHiding: false,
-  },
-  {
-    accessorKey: 'region',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Region'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('region')}</div>,
+    cell: ({ row }) => <div>{row.getValue('scale')}</div>,
     // enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
   },
+
+  {
+    accessorKey: 'address',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Address'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('address')}</div>,
+    enableSorting: false,
+    // enableHiding: false,
+  },
+  {
+    accessorKey: 'waste_volume',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Waste Volume'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('waste_volume')}</div>,
+    enableSorting: false,
+    // enableHiding: false,
+  },
   {
     accessorKey: 'status',
     header: ({ column }) => (
-      <div className='flex'>
-        {/* <DataTableColumnHeader column={column} title='Status' /> */}
-        <DataTableColumnHeader
-          className='text-[14px]'
-          column={column}
-          title='Status'
-        />
-      </div>
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Status'
+      />
     ),
     cell: ({ row }) => {
       const status = row.getValue('status')
-      const fillColor =
-        status === 'Active'
-          ? 'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
-          : 'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]'
+      let textColor
 
-      return (
-        <div className='flex '>
-          <Button
-            variant='scale_btn'
-            size='scale_btn_sm'
-            className={`text-[11px] ${fillColor}`}
-          >
-            <svg
-              className='mr-2 inline-block'
-              xmlns='http://www.w3.org/2000/svg'
-              width='6'
-              height='6'
-              viewBox='0 0 24 24'
-            >
-              <circle cx='12' cy='12' r='12' fill='currentColor' />
-            </svg>
-            {status as React.ReactNode}
-          </Button>
-        </div>
-      )
+      switch (status) {
+        case 'Collected':
+          textColor = 'text-primary'
+          break
+        case 'Cancelled':
+          textColor = 'text-destructive'
+          break
+        case 'To do':
+          textColor = ''
+          break
+        default:
+          textColor = ''
+      }
+
+      return <div className={textColor}>{status as React.ReactNode}</div>
     },
+    // enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
   },
+
   // {
   //   id: 'actions',
-  //   header: () => null,
-  //   cell: ({ row }: { row: { getValue: (key: string) => string; employee_id?: string } }) => {
+  //   cell: ({ row }) => {
   //     const navigate = useNavigate()
 
   //     const handleButtonClick = () => {
@@ -165,41 +137,17 @@ export const columns: ColumnDef<Cleaner>[] = [
   //     }
 
   //     return (
-  //       <div className='mr-4 text-right'>
+  //       <div className='mr-4 flex items-center justify-end'>
   //         <Button
   //           variant='ghost'
-  //           className='flex h-8  px-2 text-[12px] text-primary/80 hover:text-primary'
+  //           className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
   //           onClick={handleButtonClick}
   //         >
   //           View
   //         </Button>
+  //         <DataTableRowActions row={row} />
   //       </div>
   //     )
   //   },
-  //   enableSorting: false,
-  //   enableHiding: false,
   // },
-  {
-    id: 'actions',
-    cell: ({ row }) => {
-      const navigate = useNavigate()
-
-      const handleButtonClick = () => {
-        navigate(`/cleaners/${row.getValue('employee_id')}`)
-      }
-
-      return (
-        <div className='mr-4 flex items-center justify-end'>
-          <Button
-            variant='ghost'
-            className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
-            onClick={handleButtonClick}
-          >
-            View
-          </Button>
-          <DataTableRowActions row={row} />
-        </div>
-      )
-    },
-  },
 ]
