@@ -200,12 +200,12 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: 'home',
-  //   lazy: async () => ({
-  //     Component: (await import('@/pages/home')).default,
-  //   }),
-  // },
+  {
+    path: 'home',
+    lazy: async () => ({
+      Component: (await import('@/pages/home')).default,
+    }),
+  },
 
   // Error routes
   { path: '/500', Component: GeneralError },

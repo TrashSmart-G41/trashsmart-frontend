@@ -2,8 +2,13 @@ import { IconMoon, IconSun } from '@tabler/icons-react'
 import { useTheme } from './theme-provider'
 import { Button } from './custom/button'
 import { useEffect } from 'react'
+import { cn } from '@/lib/utils'
 
-export default function ThemeSwitch() {
+interface ThemeSwitchProps {
+  className?: string
+}
+
+export default function ThemeSwitch({ className }: ThemeSwitchProps) {
   const { theme, setTheme } = useTheme()
 
   /* Update theme-color meta tag
@@ -18,7 +23,7 @@ export default function ThemeSwitch() {
     <Button
       size='icon'
       variant='ghost'
-      className='rounded-xl'
+      className={cn('rounded-xl', className)}
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
     >
       {theme === 'light' ? <IconMoon size={20} /> : <IconSun size={20} />}
