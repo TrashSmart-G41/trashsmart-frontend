@@ -97,7 +97,6 @@ export function DataTable<TData, TValue>({
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && 'selected'}
-                    className='h-11'
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>

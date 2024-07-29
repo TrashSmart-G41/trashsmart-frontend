@@ -201,6 +201,54 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: '/insitute',
+    lazy: async () => {
+      const AppShell = (await import('./components/app-shell')).AppShell_Ins
+      return { Component: AppShell }
+    },
+    errorElement: <GeneralError />,
+    children: [
+      {
+        index: true,
+        lazy: async () => ({
+          Component: (await import('./insitute_pages/dashboard')).default,
+        }),
+      },
+      {
+        path: '/insitute/bins',
+        lazy: async () => ({
+          Component: (await import('@/insitute_pages/bins')).default,
+        }),
+      },
+      {
+        path: '/insitute/cleaners',
+        lazy: async () => ({
+          Component: (await import('@/insitute_pages/cleaners')).default,
+        }),
+      },
+      {
+        path: '/insitute/cleaners/:employee_id',
+        lazy: async () => ({
+          Component: (await import('@/insitute_pages/cleaners/cleaner'))
+            .default,
+        }),
+      },
+      {
+        path: '/insitute/requests',
+        lazy: async () => ({
+          Component: (await import('@/pages/requests')).default,
+        }),
+      },
+      {
+        path: '/insitute/dispatches',
+        lazy: async () => ({
+          Component: (await import('@/pages/dispatches')).default,
+        }),
+      },
+    ],
+  },
+
+  {
     path: 'home',
     lazy: async () => ({
       Component: (await import('@/pages/home')).default,
