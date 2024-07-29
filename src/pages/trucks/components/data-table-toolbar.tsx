@@ -1,5 +1,3 @@
-import { TruckForm } from '@/pages/trucks/components/add-truck-form'
-
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
@@ -9,6 +7,8 @@ import { Input } from '@/components/ui/input'
 
 import { statuses } from '../data/statuses'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import { PopupForm } from '@/components/custom/popupform'
+import { AddTruckForm } from './add-truck-form'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -64,7 +64,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {/* <DataTableViewOptions table={table} /> */}
-      <TruckForm />
+      <PopupForm formContent={AddTruckForm} buttonContent={'+ Add Truck'} />
     </div>
   )
 }

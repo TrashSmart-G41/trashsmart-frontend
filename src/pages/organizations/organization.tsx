@@ -55,7 +55,7 @@ export default function Organization() {
               <div className='col-span-1 p-4 pt-0 lg:col-span-3'>
                 <CardHeader className='p-0'>
                   <div className='flex flex-row items-center justify-start'>
-                    <CardTitle className='text-2xl font-bold'>
+                    <CardTitle className='text-2xl font-bold text-muted-foreground'>
                       Infinite Education Network
                     </CardTitle>
                     <Button

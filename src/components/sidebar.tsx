@@ -4,19 +4,21 @@ import { Layout } from './custom/layout'
 import { Button } from './custom/button'
 import Nav from './nav'
 import { cn } from '@/lib/utils'
-import { sidelinks } from '@/data/sidelinks'
+import { sidelinks, sidelinks_insitutes } from '@/data/sidelinks'
 import LogoLg from '@/assets/logo2-lg.png'
 import LogoSm from '@/assets/trashsmart-icon.png'
 
 interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   isCollapsed: boolean
   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>
+  useInstituteLinks: boolean // New prop to choose between sidelinks and sidelinks_institutes
 }
 
 export default function Sidebar({
   className,
   isCollapsed,
   setIsCollapsed,
+  useInstituteLinks, // Include new prop here
 }: SidebarProps) {
   const [navOpened, setNavOpened] = useState(false)
 
@@ -28,6 +30,8 @@ export default function Sidebar({
       document.body.classList.remove('overflow-hidden')
     }
   }, [navOpened])
+
+  const links = useInstituteLinks ? sidelinks_insitutes : sidelinks // Select links based on the new prop
 
   return (
     <aside
@@ -49,41 +53,6 @@ export default function Sidebar({
           className='z-50 flex justify-between px-4 py-3 md:px-4'
         >
           <div className={`flex items-center ${!isCollapsed ? 'gap-2' : ''}`}>
-            {/* <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 256 256'
-              className={`transition-all ${isCollapsed ? 'h-6 w-6' : 'h-8 w-8'}`}
-            >
-              <rect width='256' height='256' fill='none'></rect>
-              <line
-                x1='208'
-                y1='128'
-                x2='128'
-                y2='208'
-                fill='none'
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='16'
-              ></line>
-              <line
-                x1='192'
-                y1='40'
-                x2='40'
-                y2='192'
-                fill='none'
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth='16'
-              ></line>
-              <span className='sr-only'>Website Name</span>
-            </svg>
-            <div
-              className={`flex flex-col justify-end truncate ${isCollapsed ? 'invisible w-0' : 'visible w-auto'}`}
-            > */}
-            {/* <span className='font-medium'>TrashSmart</span> */}
-            {/* <span className='text-xs'>Vite + ShadcnUI</span> */}
             <div className={`flex items-center ${!isCollapsed ? 'gap-2' : ''}`}>
               {isCollapsed ? (
                 <img src={LogoSm} alt='Logo' className='w-8 rounded-lg' />
@@ -92,7 +61,6 @@ export default function Sidebar({
               )}
             </div>
           </div>
-          {/* </div> */}
 
           {/* Toggle Button in mobile */}
           <Button
@@ -114,7 +82,7 @@ export default function Sidebar({
           className={`z-40 h-full flex-1 overflow-auto ${navOpened ? 'max-h-screen' : 'max-h-0 py-0 md:max-h-screen md:py-2'}`}
           closeNav={() => setNavOpened(false)}
           isCollapsed={isCollapsed}
-          links={sidelinks}
+          links={links} // Use the selected links here
         />
 
         {/* Scrollbar width toggle button */}

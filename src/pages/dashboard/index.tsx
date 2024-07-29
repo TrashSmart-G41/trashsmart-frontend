@@ -23,36 +23,39 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import { TrendingDown, TrendingUp } from 'lucide-react'
+// import { InputForm } from '@/components/custom/form'
+// import { PopupForm } from '@/components/custom/popupform'
 const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 },
+  { month: 'January', Organizations: 186, CommunalBins: 80 },
+  { month: 'February', Organizations: 305, CommunalBins: 200 },
+  { month: 'March', Organizations: 237, CommunalBins: 120 },
+  { month: 'April', Organizations: 73, CommunalBins: 190 },
+  { month: 'May', Organizations: 209, CommunalBins: 130 },
+  { month: 'June', Organizations: 214, CommunalBins: 140 },
 ]
 const chartConfig = {
-  desktop: {
-    label: 'Desktop',
+  Organizations: {
+    label: 'Organizations',
     color: 'hsl(var(--chart-1))',
   },
-  mobile: {
-    label: 'Mobile',
+  CommunalBins: {
+    label: 'Communal Bins',
     color: 'hsl(var(--chart-2))',
   },
 } satisfies ChartConfig
 
 const chartData2 = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
+  { month: 'January', Volume: 186 },
+  { month: 'February', Volume: 305 },
+  { month: 'March', Volume: 237 },
+  { month: 'April', Volume: 73 },
+  { month: 'May', Volume: 209 },
+  { month: 'June', Volume: 214 },
 ]
 const chartConfig2 = {
-  desktop: {
-    label: 'Desktop',
+  Volume: {
+    label: 'Volume (MT)',
     color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig
@@ -83,82 +86,76 @@ export default function Dashboard() {
           <TabsContent value='overview' className='space-b-1'>
             <div className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
               <Card>
-                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
-                    Total Revenue
+                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
+                    TOTAL USERS
                   </CardTitle>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
-                  >
-                    <path d='M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6' />
-                  </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>$45,231.89</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +20.1% from last month
-                  </p>
+                  <div className='flex flex-row items-center'>
+                    <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                      72,540
+                    </div>
+                    <div className='flex flex-row text-primary'>
+                      <TrendingUp className='pr-1' />
+                      1.7%
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
+
               <Card>
-                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>
-                    Subscriptions
+                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
+                    TOTAL COLLECTIONS
                   </CardTitle>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
-                  >
-                    <path d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2' />
-                    <circle cx='9' cy='7' r='4' />
-                    <path d='M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75' />
-                  </svg>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+2350</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +180.1% from last month
-                  </p>
+                  <div className='text-4xl font-semibold text-muted-foreground'>
+                    72,540
+                  </div>
                 </CardContent>
               </Card>
+
               <Card>
-                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
-                  <CardTitle className='text-sm font-medium'>Sales</CardTitle>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    fill='none'
-                    stroke='currentColor'
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    className='h-4 w-4 text-muted-foreground'
-                  >
-                    <rect width='20' height='14' x='2' y='5' rx='2' />
-                    <path d='M2 10h20' />
-                  </svg>
+                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+                  <CardTitle className='text-md font-medium text-primary'>
+                    WEEKLY WASTE
+                  </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className='text-2xl font-bold'>+12,234</div>
-                  <p className='text-xs text-muted-foreground'>
-                    +19% from last month
-                  </p>
+                  <div className='flex flex-row items-center'>
+                    <div className='pr-2 text-4xl font-semibold text-primary'>
+                      45 MT
+                    </div>
+                    <div className='flex flex-row text-primary'>
+                      <TrendingUp className='pr-1' />
+                      1.7%
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
+
               <Card>
+                <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
+                    WEEKLY REQUESTS
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className='flex flex-row items-center'>
+                    <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                      104
+                    </div>
+                    <div className='flex flex-row text-destructive'>
+                      <TrendingDown className='pr-1' />
+                      0.8%
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* <Card>
                 <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-2'>
                   <CardTitle className='text-sm font-medium'>
                     Active Now
@@ -182,13 +179,27 @@ export default function Dashboard() {
                     +201 since last hour
                   </p>
                 </CardContent>
-              </Card>
+              </Card> */}
             </div>
             <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-6'>
               <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
-                  <CardTitle>Line Chart - Multiple</CardTitle>
-                  <CardDescription>January - June 2024</CardDescription>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
+                    ACCUMULATED WASTE
+                  </CardTitle>
+                  <CardDescription>
+                    <CardContent className='px-0'>
+                      <div className='flex flex-row items-center'>
+                        <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                          2570 Metric Tons
+                        </div>
+                        <div className='flex flex-row items-center text-primary'>
+                          <TrendingUp className='pr-1' />
+                          0.8%
+                        </div>
+                      </div>
+                    </CardContent>
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ChartContainer config={chartConfig}>
@@ -213,16 +224,16 @@ export default function Dashboard() {
                         content={<ChartTooltipContent />}
                       />
                       <Line
-                        dataKey='desktop'
+                        dataKey='Organizations'
                         type='monotone'
-                        stroke='var(--color-desktop)'
+                        stroke='var(--color-Organizations)'
                         strokeWidth={2}
                         dot={false}
                       />
                       <Line
-                        dataKey='mobile'
+                        dataKey='CommunalBins'
                         type='monotone'
-                        stroke='var(--color-mobile)'
+                        stroke='var(--color-CommunalBins)'
                         strokeWidth={2}
                         dot={false}
                       />
@@ -245,8 +256,22 @@ export default function Dashboard() {
 
               <Card className='col-span-1 lg:col-span-3'>
                 <CardHeader>
-                  <CardTitle>Line Chart - Linear</CardTitle>
-                  <CardDescription>January - June 2024</CardDescription>
+                  <CardTitle className='text-md font-medium text-muted-foreground/70'>
+                    TOTAL RECYCLED VOLUME
+                  </CardTitle>
+                  <CardDescription>
+                    <CardContent className='px-0'>
+                      <div className='flex flex-row items-center'>
+                        <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
+                          698 Metric Tons
+                        </div>
+                        <div className='flex flex-row items-center text-primary'>
+                          <TrendingUp className='pr-1' />
+                          0.8%
+                        </div>
+                      </div>
+                    </CardContent>
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ChartContainer config={chartConfig2}>
@@ -271,9 +296,9 @@ export default function Dashboard() {
                         content={<ChartTooltipContent hideLabel />}
                       />
                       <Line
-                        dataKey='desktop'
+                        dataKey='Volume'
                         type='linear'
-                        stroke='var(--color-desktop)'
+                        stroke='var(--color-Volume)'
                         strokeWidth={2}
                         dot={false}
                       />
@@ -290,6 +315,7 @@ export default function Dashboard() {
                 </CardFooter> */}
               </Card>
             </div>
+            {/* <PopupForm  formContent={InputForm} /> */}
           </TabsContent>
         </Tabs>
       </Layout.Body>

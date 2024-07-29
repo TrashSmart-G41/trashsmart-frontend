@@ -1,5 +1,3 @@
-import { OrganizationForm } from '../components/add-organization-form'
-
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
@@ -9,6 +7,8 @@ import { Input } from '@/components/ui/input'
 
 import { scales } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import { AddOrganization } from './add-organization-form'
+import { PopupForm } from '@/components/custom/popupform'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -58,7 +58,11 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {/* <DataTableViewOptions table={table} /> */}
-      <OrganizationForm />
+      {/* <AddOrganization /> */}
+      <PopupForm
+        formContent={AddOrganization}
+        buttonContent={'+ Add Organization'}
+      />
     </div>
   )
 }

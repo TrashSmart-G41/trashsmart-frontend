@@ -1,107 +1,90 @@
-import { Button } from '@/components/custom/button'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import {
-  Dialog,
-  DialogContent,
-  // DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Calendar } from '@/components/ui/calendar'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import * as React from 'react'
-import { CalendarIcon } from '@radix-ui/react-icons'
-import { format } from 'date-fns'
-import { cn } from '@/lib/utils'
+  // AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  // AlertDialogContent,
+  // AlertDialogDescription,
+  AlertDialogFooter,
+  // AlertDialogHeader,
+  // AlertDialogTitle,
+  // AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 
-export function OrganizationForm() {
-  const [date, setDate] = React.useState<Date>()
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { toast } from '@/components/ui/use-toast'
+
+const FormSchema = z.object({
+  username: z.string().min(2, {
+    message: 'Username must be at least 2 characters.',
+  }),
+})
+
+export function AddOrganization() {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      username: '',
+    },
+  })
+
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    toast({
+      title: 'You submitted the following values:',
+      description: (
+        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
+        </pre>
+      ),
+    })
+    document.getElementById('continue')?.click()
+  }
+
   return (
-    <div className='gap-x-2'>
-      <Dialog>
-        <DialogTrigger asChild>
-          <Button
-            variant='default'
-            size='sm'
-            className='ml-2 hidden h-8 lg:flex'
-          >
-            + Register new organization
-          </Button>
-        </DialogTrigger>
-        <DialogContent className='sm:max-w-[425px]'>
-          <DialogHeader className='flex flex-col items-center justify-center'>
-            <DialogTitle className='text-center'>Add Organization</DialogTitle>
-            {/* Centered but commented out
-            <DialogDescription className="text-center">
-              Make changes to your profile here. Click save when you're done.
-            </DialogDescription> */}
-          </DialogHeader>
-          <div className='grid gap-4 py-4'>
-            <div className='grid grid-cols-4 items-center'>
-              <Label htmlFor='full_name' className='col-span-4'>
-                Full Name
-              </Label>
-              <Input id='full_name' className='col-span-4 mt-1' />
-            </div>
-            <div className='grid grid-cols-4 items-center'>
-              <Label htmlFor='contact_number' className='col-span-4'>
-                Contact Number
-              </Label>
-              <Input id='contact_number' className='col-span-4 mt-1' />
-            </div>
-            <div className='grid grid-cols-4 items-center'>
-              <Label htmlFor='address' className='col-span-4'>
-                Address
-              </Label>
-              <Input id='address' className='col-span-4 mt-1' />
-            </div>
-            <div className='grid grid-cols-4 items-center'>
-              <Label htmlFor='dob' className='col-span-4'>
-                Date of Birth
-              </Label>
-              <div className='col-span-4'>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant={'outline'}
-                      className={cn(
-                        'mt-1 w-full justify-start text-left font-normal',
-                        !date && 'text-muted-foreground'
-                      )}
-                    >
-                      <CalendarIcon className='mr-2 h-4 w-4' />
-                      {date ? format(date, 'PPP') : <span>Pick a date</span>}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className='w-auto p-0' align='start'>
-                    <Calendar
-                      mode='single'
-                      selected={date}
-                      onSelect={setDate}
-                      disabled={(date) =>
-                        date > new Date() || date < new Date('1900-01-01')
-                      }
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
-            </div>
+    <Form {...form}>
+      <h2 className='w-full text-center text-lg font-semibold'>
+        Create an account
+      </h2>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
+        <FormField
+          control={form.control}
+          name='username'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Username</FormLabel>
+              <FormControl>
+                <Input placeholder='shadcn' {...field} />
+              </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <AlertDialogFooter>
+          <div className='flex w-full items-center justify-center gap-2'>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <Button type='submit'>Submit</Button>
+            <AlertDialogAction className='hidden' id='continue'>
+              Continue
+            </AlertDialogAction>
           </div>
-          <DialogFooter className='flex w-full justify-center'>
-            <div className='flex w-full justify-center'>
-              <Button type='submit'>Save changes</Button>
-            </div>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+        </AlertDialogFooter>
+      </form>
+    </Form>
   )
 }

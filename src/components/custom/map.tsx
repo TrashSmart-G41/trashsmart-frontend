@@ -1,7 +1,4 @@
-import Map from // FullscreenControl, // NavigationControl, // Popup, // Marker,
-// ScaleControl,
-// GeolocateControl
-'react-map-gl'
+import Map from 'react-map-gl' // GeolocateControl // ScaleControl, // FullscreenControl, // NavigationControl, // Popup, // Marker,
 import 'mapbox-gl/dist/mapbox-gl.css'
 import { useEffect, useState } from 'react'
 // import { cn } from '@/lib/utils';

@@ -6,19 +6,13 @@ import MaintenanceError from './pages/errors/maintenance-error'
 const router = createBrowserRouter([
   // Auth routes
   {
-    path: '/sign-in',
+    path: '/login',
     lazy: async () => ({
       Component: (await import('./pages/auth/sign-in')).default,
     }),
   },
   {
-    path: '/sign-in-2',
-    lazy: async () => ({
-      Component: (await import('./pages/auth/sign-in-2')).default,
-    }),
-  },
-  {
-    path: '/sign-up',
+    path: '/signup',
     lazy: async () => ({
       Component: (await import('./pages/auth/sign-up')).default,
     }),
@@ -30,7 +24,7 @@ const router = createBrowserRouter([
     }),
   },
   {
-    path: '/otp',
+    path: '/reset-password',
     lazy: async () => ({
       Component: (await import('./pages/auth/otp')).default,
     }),
@@ -83,6 +77,18 @@ const router = createBrowserRouter([
         }),
       },
       {
+        path: 'drivers',
+        lazy: async () => ({
+          Component: (await import('@/pages/drivers')).default,
+        }),
+      },
+      {
+        path: 'drivers/:employee_id',
+        lazy: async () => ({
+          Component: (await import('@/pages/drivers/driver')).default,
+        }),
+      },
+      {
         path: 'trucks',
         lazy: async () => ({
           Component: (await import('@/pages/trucks')).default,
@@ -92,6 +98,18 @@ const router = createBrowserRouter([
         path: 'trucks/:truck_id',
         lazy: async () => ({
           Component: (await import('@/pages/trucks/truck')).default,
+        }),
+      },
+      {
+        path: 'requests',
+        lazy: async () => ({
+          Component: (await import('@/pages/requests')).default,
+        }),
+      },
+      {
+        path: 'dispatches',
+        lazy: async () => ({
+          Component: (await import('@/pages/dispatches')).default,
         }),
       },
 
@@ -182,12 +200,60 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // {
-  //   path: 'home',
-  //   lazy: async () => ({
-  //     Component: (await import('@/pages/home')).default,
-  //   }),
-  // },
+  {
+    path: '/insitute',
+    lazy: async () => {
+      const AppShell = (await import('./components/app-shell')).AppShell_Ins
+      return { Component: AppShell }
+    },
+    errorElement: <GeneralError />,
+    children: [
+      {
+        index: true,
+        lazy: async () => ({
+          Component: (await import('./insitute_pages/dashboard')).default,
+        }),
+      },
+      {
+        path: '/insitute/bins',
+        lazy: async () => ({
+          Component: (await import('@/insitute_pages/bins')).default,
+        }),
+      },
+      {
+        path: '/insitute/cleaners',
+        lazy: async () => ({
+          Component: (await import('@/insitute_pages/cleaners')).default,
+        }),
+      },
+      {
+        path: '/insitute/cleaners/:employee_id',
+        lazy: async () => ({
+          Component: (await import('@/insitute_pages/cleaners/cleaner'))
+            .default,
+        }),
+      },
+      {
+        path: '/insitute/requests',
+        lazy: async () => ({
+          Component: (await import('@/pages/requests')).default,
+        }),
+      },
+      {
+        path: '/insitute/dispatches',
+        lazy: async () => ({
+          Component: (await import('@/pages/dispatches')).default,
+        }),
+      },
+    ],
+  },
+
+  {
+    path: 'home',
+    lazy: async () => ({
+      Component: (await import('@/pages/home')).default,
+    }),
+  },
 
   // Error routes
   { path: '/500', Component: GeneralError },

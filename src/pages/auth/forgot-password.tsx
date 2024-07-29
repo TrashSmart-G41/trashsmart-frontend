@@ -1,51 +1,54 @@
-import { Card } from '@/components/ui/card'
-import { ForgotForm } from './components/forgot-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 export default function ForgotPassword() {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate('/reset-password')
+  }
   return (
-    <>
-      <div className='container grid h-svh flex-col items-center justify-center bg-primary-foreground lg:max-w-none lg:px-0'>
-        <div className='mx-auto flex w-full flex-col justify-center space-y-2 sm:w-[480px] lg:p-8'>
-          <div className='mb-4 flex items-center justify-center'>
-            <svg
-              xmlns='http://www.w3.org/2000/svg'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              className='mr-2 h-6 w-6'
-            >
-              <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
-            </svg>
-            <h1 className='text-xl font-medium'>Shadcn Admin</h1>
-          </div>
-          <Card className='p-6'>
-            <div className='mb-2 flex flex-col space-y-2 text-left'>
-              <h1 className='text-md font-semibold tracking-tight'>
-                Forgot Password
-              </h1>
-              <p className='text-sm text-muted-foreground'>
-                Enter your registered email and <br /> we will send you a link
-                to reset your password.
-              </p>
+    <div className='flex h-screen items-center justify-center'>
+      <Card className='mx-auto max-w-sm'>
+        <CardHeader>
+          <CardTitle className='text-xl'>Forgot Password</CardTitle>
+          <CardDescription>
+            Enter your registered email and we will send you a link to reset
+            your password.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className='grid gap-4'>
+            <div className='grid gap-2'>
+              <Label htmlFor='email'>Email</Label>
+              <Input
+                id='email'
+                type='email'
+                placeholder='m@example.com'
+                required
+              />
             </div>
-            <ForgotForm />
-            <p className='mt-4 px-8 text-center text-sm text-muted-foreground'>
-              Don't have an account?{' '}
-              <Link
-                to='/sign-up'
-                className='underline underline-offset-4 hover:text-primary'
-              >
-                Sign up
-              </Link>
-              .
-            </p>
-          </Card>
-        </div>
-      </div>
-    </>
+            <Button type='submit' className='w-full' onClick={handleClick}>
+              Send Reset Link
+            </Button>
+          </div>
+          <div className='mt-4 text-center text-sm'>
+            Remember your password?{' '}
+            <Link to='/login' className='underline'>
+              Log in
+            </Link>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
