@@ -48,6 +48,7 @@
     "dayjs": "^1.11.10",
     "dotenv": "^16.4.5",
     "embla-carousel-react": "^8.1.7",
+    "framer-motion": "^11.3.19",
     "google-map-react": "^2.2.1",
     "lucide-react": "^0.407.0",
     "mapbox-gl": "^3.5.2",

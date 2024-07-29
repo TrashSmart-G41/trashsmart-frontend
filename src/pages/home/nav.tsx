@@ -3,12 +3,16 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import ThemeSwitch from '@/components/theme-switch'
 import { Button } from '@/components/ui/button'
+// import { IconLogin } from '@tabler/icons-react'
+import { LogInIcon } from 'lucide-react'
+import LogoLg from '@/assets/logo2-lg.png'
+// import LogoSm from '@/assets/trashsmart-icon.png'
 
 const navigation = [
-  { name: 'Product', href: '#' },
-  { name: 'Features', href: '#' },
-  { name: 'Marketplace', href: '#' },
-  { name: 'Company', href: '#' },
+  { name: 'Home', href: '#' },
+  { name: 'Features', href: '#features' },
+  { name: 'Reviews', href: '#reviews' },
+  { name: 'About', href: '#about' },
 ]
 
 export default function Nav() {
@@ -25,11 +29,17 @@ export default function Nav() {
           <div className='flex lg:flex-1'>
             <a href='#' className='-m-1.5 p-1.5'>
               <span className='sr-only'>Your Company</span>
-              <img
+              {/* <img
                 alt=''
                 src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
                 className='h-8 w-auto'
-              />
+              /> */}
+              <button
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                className='ml-2 h-8'
+              >
+                <img src={LogoLg} alt='Logo' className='h-9' />
+              </button>
             </a>
           </div>
           <div className='flex lg:hidden'>
@@ -47,19 +57,21 @@ export default function Nav() {
               <a
                 key={item.name}
                 href={item.href}
-                className='text-md font-semibold leading-6 text-muted-foreground'
+                className='text-md font-lg leading-6 text-muted-foreground'
               >
                 {item.name}
               </a>
             ))}
           </div>
           <div className='hidden items-center lg:flex lg:flex-1 lg:justify-end'>
-            <ThemeSwitch />
+            <ThemeSwitch className='text-muted-foreground' />
             {/* <a href="#" className="ml-2 text-md font-semibold leading-6 text-muted-foreground">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </a> */}
             <Button variant='ghost' className='ml-2 h-8'>
-              Log in
+              <span className='font-lg flex flex-1 items-center gap-1 text-muted-foreground'>
+                Log In <LogInIcon className='w-4' />{' '}
+              </span>
             </Button>
           </div>
         </nav>
@@ -95,7 +107,7 @@ export default function Nav() {
                     <a
                       key={item.name}
                       href={item.href}
-                      className='-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-muted-foreground hover:bg-gray-50'
+                      className='-mx-3 block rounded-lg px-3 py-2  text-lg leading-7  text-muted-foreground  hover:bg-gray-50'
                     >
                       {item.name}
                     </a>
@@ -106,8 +118,13 @@ export default function Nav() {
                   {/* <a href="#" className="ml-2 text-md font-semibold leading-6 text-muted-foreground">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </a> */}
-                  <Button variant='ghost' className='h-8 w-full'>
-                    Log in
+                  <Button
+                    variant='ghost'
+                    className='h-8 w-full hover:text-primary'
+                  >
+                    <span className='font-lg text-muted-foreground '>
+                      Log In
+                    </span>
                   </Button>
                 </div>
               </div>
