@@ -1,5 +1,3 @@
-import { CleanerForm } from '@/pages/cleaners/components/add-cleaner-form'
-
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
@@ -9,6 +7,8 @@ import { Input } from '@/components/ui/input'
 
 import { statuses, regions } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import { PopupForm } from '@/components/custom/popupform'
+import { AddDriverForm } from './add-driver-form'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -60,7 +60,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {/* <DataTableViewOptions table={table} /> */}
-      <CleanerForm />
+      <PopupForm formContent={AddDriverForm} buttonContent={'+ Add Driver'} />
     </div>
   )
 }

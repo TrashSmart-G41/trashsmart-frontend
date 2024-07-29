@@ -1,4 +1,4 @@
-import { ComponentType } from 'react'
+import { ComponentType, ReactNode } from 'react'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -7,17 +7,23 @@ import {
 import { Button } from '@/components/ui/button'
 
 interface PopupFormProps {
-  formContent: ComponentType
+  formContent: ComponentType<any>
+  buttonContent: ReactNode
+  formProps?: any
 }
 
-export function PopupForm({ formContent: FormContent }: PopupFormProps) {
+export function PopupForm({
+  formContent: FormContent,
+  buttonContent,
+  formProps,
+}: PopupFormProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='outline'>Open Form</Button>
+        <Button variant='default'>{buttonContent}</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
-        <FormContent />
+        <FormContent {...formProps} />
       </AlertDialogContent>
     </AlertDialog>
   )

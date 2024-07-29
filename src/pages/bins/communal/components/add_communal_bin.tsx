@@ -32,7 +32,7 @@ const FormSchema = z.object({
   }),
 })
 
-export function AddCleanerForm() {
+export function AddCommunalBinForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

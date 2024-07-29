@@ -1,5 +1,3 @@
-import { CleanerForm } from '@/pages/cleaners/components/add-cleaner-form'
-
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
 
@@ -51,7 +49,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {/* <DataTableViewOptions table={table} /> */}
-      <CleanerForm />
+      {/* <CleanerForm /> */}
     </div>
   )
 }
