@@ -27,16 +27,18 @@ import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
+  licence_plate_no: z.string(),
+  max_capacity: z.string(),
+  mileage: z.string(),
 })
 
 export function AddTruckForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: '',
+      licence_plate_no: '',
+      mileage: '',
+      max_capacity: '',
     },
   })
 
@@ -55,20 +57,49 @@ export function AddTruckForm() {
   return (
     <Form {...form}>
       <h2 className='w-full text-center text-lg font-semibold'>
-        Create an account
+        Add new truck
       </h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
-          name='username'
+          name='licence_plate_no'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Licence Plate Number</FormLabel>
               <FormControl>
-                <Input placeholder='shadcn' {...field} />
+                <Input
+                  placeholder='Enter the licence plate number'
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='mileage'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Mileage</FormLabel>
+              <FormControl>
+                <Input placeholder='Enter truck mileage' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='max_capacity'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Max Capacity</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
               </FormControl>
               <FormDescription>
-                This is your public display name.
+                Enter the maximum garbage capacity the truck can carry.
               </FormDescription>
               <FormMessage />
             </FormItem>

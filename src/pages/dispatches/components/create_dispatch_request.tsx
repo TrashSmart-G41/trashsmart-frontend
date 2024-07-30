@@ -14,10 +14,26 @@ import {
 } from '@/components/ui/alert-dialog'
 
 import { Button } from '@/components/ui/button'
+import { CalendarIcon } from 'lucide-react'
+import { format } from 'date-fns'
+import { cn } from '@/lib/utils'
+import { Calendar } from '@/components/ui/calendar'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import {
   Form,
   FormControl,
-  FormDescription,
+  // FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -27,16 +43,22 @@ import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
+  region: z.string(),
+  truck_id: z.string(),
+  driver_id: z.string(),
+  date: z.string(),
+  time: z.string(),
 })
 
 export function DispatchForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: '',
+      region: '',
+      truck_id: '',
+      driver_id: '',
+      date: '',
+      time: '',
     },
   })
 
@@ -55,21 +77,125 @@ export function DispatchForm() {
   return (
     <Form {...form}>
       <h2 className='w-full text-center text-lg font-semibold'>
-        Create an account
+        Create new dispatch
       </h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
-          name='username'
+          name='region'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Region</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Region' {...field} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='small'>Small</SelectItem>
+                  <SelectItem value='medium'>Medium</SelectItem>
+                  <SelectItem value='large'>Large</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='truck_id'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Truck_ID</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select truck' {...field} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='small'>Small</SelectItem>
+                  <SelectItem value='medium'>Medium</SelectItem>
+                  <SelectItem value='large'>Large</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='driver_id'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Driver_ID</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select driver' {...field} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='small'>Small</SelectItem>
+                  <SelectItem value='medium'>Medium</SelectItem>
+                  <SelectItem value='large'>Large</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='date'
+          render={({ field }) => (
+            <FormItem className='flex flex-col'>
+              <FormLabel>Date</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={'outline'}
+                      className={cn(
+                        'w-full pl-3 text-left font-normal',
+                        !field.value && 'text-muted-foreground'
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, 'PPP')
+                      ) : (
+                        <span>DD-MM-YYYY</span>
+                      )}
+                      <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className='w-auto p-0' align='start'>
+                  <Calendar
+                    mode='single'
+                    // selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date('1900-01-01')
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='time'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Time</FormLabel>
               <FormControl>
-                <Input placeholder='shadcn' {...field} />
+                <Input placeholder='' {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
