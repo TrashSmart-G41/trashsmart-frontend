@@ -24,6 +24,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { TrendingDown, TrendingUp } from 'lucide-react'
+
 // import { InputForm } from '@/components/custom/form'
 // import { PopupForm } from '@/components/custom/popupform'
 const chartData = [
@@ -320,5 +321,6 @@ export default function Dashboard() {
         </Tabs>
       </Layout.Body>
     </Layout>
+    
   )
 }
