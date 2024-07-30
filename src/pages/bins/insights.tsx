@@ -12,7 +12,7 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 // import { Overview } from './components/overview'
 // import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
-import {  TrendingUp } from 'lucide-react'
+import { TrendingUp } from 'lucide-react'
 
 import {
   ChartConfig,
@@ -22,17 +22,17 @@ import {
 } from '@/components/ui/chart'
 import { TopTen } from './components/insights/top10'
 const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: 'January', desktop: 186 },
+  { month: 'February', desktop: 305 },
+  { month: 'March', desktop: 237 },
+  { month: 'April', desktop: 73 },
+  { month: 'May', desktop: 209 },
+  { month: 'June', desktop: 214 },
 ]
 const chartConfig = {
   desktop: {
-    label: "Purchases",
-    color: "hsl(var(--chart-1))",
+    label: 'Purchases',
+    color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig
 
@@ -64,7 +64,7 @@ export default function Insights() {
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                TOTAL BINS
+                  TOTAL BINS
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -72,14 +72,13 @@ export default function Insights() {
                   <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
                     1224
                   </div>
-                  
                 </div>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
                 <CardTitle className='text-md font-medium text-primary'>
-                CURRENTLY FULL
+                  CURRENTLY FULL
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -87,7 +86,6 @@ export default function Insights() {
                   <div className='pr-2 text-4xl font-semibold text-primary'>
                     226
                   </div>
-                  
                 </div>
               </CardContent>
             </Card>
@@ -105,12 +103,10 @@ export default function Insights() {
               </CardContent>
             </Card>
 
-            
-
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                TOTAL MAINTENANCE
+                  TOTAL MAINTENANCE
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -118,7 +114,6 @@ export default function Insights() {
                   <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
                     24
                   </div>
-                  
                 </div>
               </CardContent>
             </Card>
@@ -153,7 +148,7 @@ export default function Insights() {
             <Card className='col-span-1 lg:col-span-3'>
               <CardHeader>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                NEW COMMERCIAL BIN PURCHASES
+                  NEW COMMERCIAL BIN PURCHASES
                 </CardTitle>
                 <CardDescription>
                   <CardContent className='px-0'>
@@ -161,7 +156,6 @@ export default function Insights() {
                       <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
                         124 Bins
                       </div>
-                      
                     </div>
                   </CardContent>
                 </CardDescription>
@@ -222,13 +216,13 @@ export default function Insights() {
             <Card className='col-span-1 lg:col-span-3'>
               <CardHeader>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                NEW COMMUNAL BIN ESTABLISHMENTS
+                  NEW COMMUNAL BIN ESTABLISHMENTS
                 </CardTitle>
                 <CardDescription>
                   <CardContent className='px-0'>
                     <div className='flex flex-row items-center'>
                       <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                      35 bins
+                        35 bins
                       </div>
                       <div className='flex flex-row items-center text-primary'>
                         <TrendingUp className='pr-1' />

@@ -9,8 +9,8 @@ import { DataTableColumnHeader } from './data-table-column-header'
 
 // import { statuses, regions } from '../data/data'
 import { CommunalBin } from '../data/schema'
-import { Button } from '@/components/custom/button'
-import { DataTableRowActions } from './data-table-row-actions'
+// import { Button } from '@/components/custom/button'
+// import { DataTableRowActions } from './data-table-row-actions'
 import { CommunalDialog } from './communal_bin_dialog'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -161,10 +161,10 @@ export const columns: ColumnDef<CommunalBin>[] = [
       // const handleButtonClick = () => {
       //   navigate(`/cleaners/${row.getValue('employee_id')}`)
       // }
-      // console.log(row)
+      console.log(row)
 
       return (
-        <div className='mr-4 flex items-center justify-end'>    
+        <div className='mr-4 flex items-center justify-end'>
           <CommunalDialog />
           {/* <DataTableRowActions row={row} /> */}
         </div>
