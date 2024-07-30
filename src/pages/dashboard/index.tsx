@@ -12,10 +12,13 @@ import { Search } from '@/components/search'
 import { Tabs, TabsContent } from '@/components/ui/tabs'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
+import { NotifyNav } from '@/components/notifications-nav'
 // import { RecentSales } from './components/recent-sales'
 // import { Overview } from './components/overview'
 // import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
+import { columns } from './org/columns'
+import { organizations } from './org/data/organizations'
 
 import {
   ChartConfig,
@@ -24,6 +27,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { TrendingDown, TrendingUp } from 'lucide-react'
+import { DataTable } from './org/data-table'
 
 // import { InputForm } from '@/components/custom/form'
 // import { PopupForm } from '@/components/custom/popupform'
@@ -67,7 +71,8 @@ export default function Dashboard() {
       {/* ===== Top Heading ===== */}
       <Layout.Header sticky>
         <Search />
-        <div className='ml-auto flex items-center space-x-4'>
+        <div className='ml-auto flex items-center space-x-2'>
+          <NotifyNav />
           <ThemeSwitch />
           <UserNav />
         </div>
@@ -319,6 +324,11 @@ export default function Dashboard() {
             {/* <PopupForm  formContent={InputForm} /> */}
           </TabsContent>
         </Tabs>
+        <Card className='mt-4 rounded-xl bg-card p-4'>
+          <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
+            <DataTable data={organizations} columns={columns} />
+          </div>
+        </Card>
       </Layout.Body>
     </Layout>
   )

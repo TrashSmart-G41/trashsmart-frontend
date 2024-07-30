@@ -277,12 +277,11 @@ export default function Insights() {
         </TabsContent>
       </Tabs>
 
-      <Card className='mt-2'>
+      <Card className='mt-4'>
         <CardHeader>
           <CardTitle>TOP 10 ORGANIZATIONS</CardTitle>
           <CardDescription>Based on no.of bins occupied</CardDescription>
         </CardHeader>
-
         <CardContent>
           <TopTen />
         </CardContent>
