@@ -155,7 +155,7 @@ export default function Tasks() {
             <div className='mb-2 flex items-center justify-between space-y-2 '>
               <div>
                 <h2 className='text-2xl font-semibold text-muted-foreground '>
-                  Smart Bins
+                  Organizations
                 </h2>
               </div>
             </div>
