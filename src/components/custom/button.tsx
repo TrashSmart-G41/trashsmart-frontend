@@ -22,6 +22,7 @@ const buttonVariants = cva(
         link: 'text-primary underline-offset-4 hover:underline',
         nav_selected: 'bg-primary/15 text-primary',
         scale_btn: 'bg-primary rounded text-accent-foreground text-[12px]',
+        icon: 'bg-background hover:bg-accent hover:text-accent-foreground',
       },
       size: {
         default: 'h-9 px-4 py-2',
