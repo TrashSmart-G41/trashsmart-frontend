@@ -9,6 +9,7 @@ import { DataTableColumnHeader } from './data-table-column-header'
 
 // import { statuses, regions } from '../data/data'
 import { Dispatch } from '../data/schema'
+import { DispatchesDialog } from './dispatched_dialog'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -136,6 +137,24 @@ export const columns: ColumnDef<Dispatch>[] = [
     enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
+    },
+  },
+
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      // const navigate = useNavigate()
+      // const handleButtonClick = () => {
+      //   navigate(`/cleaners/${row.getValue('employee_id')}`)
+      // }
+      console.log(row)
+
+      return (
+        <div className='mr-4 flex items-center justify-end'>
+          <DispatchesDialog />
+          {/* <DataTableRowActions row={row} /> */}
+        </div>
+      )
     },
   },
 
