@@ -17,33 +17,26 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
-  // FormDescription,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
-  bin_id: z.string(),
-  reason: z.string(),
+  username: z.string().min(2, {
+    message: 'Username must be at least 2 characters.',
+  }),
 })
 
-export function RequestForm() {
+export function AddOrganization() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      bin_id: '',
-      reason: '',
+      username: '',
     },
   })
 
@@ -62,40 +55,21 @@ export function RequestForm() {
   return (
     <Form {...form}>
       <h2 className='w-full text-center text-lg font-semibold'>
-        New Maintenance Request
+        Create an account
       </h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
-          name='bin_id'
+          name='username'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bin ID</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select Bin' {...field} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value='small'>Small</SelectItem>
-                  <SelectItem value='medium'>Medium</SelectItem>
-                  <SelectItem value='large'>Large</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='reason'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Reason</FormLabel>
+              <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input placeholder='Enter reason for maintenance' {...field} />
+                <Input placeholder='shadcn' {...field} />
               </FormControl>
+              <FormDescription>
+                This is your public display name.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -104,7 +78,7 @@ export function RequestForm() {
         <AlertDialogFooter>
           <div className='flex w-full items-center justify-center gap-2'>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <Button type='submit'>Create</Button>
+            <Button type='submit'>Submit</Button>
             <AlertDialogAction className='hidden' id='continue'>
               Continue
             </AlertDialogAction>

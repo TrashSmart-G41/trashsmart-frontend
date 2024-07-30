@@ -22,7 +22,7 @@ export default function ThemeSwitch({ className }: ThemeSwitchProps) {
   return (
     <Button
       size='icon'
-      variant='ghost'
+      variant='icon'
       className={cn('rounded-xl', className)}
       onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
     >
