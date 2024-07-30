@@ -14,6 +14,15 @@ import {
 } from '@/components/ui/alert-dialog'
 
 import { Button } from '@/components/ui/button'
+import { CalendarIcon } from 'lucide-react'
+import { format } from 'date-fns'
+import { cn } from '@/lib/utils'
+import { Calendar } from '@/components/ui/calendar'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import {
   Form,
   FormControl,
@@ -27,16 +36,20 @@ import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
+  full_name: z.string(),
+  contact_number: z.string(),
+  address: z.string(),
+  date_of_birth: z.string(),
 })
 
 export function AddDriverForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: '',
+      full_name: '',
+      contact_number: '',
+      address: '',
+      date_of_birth: '',
     },
   })
 
@@ -54,22 +67,84 @@ export function AddDriverForm() {
 
   return (
     <Form {...form}>
-      <h2 className='w-full text-center text-lg font-semibold'>
-        Create an account
-      </h2>
+      <h2 className='w-full text-center text-lg font-semibold'>Add Driver</h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
-          name='username'
+          name='full_name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Full Name</FormLabel>
               <FormControl>
-                <Input placeholder='shadcn' {...field} />
+                <Input placeholder='' {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='contact_number'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Contact Number</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='address'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='date_of_birth'
+          render={({ field }) => (
+            <FormItem className='flex flex-col'>
+              <FormLabel>Date of Birth</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={'outline'}
+                      className={cn(
+                        'w-full pl-3 text-left font-normal',
+                        !field.value && 'text-muted-foreground'
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, 'PPP')
+                      ) : (
+                        <span>DD-MM-YYYY</span>
+                      )}
+                      <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className='w-auto p-0' align='start'>
+                  <Calendar
+                    mode='single'
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) =>
+                      date > new Date() || date < new Date('1900-01-01')
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
               <FormMessage />
             </FormItem>
           )}
@@ -78,7 +153,7 @@ export function AddDriverForm() {
         <AlertDialogFooter>
           <div className='flex w-full items-center justify-center gap-2'>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <Button type='submit'>Submit</Button>
+            <Button type='submit'>Add</Button>
             <AlertDialogAction className='hidden' id='continue'>
               Continue
             </AlertDialogAction>

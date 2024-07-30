@@ -23,20 +23,38 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+
 import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
+  // username: z.string().min(2, {
+  //   message: 'Username must be at least 2 characters.',
+  // }),
+  name: z.string(),
+  address: z.string(),
+  contact_number: z.string(),
+  web_url: z.string(),
+  scale: z.string(),
 })
 
 export function AddOrganization() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: '',
+      name: '',
+      address: '',
+      contact_number: '',
+      web_url: '',
+      scale: '',
     },
   })
 
@@ -55,21 +73,82 @@ export function AddOrganization() {
   return (
     <Form {...form}>
       <h2 className='w-full text-center text-lg font-semibold'>
-        Create an account
+        Add organization
       </h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
-          name='username'
+          name='name'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input placeholder='shadcn' {...field} />
+                <Input placeholder='' {...field} />
               </FormControl>
-              <FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='address'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Address</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              {/* <FormDescription>
                 This is your public display name.
-              </FormDescription>
+              </FormDescription> */}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='contact_number'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Contact Number</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='web_url'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Web URL</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='scale'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Scale</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select input' {...field} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='small'>Small</SelectItem>
+                  <SelectItem value='medium'>Medium</SelectItem>
+                  <SelectItem value='large'>Large</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
