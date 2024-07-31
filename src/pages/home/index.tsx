@@ -4,6 +4,7 @@ import Features from './features'
 import { MarqueeDemo } from './marquee'
 import About from './about'
 import Footer from './footer'
+import Frame from './assets/Frame.png'
 
 export default function Index() {
   return (
@@ -37,7 +38,7 @@ export default function Index() {
           <div className='relative ms-4'>
             <img
               className='w-full rounded-md'
-              src='https://placehold.co/800x700'
+              src={Frame}
               alt='Image Description'
             />
           </div>
