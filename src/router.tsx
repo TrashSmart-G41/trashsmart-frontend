@@ -10,7 +10,6 @@ import kc from '@/security/keycloak'
 //   console.error('Failed to initialize adapter:', error);
 // }
 
-
 const router = createBrowserRouter([
   // Auth routes
   {
@@ -43,13 +42,21 @@ const router = createBrowserRouter([
     path: '/',
     lazy: async () => {
       try {
-        const authenticated = await kc.init({ onLoad: 'check-sso', pkceMethod: 'S256', checkLoginIframe: false, responseMode: 'query', flow: 'standard', });
-        console.log(`User is ${authenticated ? 'authenticated' : 'not authenticated'}`);
+        const authenticated = await kc.init({
+          onLoad: 'check-sso',
+          pkceMethod: 'S256',
+          checkLoginIframe: false,
+          responseMode: 'query',
+          flow: 'standard',
+        })
+        console.log(
+          `User is ${authenticated ? 'authenticated' : 'not authenticated'}`
+        )
         if (!authenticated) {
-          return {Component: (await import('@/pages/home')).default,}
+          return { Component: (await import('@/pages/home')).default }
         }
       } catch (error) {
-        console.error('Failed to initialize adapter:', error);
+        console.error('Failed to initialize adapter:', error)
       }
       const AppShell = await import('./components/app-shell')
       return { Component: AppShell.default }

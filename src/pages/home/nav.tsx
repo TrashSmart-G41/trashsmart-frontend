@@ -69,7 +69,11 @@ export default function Nav() {
             {/* <a href="#" className="ml-2 text-md font-semibold leading-6 text-muted-foreground">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </a> */}
-            <Button onClick={() => kc.login()} variant='ghost' className='ml-2 h-8'>
+            <Button
+              onClick={() => kc.login()}
+              variant='ghost'
+              className='ml-2 h-8'
+            >
               <span className='font-lg flex flex-1 items-center gap-1 text-muted-foreground'>
                 Log In <LogInIcon className='w-4' />{' '}
               </span>
