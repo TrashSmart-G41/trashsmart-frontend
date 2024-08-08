@@ -2,6 +2,14 @@ import { createBrowserRouter } from 'react-router-dom'
 import GeneralError from './pages/errors/general-error'
 import NotFoundError from './pages/errors/not-found-error'
 import MaintenanceError from './pages/errors/maintenance-error'
+import kc from '@/security/keycloak'
+// try {
+//   const authenticated = await kc.init({ onLoad: 'check-sso', pkceMethod: 'S256', checkLoginIframe: false });
+//   console.log(`User is ${authenticated ? 'authenticated' : 'not authenticated'}`);
+// } catch (error) {
+//   console.error('Failed to initialize adapter:', error);
+// }
+
 
 const router = createBrowserRouter([
   // Auth routes
@@ -34,6 +42,15 @@ const router = createBrowserRouter([
   {
     path: '/',
     lazy: async () => {
+      try {
+        const authenticated = await kc.init({ onLoad: 'check-sso', pkceMethod: 'S256', checkLoginIframe: false, responseMode: 'query', flow: 'standard', });
+        console.log(`User is ${authenticated ? 'authenticated' : 'not authenticated'}`);
+        if (!authenticated) {
+          return {Component: (await import('@/pages/home')).default,}
+        }
+      } catch (error) {
+        console.error('Failed to initialize adapter:', error);
+      }
       const AppShell = await import('./components/app-shell')
       return { Component: AppShell.default }
     },
