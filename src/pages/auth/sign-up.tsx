@@ -15,18 +15,18 @@ export default function SignUp() {
   return (
     <div className='flex h-screen items-center justify-center'>
       <Card className='mx-auto max-w-sm  sm:min-w-[500px]'>
-        <CardHeader className="flex justify-center">
-        <h1 className='text-2xl font-semibold tracking-tight text-center mx-auto'>
-              <img src={LogoLg} alt='Logo' className='h-9' />
-            </h1>
-          <CardTitle className="text-xl text-center">Sign Up</CardTitle>
+        <CardHeader className='flex justify-center'>
+          <h1 className='mx-auto text-center text-2xl font-semibold tracking-tight'>
+            <img src={LogoLg} alt='Logo' className='h-9' />
+          </h1>
+          <CardTitle className='text-center text-xl'>Sign Up</CardTitle>
         </CardHeader>
         <CardContent>
           <div className='grid gap-4 '>
             <div className='grid gap-2'>
-                <Label htmlFor='first-name'>First name</Label>
-                <Input id='first-name' placeholder='Max' required />
-              </div>
+              <Label htmlFor='first-name'>First name</Label>
+              <Input id='first-name' placeholder='Max' required />
+            </div>
             <div className='grid gap-2'>
               <Label htmlFor='last-name'>Last name</Label>
               <Input id='last-name' placeholder='Robinson' required />

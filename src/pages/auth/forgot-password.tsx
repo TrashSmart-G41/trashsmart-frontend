@@ -18,7 +18,7 @@ export default function ForgotPassword() {
   }
   return (
     <div className='flex h-screen items-center justify-center'>
-      <Card className='mx-auto max-w-sm min-w-[500px]'>
+      <Card className='mx-auto min-w-[500px] max-w-sm'>
         <CardHeader>
           <CardTitle className='text-xl'>Forgot Password</CardTitle>
           <CardDescription>

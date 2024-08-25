@@ -6,12 +6,14 @@ export default function SignIn2() {
   return (
     <>
       <div className='flex h-screen items-center justify-center'>
-        <Card className='p-6 mx-auto max-w-sm  sm:min-w-[500px]'>
+        <Card className='mx-auto max-w-sm p-6  sm:min-w-[500px]'>
           <div className='flex flex-col space-y-2 text-left'>
-            <h1 className='text-2xl font-semibold tracking-tight text-center mx-auto'>
+            <h1 className='mx-auto text-center text-2xl font-semibold tracking-tight'>
               <img src={LogoLg} alt='Logo' className='h-9' />
             </h1>
-            <h1 className='text-2xl font-semibold tracking-tight text-center mx-auto'>Login</h1>
+            <h1 className='mx-auto text-center text-2xl font-semibold tracking-tight'>
+              Login
+            </h1>
             {/* <p className='text-sm text-muted-foreground'>
               Enter your email and password below <br />
               to log into your account

@@ -52,6 +52,7 @@
     "embla-carousel-react": "^8.1.7",
     "framer-motion": "^11.3.19",
     "google-map-react": "^2.2.1",
+    "jwt-decode": "^4.0.0",
     "lucide-react": "^0.407.0",
     "mapbox-gl": "^3.5.2",
     "preline": "^2.4.0",

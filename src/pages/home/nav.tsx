@@ -9,7 +9,6 @@ import LogoLg from '@/assets/logo2-lg.png'
 // import LogoSm from '@/assets/trashsmart-icon.png'
 import { useNavigate } from 'react-router-dom'
 
-
 const navigation = [
   { name: 'Home', href: '#' },
   { name: 'Features', href: '#features' },

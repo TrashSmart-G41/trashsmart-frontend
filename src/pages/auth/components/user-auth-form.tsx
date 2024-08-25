@@ -1,6 +1,6 @@
 import { HTMLAttributes, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandGoogle } from '@tabler/icons-react'
@@ -16,8 +16,10 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/custom/button'
 import { PasswordInput } from '@/components/custom/password-input'
 import { cn } from '@/lib/utils'
+import axios from 'axios'
+import { setAuthToken } from '@/lib/axiosHelper'
 
-interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> { }
+interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {}
 
 const formSchema = z.object({
   email: z
@@ -36,6 +38,7 @@ const formSchema = z.object({
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate() // Moved to the top level of the component
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -45,13 +48,35 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true)
-    console.log(data)
 
-    setTimeout(() => {
+    try {
+      const response = await axios.post('api/v1/auth/login', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (response.status === 200) {
+        const contentType = response.headers['content-type']
+        if (contentType && contentType.includes('application/json')) {
+          setAuthToken(response.data.jwt)
+          window.location.reload()
+          setTimeout(() => {
+            navigate('/')
+          }, 1000)
+        } else {
+          console.log('Unexpected response format')
+        }
+      } else {
+        console.log('Login failed')
+      }
+    } catch (error) {
+      console.error('Login failed', error)
+    } finally {
       setIsLoading(false)
-    }, 3000)
+    }
   }
 
   return (
@@ -93,13 +118,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 </FormItem>
               )}
             />
-                        <Link 
+            <Link
               to='/signup'
-              className='mt-2 text-sm font-medium text-muted-foreground hover:opacity-75 text-right'
+              className='mt-2 text-right text-sm font-medium text-muted-foreground hover:opacity-75'
             >
               Don't have an account? Sign up
             </Link>
-            <Button  loading={isLoading}>
+            <Button loading={isLoading} type='submit'>
               Login
             </Button>
 
