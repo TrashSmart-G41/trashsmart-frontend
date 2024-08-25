@@ -67,13 +67,30 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             navigate('/')
           }, 1000)
         } else {
-          console.log('Unexpected response format')
+          // console.log('Unexpected response format')
+          // form.setError('email', {
+          //   message: 'Invalid email or password',
+          // })
+          
         }
       } else {
-        console.log('Login failed')
+        // console.log('Login failed')
+        // clear the form values
+        form.setValue('email', '')
+        form.setValue('password', '')
       }
     } catch (error) {
-      console.error('Login failed', error)
+      // console.error('Login failed', error)
+      // clear the form values
+      // form.setValue('email', '')
+      // form.setValue('password', '')
+
+      form.setError('email', {
+        message: '',
+      })
+      form.setError('password', {
+        message: 'Invalid credentials',
+      })
     } finally {
       setIsLoading(false)
     }
@@ -112,7 +129,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                     </Link>
                   </div>
                   <FormControl>
-                    <PasswordInput placeholder='********' {...field} />
+                    <PasswordInput placeholder='' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
