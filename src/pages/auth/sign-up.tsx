@@ -3,35 +3,33 @@ import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
-  CardDescription,
+  // CardDescription,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import LogoLg from '@/assets/logo2-lg.png'
 
 export default function SignUp() {
   return (
     <div className='flex h-screen items-center justify-center'>
-      <Card className='mx-auto max-w-sm '>
-        <CardHeader>
-          <CardTitle className='text-xl'>Sign Up</CardTitle>
-          <CardDescription>
-            Enter your registered email and <br /> we will send you a link to
-            reset your password.
-          </CardDescription>
+      <Card className='mx-auto max-w-sm  sm:min-w-[500px]'>
+        <CardHeader className='flex justify-center'>
+          <h1 className='mx-auto text-center text-2xl font-semibold tracking-tight'>
+            <img src={LogoLg} alt='Logo' className='h-9' />
+          </h1>
+          <CardTitle className='text-center text-xl'>Sign Up</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className='grid gap-4'>
-            <div className='grid grid-cols-2 gap-4'>
-              <div className='grid gap-2'>
-                <Label htmlFor='first-name'>First name</Label>
-                <Input id='first-name' placeholder='Max' required />
-              </div>
-              <div className='grid gap-2'>
-                <Label htmlFor='last-name'>Last name</Label>
-                <Input id='last-name' placeholder='Robinson' required />
-              </div>
+          <div className='grid gap-4 '>
+            <div className='grid gap-2'>
+              <Label htmlFor='first-name'>First name</Label>
+              <Input id='first-name' placeholder='Max' required />
+            </div>
+            <div className='grid gap-2'>
+              <Label htmlFor='last-name'>Last name</Label>
+              <Input id='last-name' placeholder='Robinson' required />
             </div>
             <div className='grid gap-2'>
               <Label htmlFor='email'>Email</Label>
