@@ -7,6 +7,8 @@ import { Button } from '@/components/ui/button'
 import { LogInIcon } from 'lucide-react'
 import LogoLg from '@/assets/logo2-lg.png'
 // import LogoSm from '@/assets/trashsmart-icon.png'
+import { useNavigate } from 'react-router-dom'
+
 
 const navigation = [
   { name: 'Home', href: '#' },
@@ -16,6 +18,11 @@ const navigation = [
 ]
 
 export default function Nav() {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate('/login')
+  }
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <>
@@ -28,7 +35,7 @@ export default function Nav() {
         >
           <div className='flex lg:flex-1'>
             <a href='#' className='-m-1.5 p-1.5'>
-              <span className='sr-only'>Your Company</span>
+              <span className='sr-only'></span>
               {/* <img
                 alt=''
                 src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
@@ -68,7 +75,7 @@ export default function Nav() {
             {/* <a href="#" className="ml-2 text-md font-semibold leading-6 text-muted-foreground">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </a> */}
-            <Button variant='ghost' className='ml-2 h-8'>
+            <Button variant='ghost' className='ml-2 h-8' onClick={handleClick}>
               <span className='font-lg flex flex-1 items-center gap-1 text-muted-foreground'>
                 Log In <LogInIcon className='w-4' />{' '}
               </span>
@@ -83,14 +90,15 @@ export default function Nav() {
           <div className='fixed inset-0 z-50' />
           <DialogPanel className='fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-background px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10'>
             <div className='flex items-center justify-between'>
-              <a href='#' className='-m-1.5 p-1.5'>
-                <span className='sr-only'>Your Company</span>
+              {/* <a href='#' className='-m-1.5 p-1.5'>
+                <span className='sr-only'>trashSmart</span>
                 <img
                   alt=''
                   src='https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600'
                   className='h-8 w-auto'
                 />
-              </a>
+              </a> */}
+              <img src={LogoLg} alt='Logo' className='h-9' />
               <button
                 type='button'
                 onClick={() => setMobileMenuOpen(false)}
@@ -121,6 +129,7 @@ export default function Nav() {
                   <Button
                     variant='ghost'
                     className='h-8 w-full hover:text-primary'
+                    onClick={handleClick}
                   >
                     <span className='font-lg text-muted-foreground '>
                       Log In

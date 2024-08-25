@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
+import { IconBrandGoogle } from '@tabler/icons-react'
 import {
   Form,
   FormControl,
@@ -17,7 +17,7 @@ import { Button } from '@/components/custom/button'
 import { PasswordInput } from '@/components/custom/password-input'
 import { cn } from '@/lib/utils'
 
-interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> {}
+interface UserAuthFormProps extends HTMLAttributes<HTMLDivElement> { }
 
 const formSchema = z.object({
   email: z
@@ -66,7 +66,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 <FormItem className='space-y-1'>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input placeholder='name@example.com' {...field} />
+                    <Input placeholder='' {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -93,7 +93,13 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 </FormItem>
               )}
             />
-            <Button className='mt-2' loading={isLoading}>
+                        <Link 
+              to='/signup'
+              className='mt-2 text-sm font-medium text-muted-foreground hover:opacity-75 text-right'
+            >
+              Don't have an account? Sign up
+            </Link>
+            <Button  loading={isLoading}>
               Login
             </Button>
 
@@ -114,11 +120,11 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 className='w-full'
                 type='button'
                 loading={isLoading}
-                leftSection={<IconBrandGithub className='h-4 w-4' />}
+                leftSection={<IconBrandGoogle className='h-4 w-4' />}
               >
-                GitHub
+                Google
               </Button>
-              <Button
+              {/* <Button
                 variant='outline'
                 className='w-full'
                 type='button'
@@ -126,7 +132,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 leftSection={<IconBrandFacebook className='h-4 w-4' />}
               >
                 Facebook
-              </Button>
+              </Button> */}
             </div>
           </div>
         </form>

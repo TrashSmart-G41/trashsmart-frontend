@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label'
 export default function OTPVerification() {
   return (
     <div className='flex h-screen items-center justify-center'>
-      <Card className='mx-auto max-w-sm'>
+      <Card className='mx-auto max-w-sm min-w-[500px]'>
         <CardHeader>
           <CardTitle className='text-xl'>OTP Verification</CardTitle>
           <CardDescription>

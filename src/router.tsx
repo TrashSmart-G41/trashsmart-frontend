@@ -33,10 +33,13 @@ const router = createBrowserRouter([
   // Main routes
   {
     path: '/',
-    lazy: async () => {
-      const AppShell = await import('./components/app-shell')
-      return { Component: AppShell.default }
-    },
+    // lazy: async () => {
+    //   const AppShell = await import('./components/app-shell')
+    //   return { Component: AppShell.default }
+    // },
+    lazy: async () => ({
+      Component: (await import('@/pages/home')).default,
+    }),
     errorElement: <GeneralError />,
     children: [
       {

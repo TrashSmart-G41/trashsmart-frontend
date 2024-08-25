@@ -1,70 +1,42 @@
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { Link, useNavigate } from 'react-router-dom'
+import { Card } from '@/components/ui/card'
+import { UserAuthForm } from './components/user-auth-form'
+import LogoLg from '@/assets/logo2-lg.png'
 
-export default function SignIn() {
-  const navigate = useNavigate()
-
-  const handleClick = () => {
-    navigate('/')
-  }
+export default function SignIn2() {
   return (
-    <div className='w-full  lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]'>
-      <div className='flex items-center justify-center py-12'>
-        <div className='mx-auto grid w-[350px] gap-6'>
-          <div className='grid gap-2 text-center'>
-            <h1 className='text-3xl font-bold'>Login</h1>
-            <p className='text-balance text-muted-foreground'>
-              Enter your email below to login to your account
-            </p>
+    <>
+      <div className='flex h-screen items-center justify-center'>
+        <Card className='p-6 mx-auto max-w-sm  sm:min-w-[500px]'>
+          <div className='flex flex-col space-y-2 text-left'>
+            <h1 className='text-2xl font-semibold tracking-tight text-center mx-auto'>
+              <img src={LogoLg} alt='Logo' className='h-9' />
+            </h1>
+            <h1 className='text-2xl font-semibold tracking-tight text-center mx-auto'>Login</h1>
+            {/* <p className='text-sm text-muted-foreground'>
+              Enter your email and password below <br />
+              to log into your account
+            </p> */}
           </div>
-          <div className='grid gap-4'>
-            <div className='grid gap-2'>
-              <Label htmlFor='email'>Email</Label>
-              <Input
-                id='email'
-                type='email'
-                placeholder='m@example.com'
-                required
-              />
-            </div>
-            <div className='grid gap-2'>
-              <div className='flex items-center'>
-                <Label htmlFor='password'>Password</Label>
-                <Link
-                  to='/forgot-password'
-                  className='ml-auto inline-block text-sm underline'
-                >
-                  Forgot your password?
-                </Link>
-              </div>
-              <Input id='password' type='password' required />
-            </div>
-            <Button type='submit' className='w-full' onClick={handleClick}>
-              Login
-            </Button>
-            <Button variant='outline' className='w-full'>
-              Login with Google
-            </Button>
-          </div>
-          <div className='mt-4 text-center text-sm'>
-            Don&apos;t have an account?{' '}
-            <Link to='/signup' className='underline'>
-              Sign up
-            </Link>
-          </div>
-        </div>
+          <UserAuthForm />
+          <p className='mt-4 px-8 text-center text-sm text-muted-foreground'>
+            By clicking login, you agree to our{' '}
+            <a
+              href='/terms'
+              className='underline underline-offset-4 hover:text-primary'
+            >
+              Terms of Service
+            </a>{' '}
+            and{' '}
+            <a
+              href='/privacy'
+              className='underline underline-offset-4 hover:text-primary'
+            >
+              Privacy Policy
+            </a>
+            .
+          </p>
+        </Card>
       </div>
-      <div className='hidden bg-muted lg:block'>
-        <img
-          src='/placeholder.svg'
-          alt='Image'
-          width='1920'
-          height='1080'
-          className='h-full w-full object-cover dark:brightness-[0.2] dark:grayscale'
-        />
-      </div>
-    </div>
+    </>
   )
 }
