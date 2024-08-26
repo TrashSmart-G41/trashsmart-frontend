@@ -49,7 +49,7 @@ export const columns: ColumnDef<Organization>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
+    accessorKey: 'firstName',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -57,7 +57,7 @@ export const columns: ColumnDef<Organization>[] = [
         className='text-center text-[14px]'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('name')}</div>,
+    cell: ({ row }) => <div>{row.getValue('firstName')}</div>,
     enableSorting: true,
     enableHiding: false,
   },
@@ -90,7 +90,7 @@ export const columns: ColumnDef<Organization>[] = [
     // enableSorting: true,
   },
   {
-    accessorKey: 'waste_volume',
+    accessorKey: 'totalWaste',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
@@ -98,7 +98,7 @@ export const columns: ColumnDef<Organization>[] = [
         title='Waste Volume'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('waste_volume')}</div>,
+    cell: ({ row }) => <div>{row.getValue('totalWaste')}</div>,
     // enableSorting: true,
   },
 
