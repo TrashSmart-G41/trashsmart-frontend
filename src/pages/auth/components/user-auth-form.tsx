@@ -71,7 +71,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           // form.setError('email', {
           //   message: 'Invalid email or password',
           // })
-          
         }
       } else {
         // console.log('Login failed')

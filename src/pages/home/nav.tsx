@@ -8,6 +8,7 @@ import { LogInIcon } from 'lucide-react'
 import LogoLg from '@/assets/logo2-lg.png'
 // import LogoSm from '@/assets/trashsmart-icon.png'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
 
 const navigation = [
   { name: 'Home', href: '#' },
@@ -17,11 +18,18 @@ const navigation = [
 ]
 
 export default function Nav() {
+  const { isAuthenticated, logout } = useAuth()
   const navigate = useNavigate()
 
   const handleClick = () => {
     navigate('/login')
   }
+
+  const handleLogout = () => {
+    logout()
+    navigate('/login')
+  }
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <>
@@ -74,11 +82,19 @@ export default function Nav() {
             {/* <a href="#" className="ml-2 text-md font-semibold leading-6 text-muted-foreground">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </a> */}
-            <Button variant='ghost' className='ml-2 h-8' onClick={handleClick}>
-              <span className='font-lg flex flex-1 items-center gap-1 text-muted-foreground'>
-                Log In <LogInIcon className='w-4' />{' '}
-              </span>
-            </Button>
+            {!isAuthenticated ? (
+              <Button variant='ghost' className='ml-2 h-8' onClick={handleClick}>
+                <span className='font-lg flex flex-1 items-center gap-1 text-muted-foreground'>
+                  Log In <LogInIcon className='w-4' />{' '}
+                </span>
+              </Button>
+            ) : (
+              <Button variant='ghost' className='ml-2 h-8' onClick={handleLogout}>
+                <span className='font-lg flex flex-1 items-center gap-1 text-muted-foreground'>
+                  Log Out
+                </span>
+              </Button>
+            )}
           </div>
         </nav>
         <Dialog
@@ -125,15 +141,27 @@ export default function Nav() {
                   {/* <a href="#" className="ml-2 text-md font-semibold leading-6 text-muted-foreground">
                             Log in <span aria-hidden="true">&rarr;</span>
                         </a> */}
-                  <Button
-                    variant='ghost'
-                    className='h-8 w-full hover:text-primary'
-                    onClick={handleClick}
-                  >
-                    <span className='font-lg text-muted-foreground '>
-                      Log In
-                    </span>
-                  </Button>
+                  {!isAuthenticated ? (
+                    <Button
+                      variant='ghost'
+                      className='h-8 w-full hover:text-primary'
+                      onClick={handleClick}
+                    >
+                      <span className='font-lg text-muted-foreground '>
+                        Log In
+                      </span>
+                    </Button>
+                  ) : (
+                    <Button
+                      variant='ghost'
+                      className='h-8 w-full hover:text-primary'
+                      onClick={handleLogout}
+                    >
+                      <span className='font-lg text-muted-foreground '>
+                        Log Out
+                      </span>
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
