@@ -62,23 +62,39 @@ export function AddOrganization() {
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    // toast({
-    //   title: 'You submitted the following values:',
-    //   description: (
-    //     <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-    //       <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // })
-    // document.getElementById('continue')?.click()
+  // function onSubmit(data: z.infer<typeof FormSchema>) {
+  //   // toast({
+  //   //   title: 'You submitted the following values:',
+  //   //   description: (
+  //   //     <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
+  //   //       <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
+  //   //     </pre>
+  //   //   ),
+  //   // })
+  //   // document.getElementById('continue')?.click()
+  //   console.log(data)
+  //   const API_URL = 'api/v1/organization'
+  //   const response = request('POST', API_URL, data)
+  //   console.log(response)
+  //   document.getElementById('continue')?.click()
+  // }
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data)
     const API_URL = 'api/v1/organization'
-    const response = request('POST', API_URL, data)
-    console.log(response)
-    // return response.data;
-    // console.log(response.data)
-    // return response.data;
+    try {
+      const response = await request('POST', API_URL, data)
+
+      if (response.status === 200) {
+        console.log('Form submitted successfully')
+        document.getElementById('continue')?.click()
+      } else {
+        console.error('Form submission failed with status:', response.status)
+        // logic to handle error
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      // logic to handle error
+    }
   }
 
   return (
