@@ -4,7 +4,6 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { organizations } from './data/organizations'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 import {
   Card,
@@ -14,8 +13,32 @@ import {
   CardTitle,
   // CardFooter,
 } from '@/components/ui/card'
+import { useEffect, useState } from 'react'
+import { fetchOrganizations } from './data/organizations'
 
 export default function Tasks() {
+  const [organizations, setOrganizations] = useState([])
+
+  useEffect(() => {
+    const loadOrganizations = async () => {
+      try {
+        const data: any = await fetchOrganizations()
+        const mappedData = data.map((org: any) => ({
+          id: org.id.toString(),
+          firstName: org.firstName,
+          scale: org.scale,
+          address: org.address,
+          totalWaste: org.totalWaste.toString(),
+        }))
+        setOrganizations(mappedData)
+      } catch (error) {
+        console.error('Failed to load organizations:', error)
+      }
+    }
+
+    loadOrganizations()
+  }, [])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
