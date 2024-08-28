@@ -36,17 +36,32 @@ import { Input } from '@/components/ui/input'
 // import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
-  // username: z.string().min(2, {
-  //   message: 'Username must be at least 2 characters.',
-  // }),
-  firstName: z.string(),
-  lastName: z.string(),
-  email: z.string(),
-  address: z.string(),
-  contact_number: z.string(),
-  scale: z.string(),
-  organization_type: z.string(),
-})
+  firstName: z.string().min(2, {
+    message: 'First name must be at least 2 characters.',
+  }),
+  lastName: z.string().min(2, {
+    message: 'Last name must be at least 2 characters.',
+  }),
+  email: z.string().email({
+    message: 'Invalid email address.',
+  }),
+  address: z.string().min(5, {
+    message: 'Address must be at least 5 characters.',
+  }),
+  contact_number: z.string()
+    .regex(/^0\d{9}$/, {
+      message: 'Contact number must start with 0 and be exactly 10 digits.',
+    })
+    .length(10, {
+      message: 'Contact number must be exactly 10 digits.',
+    }),
+  scale: z.string().min(1, {
+    message: 'Scale is required.',
+  }),
+  organization_type: z.string().min(1, {
+    message: 'Organization type is required.',
+  }),
+});
 
 export function AddOrganization() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -81,12 +96,15 @@ export function AddOrganization() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data)
     const API_URL = 'api/v1/organization'
+
+    // Close the popup immediately
+    document.getElementById('continue')?.click()
+
     try {
       const response = await request('POST', API_URL, data)
 
       if (response.status === 200) {
         console.log('Form submitted successfully')
-        document.getElementById('continue')?.click()
       } else {
         console.error('Form submission failed with status:', response.status)
         // logic to handle error
