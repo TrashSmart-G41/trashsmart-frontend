@@ -34,6 +34,7 @@ import {
 
 import { Input } from '@/components/ui/input'
 // import { toast } from '@/components/ui/use-toast'
+import loadOrganizations from '../index'
 
 const FormSchema = z.object({
   firstName: z.string().min(2, {
@@ -102,9 +103,10 @@ export function AddOrganization() {
 
     try {
       const response = await request('POST', API_URL, data)
-
       if (response.status === 200) {
+        window.location.reload()
         console.log('Form submitted successfully')
+        // loadOrganizations();
       } else {
         console.error('Form submission failed with status:', response.status)
         // logic to handle error
@@ -114,6 +116,8 @@ export function AddOrganization() {
       // logic to handle error
     }
   }
+
+
 
   return (
     <Form {...form}>

@@ -1,17 +1,17 @@
 export const scales = [
   {
     label: 'Large',
-    value: 'Large',
+    value: 'LARGE',
     // icon: ArrowDownIcon,
   },
   {
     label: 'Medium',
-    value: 'Medium',
+    value: 'MEDIUM',
     // icon: ArrowRightIcon,
   },
   {
     label: 'Small',
-    value: 'Small',
+    value: 'SMALL',
     // icon: ArrowUpIcon,
   },
 ]

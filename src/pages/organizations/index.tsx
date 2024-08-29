@@ -24,9 +24,9 @@ export default function Tasks() {
       try {
         const data: any = await fetchOrganizations()
         const mappedData = data.map((org: any) => ({
-          id: org.id.toString(),
+          id: `ORG-${org.id.toString().padStart(3, '0')}`,
           firstName: org.firstName,
-          scale: org.scale,
+          scale: org.scale.toString().charAt(0).toUpperCase() + org.scale.toString().slice(1).toLowerCase(),
           address: org.address,
           totalWaste: org.totalWaste.toString(),
         }))
@@ -38,6 +38,7 @@ export default function Tasks() {
 
     loadOrganizations()
   }, [])
+
 
   return (
     <Layout>
