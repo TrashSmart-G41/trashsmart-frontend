@@ -12,7 +12,7 @@ import {
   // AlertDialogTitle,
   // AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-import { request } from '@/lib/axiosHelper'
+// import { request } from '@/lib/axiosHelper'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -34,7 +34,7 @@ import {
 
 import { Input } from '@/components/ui/input'
 import { addOrganization } from '../data/services'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 // import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
@@ -42,7 +42,7 @@ const FormSchema = z.object({
     message: 'Organization name must be at least 2 characters.',
   }),
   lastName: z.string().min(2, {
-    message: 'Contact person\'s name must be at least 2 characters.',
+    message: "Contact person's name must be at least 2 characters.",
   }),
   email: z.string().email({
     message: 'Invalid email address.',
@@ -50,7 +50,8 @@ const FormSchema = z.object({
   address: z.string().min(5, {
     message: 'Address must be at least 5 characters.',
   }),
-  contactNo: z.string()
+  contactNo: z
+    .string()
     .regex(/^0\d{9}$/, {
       message: 'Contact number must start with 0 and be exactly 10 digits.',
     })
@@ -63,11 +64,11 @@ const FormSchema = z.object({
   orgType: z.string().min(1, {
     message: 'Organization type is required.',
   }),
-});
+})
 
 export function AddOrganization() {
-  let desc: string = ""
-  const navigate = useNavigate()
+  // let desc: string = ""
+  // const navigate = useNavigate()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -105,16 +106,15 @@ export function AddOrganization() {
       const addOrg = async () => {
         const response = await addOrganization(data)
         if (response.status === 200) {
-          desc = 'Organization added successfully!'
+          // desc = 'Organization added successfully!'
           window.location.reload()
         }
       }
       addOrg()
     } catch (error) {
       // console.error(error)
-      desc = 'Error adding organization!'
+      // desc = 'Error adding organization!'
     }
-    
   }
 
   return (

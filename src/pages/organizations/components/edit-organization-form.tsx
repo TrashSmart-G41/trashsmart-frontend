@@ -36,7 +36,7 @@ const FormSchema = z.object({
     message: 'Organization name must be at least 2 characters.',
   }),
   lastName: z.string().min(2, {
-    message: 'Contact person\'s name must be at least 2 characters.',
+    message: "Contact person's name must be at least 2 characters.",
   }),
   email: z.string().email({
     message: 'Invalid email address.',
@@ -44,7 +44,8 @@ const FormSchema = z.object({
   address: z.string().min(5, {
     message: 'Address must be at least 5 characters.',
   }),
-  contactNo: z.string()
+  contactNo: z
+    .string()
     .regex(/^0\d{9}$/, {
       message: 'Contact number must start with 0 and be exactly 10 digits.',
     })
@@ -57,11 +58,10 @@ const FormSchema = z.object({
   orgType: z.string().min(1, {
     message: 'Organization type is required.',
   }),
-});
-
+})
 
 export function EditOrganization({ contId }: { contId: string }) {
-  let desc:string = ''
+  // let desc: string = ''
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -73,34 +73,36 @@ export function EditOrganization({ contId }: { contId: string }) {
       scale: '',
       orgType: '',
     },
-  });
+  })
 
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log('contId:', contId);
+        console.log('contId:', contId)
         fetchOrganization(contId)
           .then((data) => {
-            return form.reset(data as {
-              firstName: string;
-              lastName: string;
-              email: string;
-              address: string;
-              contactNo: string;
-              scale: string;
-              orgType: string;
-            });
+            return form.reset(
+              data as {
+                firstName: string
+                lastName: string
+                email: string
+                address: string
+                contactNo: string
+                scale: string
+                orgType: string
+              }
+            )
           })
           .catch((error) => {
-            console.error('Error fetching organization data:', error);
-          });
+            console.error('Error fetching organization data:', error)
+          })
       } catch (error) {
-        console.error('Error fetching organization data:', error);
+        console.error('Error fetching organization data:', error)
       }
     }
 
-    fetchData();
-  }, [contId, form]);
+    fetchData()
+  }, [contId, form])
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data)
@@ -108,33 +110,39 @@ export function EditOrganization({ contId }: { contId: string }) {
     document.getElementById('continue')?.click()
     try {
       const editOrg = async () => {
-        const response = await updateOrganization(contId.slice(-3),data)
+        const response = await updateOrganization(contId.slice(-3), data)
         if (response.status === 200) {
-          desc = 'Organization added successfully!'
+          // desc = 'Organization added successfully!'
           window.location.reload()
         }
       }
       editOrg()
     } catch (error) {
       // console.error(error)
-      desc = 'Error adding organization!'
+      // desc = 'Error adding organization!'
     }
-    
   }
 
   return (
     <>
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant='ghost'
-            className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'>Edit</Button>
+          <Button
+            variant='ghost'
+            className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
+          >
+            Edit
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <Form {...form}>
             <h2 className='w-full text-center text-lg font-semibold'>
               Edit Organization
             </h2>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className='w-full space-y-6'
+            >
               <FormField
                 control={form.control}
                 name='firstName'
@@ -206,7 +214,10 @@ export function EditOrganization({ contId }: { contId: string }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Scale</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder='Select input' {...field} />
@@ -228,7 +239,10 @@ export function EditOrganization({ contId }: { contId: string }) {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Organization Type</FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder='Select input' {...field} />
@@ -252,7 +266,9 @@ export function EditOrganization({ contId }: { contId: string }) {
                         <SelectItem value='MEDIA_AND_COMMUNICATION'>
                           Media and communication
                         </SelectItem>
-                        <SelectItem value='TRANSPORTATION'>Transportation</SelectItem>
+                        <SelectItem value='TRANSPORTATION'>
+                          Transportation
+                        </SelectItem>
                         <SelectItem value='AGRICULTURE_AND_FOOD'>
                           Agriculture and Food
                         </SelectItem>

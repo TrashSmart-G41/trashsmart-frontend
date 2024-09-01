@@ -31,7 +31,9 @@ export default function Tasks() {
           totalWaste: org.totalWaste.toString(),
         }))
         // setOrganizations(mappedData)
-        const sortedData = mappedData.sort((a:any, b:any) => b.id.localeCompare(a.id))
+        const sortedData = mappedData.sort((a: any, b: any) =>
+          b.id.localeCompare(a.id)
+        )
         setOrganizations(sortedData)
       } catch (error) {
         console.error('Failed to load organizations:', error)

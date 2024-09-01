@@ -36,12 +36,14 @@ export function PopupForm2({
   buttonContent,
   id,
   // formProps,
-  contId
+  contId,
 }: PopupFormProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button id={id} className='hidden' variant='default'>{buttonContent}</Button>
+        <Button id={id} className='hidden' variant='default'>
+          {buttonContent}
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <FormContent contId={contId} />
@@ -49,5 +51,3 @@ export function PopupForm2({
     </AlertDialog>
   )
 }
-
-
