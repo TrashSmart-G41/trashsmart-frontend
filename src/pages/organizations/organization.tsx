@@ -25,7 +25,9 @@ import Info from './info'
 import Requests from './requests'
 import SmartBins from './smart_bins'
 import Collections from './collections'
+// import LocationPicker from '@/components/custom/location_picker'
 import GoogleMap from '../../components/custom/map'
+// import Map2 from '@/components/custom/map2'
 
 export default function Organization() {
   return (
@@ -49,6 +51,8 @@ export default function Organization() {
                   className='h-full w-full rounded-t-xl'
                   height={200}
                 />
+                {/* <Map2/> */}
+                {/* <LocationPicker /> */}
               </div>
             </div>
             <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-6'>

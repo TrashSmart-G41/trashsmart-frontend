@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 import { fetchOrganizations } from './data/services'
+// import LocationPicker from '@/components/custom/location_picker'
 
 export default function Tasks() {
   const [organizations, setOrganizations] = useState([])
@@ -192,6 +193,7 @@ export default function Tasks() {
             </div>
           </div>
         </Card>
+        {/* <LocationPicker/> */}
       </Layout.Body>
     </Layout>
   )
