@@ -10,6 +10,9 @@ import { useEffect, useState } from 'react'
 //     longitude: 79.86140,
 //     latitude: 6.90200,
 //   },
+//   {
+
+//   }
 //   // Add more city objects here if needed
 // ];
 
