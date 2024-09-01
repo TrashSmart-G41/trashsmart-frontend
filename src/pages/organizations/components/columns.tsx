@@ -4,11 +4,15 @@ import { useNavigate } from 'react-router-dom'
 // import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
+// import { DataTableRowActions } from './data-table-row-actions'
 
 // import { statuses, regions } from '../data/data'
 import { Organization } from '../data/schema'
 import { Button } from '@/components/custom/button'
+// import { PopupForm2 } from '@/components/custom/popupform'
+import { EditOrganization } from './edit-organization-form'
+import { DeleteOrganization } from './delete-organization'
+// import { fetchOrganization } from '../data/organizations'
 
 export const columns: ColumnDef<Organization>[] = [
   {
@@ -45,7 +49,7 @@ export const columns: ColumnDef<Organization>[] = [
       />
     ),
     cell: ({ row }) => <div>{row.getValue('id')}</div>,
-    enableSorting: false,
+    enableSorting: true,
     enableHiding: false,
   },
   {
@@ -132,12 +136,15 @@ export const columns: ColumnDef<Organization>[] = [
     cell: ({ row }) => {
       const navigate = useNavigate()
 
+      const contId = String(row.getValue('id') || '').slice(-3);
+
+
       const handleButtonClick = () => {
         navigate(`/organizations/${row.getValue('id')}`)
       }
 
       return (
-        <div className='mr-4 flex items-center justify-end'>
+        <><div className='mr-4 flex items-center justify-end'>
           <Button
             variant='ghost'
             className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
@@ -145,8 +152,13 @@ export const columns: ColumnDef<Organization>[] = [
           >
             View
           </Button>
-          <DataTableRowActions row={row} />
+
+          <EditOrganization contId={contId} />
+          <DeleteOrganization contId={contId} />
+
+          {/* <DataTableRowActions row={row} /> */}
         </div>
+        </>
       )
     },
   },

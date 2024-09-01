@@ -33,14 +33,16 @@ import {
 } from '@/components/ui/select'
 
 import { Input } from '@/components/ui/input'
+import { addOrganization } from '../data/services'
+import { useNavigate } from 'react-router-dom'
 // import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
   firstName: z.string().min(2, {
-    message: 'First name must be at least 2 characters.',
+    message: 'Organization name must be at least 2 characters.',
   }),
   lastName: z.string().min(2, {
-    message: 'Last name must be at least 2 characters.',
+    message: 'Contact person\'s name must be at least 2 characters.',
   }),
   email: z.string().email({
     message: 'Invalid email address.',
@@ -48,7 +50,7 @@ const FormSchema = z.object({
   address: z.string().min(5, {
     message: 'Address must be at least 5 characters.',
   }),
-  contact_number: z.string()
+  contactNo: z.string()
     .regex(/^0\d{9}$/, {
       message: 'Contact number must start with 0 and be exactly 10 digits.',
     })
@@ -58,12 +60,14 @@ const FormSchema = z.object({
   scale: z.string().min(1, {
     message: 'Scale is required.',
   }),
-  organization_type: z.string().min(1, {
+  orgType: z.string().min(1, {
     message: 'Organization type is required.',
   }),
 });
 
 export function AddOrganization() {
+  let desc: string = ""
+  const navigate = useNavigate()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -71,9 +75,9 @@ export function AddOrganization() {
       lastName: '',
       email: '',
       address: '',
-      contact_number: '',
+      contactNo: '',
       scale: '',
-      organization_type: '',
+      orgType: '',
     },
   })
 
@@ -95,30 +99,28 @@ export function AddOrganization() {
   // }
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data)
-    const API_URL = 'api/v1/organization'
-
     // Close the popup immediately
     document.getElementById('continue')?.click()
-
     try {
-      const response = await request('POST', API_URL, data)
-
-      if (response.status === 200) {
-        console.log('Form submitted successfully')
-      } else {
-        console.error('Form submission failed with status:', response.status)
-        // logic to handle error
+      const addOrg = async () => {
+        const response = await addOrganization(data)
+        if (response.status === 200) {
+          desc = 'Organization added successfully!'
+          window.location.reload()
+        }
       }
+      addOrg()
     } catch (error) {
-      console.error('Error submitting form:', error)
-      // logic to handle error
+      // console.error(error)
+      desc = 'Error adding organization!'
     }
+    
   }
 
   return (
     <Form {...form}>
       <h2 className='w-full text-center text-lg font-semibold'>
-        Add organization
+        Add Organization
       </h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
@@ -126,7 +128,7 @@ export function AddOrganization() {
           name='firstName'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel>Organization Name</FormLabel>
               <FormControl>
                 <Input placeholder='' {...field} />
               </FormControl>
@@ -139,7 +141,7 @@ export function AddOrganization() {
           name='lastName'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last Name</FormLabel>
+              <FormLabel>Contact Person's Name</FormLabel>
               <FormControl>
                 <Input placeholder='' {...field} />
               </FormControl>
@@ -178,7 +180,7 @@ export function AddOrganization() {
         />
         <FormField
           control={form.control}
-          name='contact_number'
+          name='contactNo'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Contact Number</FormLabel>
@@ -213,7 +215,7 @@ export function AddOrganization() {
         />
         <FormField
           control={form.control}
-          name='organization_type'
+          name='orgType'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Organization Type</FormLabel>

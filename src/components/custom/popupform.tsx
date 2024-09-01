@@ -8,8 +8,10 @@ import { Button } from '@/components/ui/button'
 
 interface PopupFormProps {
   formContent: ComponentType<any>
-  buttonContent: ReactNode
+  buttonContent?: ReactNode
   formProps?: any
+  id?: string
+  contId?: string
 }
 
 export function PopupForm({
@@ -28,3 +30,24 @@ export function PopupForm({
     </AlertDialog>
   )
 }
+
+export function PopupForm2({
+  formContent: FormContent,
+  buttonContent,
+  id,
+  // formProps,
+  contId
+}: PopupFormProps) {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button id={id} className='hidden' variant='default'>{buttonContent}</Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent>
+        <FormContent contId={contId} />
+      </AlertDialogContent>
+    </AlertDialog>
+  )
+}
+
+
