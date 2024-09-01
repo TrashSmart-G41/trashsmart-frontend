@@ -14,7 +14,7 @@ import {
   // CardFooter,
 } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
-import { fetchOrganizations } from './data/organizations'
+import { fetchOrganizations } from './data/services'
 
 export default function Tasks() {
   const [organizations, setOrganizations] = useState([])
@@ -24,13 +24,17 @@ export default function Tasks() {
       try {
         const data: any = await fetchOrganizations()
         const mappedData = data.map((org: any) => ({
-          id: org.id.toString(),
+          id: `ORG-${org.id.toString().padStart(3, '0')}`,
           firstName: org.firstName,
           scale: org.scale,
           address: org.address,
           totalWaste: org.totalWaste.toString(),
         }))
-        setOrganizations(mappedData)
+        // setOrganizations(mappedData)
+        const sortedData = mappedData.sort((a: any, b: any) =>
+          b.id.localeCompare(a.id)
+        )
+        setOrganizations(sortedData)
       } catch (error) {
         console.error('Failed to load organizations:', error)
       }

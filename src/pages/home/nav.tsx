@@ -83,13 +83,21 @@ export default function Nav() {
                             Log in <span aria-hidden="true">&rarr;</span>
                         </a> */}
             {!isAuthenticated ? (
-              <Button variant='ghost' className='ml-2 h-8' onClick={handleClick}>
+              <Button
+                variant='ghost'
+                className='ml-2 h-8'
+                onClick={handleClick}
+              >
                 <span className='font-lg flex flex-1 items-center gap-1 text-muted-foreground'>
                   Log In <LogInIcon className='w-4' />{' '}
                 </span>
               </Button>
             ) : (
-              <Button variant='ghost' className='ml-2 h-8' onClick={handleLogout}>
+              <Button
+                variant='ghost'
+                className='ml-2 h-8'
+                onClick={handleLogout}
+              >
                 <span className='font-lg flex flex-1 items-center gap-1 text-muted-foreground'>
                   Log Out
                 </span>
