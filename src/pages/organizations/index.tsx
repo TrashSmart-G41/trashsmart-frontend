@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 import { fetchOrganizations } from './data/services'
-import LocationPicker from '@/components/custom/location_picker'
+// import LocationPicker from '@/components/custom/location_picker'
 
 export default function Tasks() {
   const [organizations, setOrganizations] = useState([])
