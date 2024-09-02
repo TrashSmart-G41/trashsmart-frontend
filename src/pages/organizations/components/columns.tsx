@@ -82,6 +82,22 @@ export const columns: ColumnDef<Organization>[] = [
     },
   },
   {
+    accessorKey: 'org_type',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Type'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('org_type')}</div>,
+    enableSorting: false,
+    // enableHiding: false,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
+  {
     accessorKey: 'address',
     header: ({ column }) => (
       <DataTableColumnHeader
