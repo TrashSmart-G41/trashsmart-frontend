@@ -5,11 +5,13 @@ import { useNavigate } from 'react-router-dom'
 // import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
+//import { DataTableRowActions } from './data-table-row-actions'
 
 // import { statuses, regions } from '../data/data'
 import { Truck } from '../data/schema'
 import { Button } from '@/components/custom/button'
+import { DeleteGarbageTruck } from './delete-garbagetruck.tsx'
+import { EditGarbageTruck } from './edit-garbagetruck-form.tsx'
 // import {
 //   Avatar,
 //   AvatarFallback,
@@ -59,7 +61,7 @@ export const columns: ColumnDef<Truck>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        title='LICENSE PLATE NO.'
+        title='License Plate No.'
         className='text-center text-[14px]'
       />
     ),
@@ -71,7 +73,7 @@ export const columns: ColumnDef<Truck>[] = [
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='MAX. CAPACITY'
+        title='Max. Capacity'
       />
     ),
     cell: ({ row }) => <div>{row.getValue('max_load_capacity')} MT</div>,
@@ -131,27 +133,27 @@ export const columns: ColumnDef<Truck>[] = [
       return value.includes(row.getValue(id))
     },
   },
+  // {
+  //   accessorKey: 'next_shift',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader
+  //       className='text-[14px]'
+  //       column={column}
+  //       title='NEXT SHIFT'
+  //     />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue('next_shift')}</div>,
+  // },
   {
-    accessorKey: 'next_shift',
+    accessorKey: 'mileage',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='NEXT SHIFT'
+        title='Mileage (KM)'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('next_shift')}</div>,
-  },
-  {
-    accessorKey: 'milage',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Milage (KM)'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('milage')}</div>,
+    cell: ({ row }) => <div>{row.getValue('mileage')}</div>,
   },
 
   // {
@@ -184,6 +186,7 @@ export const columns: ColumnDef<Truck>[] = [
     cell: ({ row }) => {
       const navigate = useNavigate()
 
+      const contId = String(row.getValue('truck_id') || '').slice(-3)
       const handleButtonClick = () => {
         navigate(`/trucks/${row.getValue('truck_id')}`)
       }
@@ -197,7 +200,8 @@ export const columns: ColumnDef<Truck>[] = [
           >
             View
           </Button>
-          <DataTableRowActions row={row} />
+          <EditGarbageTruck contId={contId} />
+          <DeleteGarbageTruck contId={contId} />
         </div>
       )
     },

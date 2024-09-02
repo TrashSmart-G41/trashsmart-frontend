@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 import { fetchOrganizations } from './data/services'
-// import LocationPicker from '@/components/custom/location_picker'
+import LocationPicker from '@/components/custom/location_picker'
 
 export default function Tasks() {
   const [organizations, setOrganizations] = useState([])
@@ -27,7 +27,7 @@ export default function Tasks() {
         const mappedData = data.map((org: any) => ({
           id: `ORG-${org.id.toString().padStart(3, '0')}`,
           firstName: org.firstName,
-          scale: org.scale,
+          scale: org.scale.charAt(0).toUpperCase() + org.scale.slice(1).toLowerCase(),
           address: org.address,
           totalWaste: org.totalWaste.toString(),
         }))
@@ -193,7 +193,7 @@ export default function Tasks() {
             </div>
           </div>
         </Card>
-        {/* <LocationPicker/> */}
+        <LocationPicker/>
       </Layout.Body>
     </Layout>
   )
