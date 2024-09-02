@@ -24,34 +24,69 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/use-toast'
+//import { toast } from '@/components/ui/use-toast'
+import { addGarbageTruck } from '../data/services'
+
+const sriLankanLicensePlateSchema = z
+  .string()
+  .regex(/^(?:[A-Z0-9]{1,3}-\d{4})$/, {
+    message:
+      'License plate must follow the Sri Lankan format, e.g., 123-4567, AB-1234, or ABC-1234.',
+  })
+
+const maxCapacitySchema = z.string().refine(
+  (value) => {
+    const num = parseFloat(value)
+    return num > 0
+  },
+  {
+    message: 'Max capacity must be greater than zero.',
+  }
+)
+
+const mileageSchema = z.string().refine(
+  (value) => {
+    const num = parseFloat(value)
+    return num >= 0
+  },
+  {
+    message: 'Mileage cannot be negative.',
+  }
+)
 
 const FormSchema = z.object({
-  licence_plate_no: z.string(),
-  max_capacity: z.string(),
-  mileage: z.string(),
+  licencePlateNo: sriLankanLicensePlateSchema,
+  maxVolume: maxCapacitySchema,
+  mileage: mileageSchema,
 })
 
 export function AddTruckForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      licence_plate_no: '',
+      licencePlateNo: '',
       mileage: '',
-      max_capacity: '',
+      maxVolume: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data)
+    // Close the popup immediately
     document.getElementById('continue')?.click()
+    try {
+      const addgarbagetruck = async () => {
+        const response = await addGarbageTruck(data)
+        if (response.status === 200) {
+          // desc = 'Organization added successfully!'
+          window.location.reload()
+        }
+      }
+      addgarbagetruck()
+    } catch (error) {
+      // console.error(error)
+      // desc = 'Error adding organization!'
+    }
   }
 
   return (
@@ -62,7 +97,7 @@ export function AddTruckForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
-          name='licence_plate_no'
+          name='licencePlateNo'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Licence Plate Number</FormLabel>
@@ -91,7 +126,7 @@ export function AddTruckForm() {
         />
         <FormField
           control={form.control}
-          name='max_capacity'
+          name='maxVolume'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Max Capacity</FormLabel>

@@ -8,6 +8,7 @@ export const orgSchema = z.object({
   scale: z.string(),
   address: z.string(),
   waste_volume: z.string(),
+  org_type: z.string(),
 })
 
 export type Organization = z.infer<typeof orgSchema>

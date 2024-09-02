@@ -28,6 +28,7 @@ export default function Tasks() {
           id: `ORG-${org.id.toString().padStart(3, '0')}`,
           firstName: org.firstName,
           scale: org.scale,
+          orgType: org.orgType,
           address: org.address,
           totalWaste: org.totalWaste.toString(),
         }))
