@@ -27,9 +27,40 @@ import SmartBins from './smart_bins'
 import Collections from './collections'
 // import LocationPicker from '@/components/custom/location_picker'
 import GoogleMap from '../../components/custom/map'
+import { useEffect, useState } from 'react'
+import { fetchOrganization } from './data/services'
 // import Map2 from '@/components/custom/map2'
 
+type OrganizationData = {
+  firstName: string;
+  address: string;
+};
+
 export default function Organization() {
+  const [organization, setOrganization] = useState<OrganizationData | null>(null);
+
+  useEffect(() => {
+    const url = window.location.href
+    const id = url.split('/').pop()?.slice(-3)
+    console.log('id:', id)
+
+    const loadOrganization = async () => {
+      try {
+        const data: any = await fetchOrganization(id ?? '')
+        const mappedData:OrganizationData = {
+          firstName : data.firstName,
+          address: data.address,
+        }
+        // console.log('Organization:', data)
+        setOrganization(mappedData)
+        console.log('Organization:', organization)
+      } catch (error) {
+        console.error('Failed to load organization:', error)
+      }
+    }
+    loadOrganization()
+  }
+  , [])
   return (
     <>
       <Layout>
@@ -60,7 +91,7 @@ export default function Organization() {
                 <CardHeader className='p-0'>
                   <div className='flex flex-row items-center justify-start'>
                     <CardTitle className='text-2xl font-bold text-muted-foreground'>
-                      Infinite Education Network
+                      {organization?.firstName}
                     </CardTitle>
                     <Button
                       variant='scale_btn'
@@ -80,7 +111,7 @@ export default function Organization() {
                     </Button>
                   </div>
                   <CardDescription>
-                    789 University Avenue, Cambridge, MA, USA
+                    {organization?.address}
                   </CardDescription>
                   <CardDescription className='pt-3 text-muted-foreground/60'>
                     Joined on 27-03-2024 20:14 PM
