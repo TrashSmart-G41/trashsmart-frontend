@@ -30,7 +30,9 @@ export default function Tasks() {
         const mappedData = data.map((org: any) => ({
           id: `ORG-${org.id.toString().padStart(3, '0')}`,
           firstName: org.firstName,
-          scale: org.scale.charAt(0).toUpperCase() + org.scale.slice(1).toLowerCase(),
+          scale:
+            org.scale.charAt(0).toUpperCase() +
+            org.scale.slice(1).toLowerCase(),
           address: org.address,
           totalWaste: org.totalWaste.toString(),
         }))
@@ -198,10 +200,10 @@ export default function Tasks() {
         </Card>
         {/* <LocationPicker/> */}
         {/* <GoogleMap /> */}
-        <GoogleMap width="100%" height={500}>
-          <MapMarker latitude={6.902} longitude={79.8614}  />
-          <MapMarker latitude={6.912} longitude={79.852}  />
-          <MapMarker latitude={6.922} longitude={79.842}  />
+        <GoogleMap width='100%' height={500}>
+          <MapMarker latitude={6.902} longitude={79.8614} />
+          <MapMarker latitude={6.912} longitude={79.852} />
+          <MapMarker latitude={6.922} longitude={79.842} />
         </GoogleMap>
       </Layout.Body>
     </Layout>
