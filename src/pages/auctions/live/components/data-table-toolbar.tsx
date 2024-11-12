@@ -3,12 +3,12 @@ import { Table } from '@tanstack/react-table'
 
 import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
-import { DataTableViewOptions } from './data-table-view-options'
+// import { DataTableViewOptions } from '../components/data-table-view-options'
 
-import { scales } from '../data/data'
+import { statuses, types } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
-
-// import { OrganizationsForm } from '@/pages/organizations/components/add-organizations-form'
+// import { PopupForm } from '@/components/custom/popupform'
+// import { AddCommunalBinForm } from './add_communal_bin'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -23,29 +23,28 @@ export function DataTableToolbar<TData>({
     <div className='flex items-center justify-between'>
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
-          placeholder='Filter organizations...'
-          value={(table.getColumn('name')?.getFilterValue() as string) ?? ''}
-          onChange={(event) => {
-            const filterValue = event.target.value
-            table.getColumn('name')?.setFilterValue(filterValue)
-          }}
+          placeholder='Search by waste type...'
+          value={(table.getColumn('wasteType')?.getFilterValue() as string) ?? ''}
+          onChange={(event) =>
+            table.getColumn('wasteType')?.setFilterValue(event.target.value)
+          }
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('sclae') && (
+          {table.getColumn('wasteType') && (
             <DataTableFacetedFilter
-              column={table.getColumn('scale')}
-              title='Scale'
-              options={scales}
+              column={table.getColumn('wasteType')}
+              title='Waste Type'
+              options={statuses}
             />
           )}
-          {/* {table.getColumn('priority') && (
+          {table.getColumn('startDate') && (
             <DataTableFacetedFilter
-              column={table.getColumn('priority')}
-              title='Priority'
-              options={priorities}
+              column={table.getColumn('startDate')}
+              title='Start Date'
+              options={types}
             />
-          )} */}
+          )}
         </div>
         {isFiltered && (
           <Button
@@ -58,8 +57,8 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
-      {/* <OrganizationsForm /> */}
+      {/* <DataTableViewOptions table={table} /> */}
+      {/* <PopupForm formContent={AddCommunalBinForm} buttonContent={'+ Add Bin'} /> */}
     </div>
   )
 }

@@ -1,12 +1,15 @@
 import { ColumnDef } from '@tanstack/react-table'
+// import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { Badge } from '@/components/ui/badge'
+// import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
+// import { DataTableRowActions } from './data-table-row-actions'
 
-import { labels, priorities, statuses } from '../data/data'
+import { scales } from '../data/data'
 import { Task } from '../data/schema'
+import { Button } from '@/components/custom/button'
 
 export const columns: ColumnDef<Task>[] = [
   {
@@ -34,88 +37,95 @@ export const columns: ColumnDef<Task>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'id',
+    accessorKey: 'name',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Task' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Name'
+      />
     ),
-    cell: ({ row }) => <div className='w-[80px]'>{row.getValue('id')}</div>,
+    cell: ({ row }) => <div>{row.getValue('name')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'title',
+    accessorKey: 'scale',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Title' />
+      <DataTableColumnHeader
+        column={column}
+        title='Scale'
+        className='text-center text-[14px]'
+      />
     ),
     cell: ({ row }) => {
-      const label = labels.find((label) => label.value === row.original.label)
+      const scale = scales.find(
+        (scale) => scale.value === row.getValue('scale')
+      )
+
+      if (!scale) {
+        return null
+      }
 
       return (
-        <div className='flex space-x-2'>
-          {label && <Badge variant='outline'>{label.label}</Badge>}
-          <span className='max-w-32 truncate font-medium sm:max-w-72 md:max-w-[31rem]'>
-            {row.getValue('title')}
-          </span>
+        <div className='flex items-center text-center'>
+          {/* {scale.icon && (
+            <scale.icon className='mr-2 h-4 w-4 text-muted-foreground' />
+          )} */}
+          <span>{scale.label}</span>
         </div>
       )
     },
   },
   {
-    accessorKey: 'status',
+    accessorKey: 'address',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Status' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Address'
+      />
     ),
-    cell: ({ row }) => {
-      const status = statuses.find(
-        (status) => status.value === row.getValue('status')
-      )
-
-      if (!status) {
-        return null
-      }
-
-      return (
-        <div className='flex w-[100px] items-center'>
-          {status.icon && (
-            <status.icon className='mr-2 h-4 w-4 text-muted-foreground' />
-          )}
-          <span>{status.label}</span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
+    cell: ({ row }) => <div>{row.getValue('address')}</div>,
+    enableSorting: false,
+    // enableHiding: false,
   },
   {
-    accessorKey: 'priority',
+    accessorKey: 'waste_volume',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Priority' />
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Waste Volume'
+      />
     ),
-    cell: ({ row }) => {
-      const priority = priorities.find(
-        (priority) => priority.value === row.getValue('priority')
-      )
-
-      if (!priority) {
-        return null
-      }
-
-      return (
-        <div className='flex items-center'>
-          {priority.icon && (
-            <priority.icon className='mr-2 h-4 w-4 text-muted-foreground' />
-          )}
-          <span>{priority.label}</span>
-        </div>
-      )
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
+    cell: ({ row }) => <div>{row.getValue('waste_volume')}</div>,
+    enableSorting: true,
   },
   {
     id: 'actions',
-    cell: ({ row }) => <DataTableRowActions row={row} />,
+    header: () => null,
+    cell: ({ row }) => {
+      const navigate = useNavigate()
+
+      const handleButtonClick = () => {
+        navigate(`/organizations/${row.id}`)
+      }
+
+      return (
+        <div className='mr-4 text-right'>
+          <Button
+            variant='outline'
+            size='sm'
+            className='hidden h-8 text-[12px] text-primary/80 hover:text-primary lg:flex'
+            onClick={handleButtonClick}
+          >
+            Manage
+          </Button>
+        </div>
+      )
+    },
+    enableSorting: false,
+    enableHiding: false,
   },
 ]
