@@ -4,10 +4,38 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { drivers } from './data/driver'
+//import { driver } from './data/driver'
 import { Card } from '@/components/ui/card'
 
+import { useEffect, useState } from 'react'
+import { fetchDrivers } from './data/services'
+
 export default function Tasks() {
+  const [drivers, setDrivers] = useState([])
+
+  useEffect(() => {
+    const loadDrivers = async () => {
+      try {
+        const data: any = await fetchDrivers()
+        // console.log(data);
+        const mappedData: any = data.map((driver: any) => ({
+          id: `EMP-${driver.id.toString().padStart(3, '0')}`,
+          fullName: `${driver.firstName || ''} ${driver.lastName || ''}`.trim(),
+          contactNo: driver.contactNo,
+          status: driver.status,
+        }));
+        const sortedData = mappedData.sort((a: any, b: any) =>
+          b.id.localeCompare(a.id)
+        )
+        setDrivers(sortedData)
+      } catch (error) {
+        console.error('Failed to load drivers:', error)
+      }
+    }
+
+    loadDrivers()
+  }, [])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}

@@ -33,36 +33,81 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/use-toast'
+//import { toast } from '@/components/ui/use-toast'
+import { addDriver } from '../data/services'
+
+const firstNameSchema = z.string().refine(
+  (value) => value.trim().length > 0,
+  {
+    message: 'First name is required.',
+  }
+);
+
+const lastNameSchema = z.string().refine(
+  (value) => value.trim().length > 0,
+  {
+    message: 'Last name is required.',
+  }
+);
+
+const contactNumberSchema = z.string().refine(
+  (value) => /^\d{10,}$/.test(value), // Adjust the minimum length as needed
+  {
+    message: 'Contact Number should contain only digits and be at least 10 digits long.',
+  }
+);
+
+const addressSchema = z.string().optional();
+
+const dateOfBirthSchema = z.string().refine(
+  (value) => /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/.test(value),
+  {
+    message: 'Date of Birth must be in the format DD-MM-YYYY.',
+  }
+);
+
+const password = z.string().optional();
 
 const FormSchema = z.object({
-  full_name: z.string(),
-  contact_number: z.string(),
-  address: z.string(),
-  date_of_birth: z.string(),
+  firstName: firstNameSchema,
+  lastName: lastNameSchema,
+  contactNo: contactNumberSchema,
+  address: addressSchema,
+  //dob: dateOfBirthSchema,
+  password: password
 })
 
 export function AddDriverForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      full_name: '',
-      contact_number: '',
+      firstName: '',
+      lastName: '',
+      contactNo: '',
       address: '',
-      date_of_birth: '',
+      //dob: ''
+      password: 'password123'
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data)
+    // Close the popup immediately
     document.getElementById('continue')?.click()
+    try {
+      const adddriver = async () => {
+        const response = await addDriver(data)
+        if (response.status === 200) {
+          // console.log('done')
+          // desc = 'Organization added successfully!'
+          window.location.reload()
+        }
+      }
+      adddriver()
+    } catch (error) {
+      console.error(error)
+      // desc = 'Error adding organization!'
+    }
   }
 
   return (
@@ -71,10 +116,10 @@ export function AddDriverForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
-          name='full_name'
+          name='firstName'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>First Name</FormLabel>
               <FormControl>
                 <Input placeholder='' {...field} />
               </FormControl>
@@ -84,7 +129,20 @@ export function AddDriverForm() {
         />
         <FormField
           control={form.control}
-          name='contact_number'
+          name='lastName'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='contactNo'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Contact Number</FormLabel>
@@ -108,9 +166,9 @@ export function AddDriverForm() {
             </FormItem>
           )}
         />
-        <FormField
+        {/* <FormField
           control={form.control}
-          name='date_of_birth'
+          name='dob'
           render={({ field }) => (
             <FormItem className='flex flex-col'>
               <FormLabel>Date of Birth</FormLabel>
@@ -148,7 +206,7 @@ export function AddDriverForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <AlertDialogFooter>
           <div className='flex w-full items-center justify-center gap-2'>
