@@ -14,15 +14,15 @@ import {
 } from '@/components/ui/alert-dialog'
 
 import { Button } from '@/components/ui/button'
-import { CalendarIcon } from 'lucide-react'
-import { format } from 'date-fns'
-import { cn } from '@/lib/utils'
-import { Calendar } from '@/components/ui/calendar'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+// import { CalendarIcon } from 'lucide-react'
+// import { format } from 'date-fns'
+// import { cn } from '@/lib/utils'
+// import { Calendar } from '@/components/ui/calendar'
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from '@/components/ui/popover'
 import {
   Form,
   FormControl,
@@ -59,12 +59,12 @@ const contactNumberSchema = z.string().refine(
 
 const addressSchema = z.string().optional();
 
-const dateOfBirthSchema = z.string().refine(
-  (value) => /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/.test(value),
-  {
-    message: 'Date of Birth must be in the format DD-MM-YYYY.',
-  }
-);
+// const dateOfBirthSchema = z.string().refine(
+//   (value) => /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/.test(value),
+//   {
+//     message: 'Date of Birth must be in the format DD-MM-YYYY.',
+//   }
+// );
 
 const password = z.string().optional();
 

@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom'
 // import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
+//import { DataTableRowActions } from './data-table-row-actions'
 
 // import { statuses, regions } from '../data/data'
 import { Driver } from '../data/schema'
 import { Button } from '@/components/custom/button'
 import { DeleteDriver } from './delete-driver.tsx'
-import { EditDriver } from './edit-driver-form.tsx'
+// import { EditDriver } from './edit-driver-form.tsx'
 //import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export const columns: ColumnDef<Driver>[] = [
@@ -189,7 +189,7 @@ export const columns: ColumnDef<Driver>[] = [
           </Button>
           {/* Remove the DataTableRowActions to get rid of the three dots menu */}
           {/* <DataTableRowActions row={row} /> */}
-          <EditDriver contId={contId} />
+          {/* <EditDriver contId={contId} /> */}
           <DeleteDriver contId={contId} />
         </div>
       )
