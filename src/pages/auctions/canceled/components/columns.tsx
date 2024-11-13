@@ -1,6 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table'
 // import React from 'react'
-// import { useNavigate } from 'react-router-dom'
 
 // import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -9,6 +8,7 @@ import { DataTableColumnHeader } from './data-table-column-header'
 
 // import { statuses, regions } from '../data/data'
 import { AllAuctions } from '../data/schema'
+// import { useNavigate } from 'react-router-dom'
 // import { CommercialDialog } from './commercial_bin_dialog'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -129,47 +129,32 @@ export const columns: ColumnDef<AllAuctions>[] = [
     enableSorting: false,
     enableHiding: false,
   },
-
   // {
   //   id: 'actions',
-  //   header: () => null,
-  //   cell: ({ row }: { row: { getValue: (key: string) => string; employee_id?: string } }) => {
+  //   cell: ({ row }) => {
   //     const navigate = useNavigate()
 
+  //     // const contId = String(row.getValue('id') || '').slice(-3)
+
   //     const handleButtonClick = () => {
-  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
+  //       navigate(`/auctions/${row.getValue('id')}`)
   //     }
 
   //     return (
-  //       <div className='mr-4 text-right'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8  px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //       </div>
+  //       <>
+  //         <div className='mr-4 flex items-center justify-end'>
+  //           <Button
+  //             variant='ghost'
+  //             className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
+  //             onClick={handleButtonClick}
+  //           >
+  //             View
+  //           </Button>
+
+  //           {/* <DataTableRowActions row={row} /> */}
+  //         </div>
+  //       </>
   //     )
   //   },
-  //   enableSorting: false,
-  //   enableHiding: false,
   // },
-  {
-    id: 'actions',
-    cell: ({ row }) => {
-      // const navigate = useNavigate()
-      // const handleButtonClick = () => {
-      //   navigate(`/cleaners/${row.getValue('employee_id')}`)
-      // }
-      console.log(row)
-
-      return (
-        <div className='mr-4 flex items-center justify-end'>
-          {/* <CommercialDialog /> */}
-          {/* <DataTableRowActions row={row} /> */}
-        </div>
-      )
-    },
-  },
 ]

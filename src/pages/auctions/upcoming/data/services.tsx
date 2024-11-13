@@ -7,8 +7,8 @@ export const fetchUpcomingAuctions = async () => {
   return response.data
 }
 
-export const fetchOrganization = async (id: string) => {
-  const url = `${API_URL}/${id}`
+export const fetchUpcomingAuction = async (id: string) => {
+  const url = `${API_URL}/upcoming/${id}`
   const response = await request('GET', url)
   return response.data
 }

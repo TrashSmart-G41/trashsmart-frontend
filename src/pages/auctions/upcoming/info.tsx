@@ -11,10 +11,7 @@ import ThemeSwitch from '@/components/theme-switch'
 // import GoogleMap from '../../components/custom/map'
 import { UserNav } from '@/components/user-nav'
 import { useState, useEffect } from 'react'
-import { fetchAuction } from './all/data/services'
-import { DeleteAuc } from './components/info/delete-popup'
-import { CancelAuc } from './components/info/cancel-popup'
-import { LogicallyDeleteAuc } from './components/info/logically-delete-popup'
+import { fetchUpcomingAuction } from './data/services'
 
 type AuctionData = {
     id: string;
@@ -39,7 +36,7 @@ const Info = () => {
   
       const loadAuction = async () => {
         try {
-          const data: any = await fetchAuction(id ?? '')
+          const data: any = await fetchUpcomingAuction(id ?? '')
           console.log(data);
           const mappedData: AuctionData = {
             id: `AUC-${data.id.toString().padStart(3, '0')}`,
@@ -62,23 +59,6 @@ const Info = () => {
       loadAuction()
     }
     , [])
-
-    const renderActionComponent = () => {
-      const url = window.location.href
-      const contId = String(url.split('/').pop()?.slice(-1))
-      switch (auction?.status) {
-        case 'UPCOMING':
-          return <DeleteAuc contId={contId}/>;
-        case 'LIVE':
-          return <CancelAuc contId={contId}/>;
-        case 'PAST':
-          return <LogicallyDeleteAuc contId={contId}/>;
-        default:
-          return null;
-      }
-    };
-
-
   return (
     <>
     <Layout>
@@ -155,44 +135,6 @@ const Info = () => {
                     />
                   </svg>
                 </Button>
-                {/* <Button className='hidden px-2 md:block ml-3 bg-red-600 hover:bg-red-800'>
-                  {auction?.status === 'LIVE' ? (
-                    <>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='18'
-                        height='18'
-                        viewBox='0 0 16 16'
-                      >
-                        <path
-                          fill='currentColor'
-                          fill-rule='evenodd'
-                          d='M13 15a.75.75 0 0 1-.75-.75v-1.5h-1.5a.75.75 0 0 1 0-1.5h1.5v-1.5a.75.75 0 0 1 1.5 0v1.5h1.5a.75.75 0 0 1 0 1.5h-1.5v1.5A.75.75 0 0 1 13 15'
-                          clip-rule='evenodd'
-                        />
-                      </svg>
-                      Cancel
-                    </>
-                  ) : (
-                    <>
-                      <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='18'
-                        height='18'
-                        viewBox='0 0 16 16'
-                      >
-                        <path
-                          fill='currentColor'
-                          fill-rule='evenodd'
-                          d='M3.5 1.5v13h5.75a.75.75 0 0 1 0 1.5H3a1 1 0 0 1-1-1V1a1 1 0 0 1 1-1h6.644a1 1 0 0 1 .72.305l3.355 3.476a1 1 0 0 1 .281.695V6.25a.75.75 0 0 1-1.5 0V6H9.75A1.75 1.75 0 0 1 8 4.25V1.5zm6 .07l2.828 2.93H9.75a.25.25 0 0 1-.25-.25z'
-                          clip-rule='evenodd'
-                        />
-                      </svg>
-                      {auction?.status === 'UPCOMING' || auction?.status === 'PAST' ? 'Delete' : ''}
-                    </>
-                  )}
-                </Button> */}
-
               </div>
             </div>
           </Card>
@@ -330,10 +272,10 @@ const Info = () => {
                 </div>
             </div>
 
-            {/* <div className='flex justify-end pt-4'>
-                <DeleteAuc />
-            </div> */}
-            <div className='flex justify-end pt-4'>{renderActionComponent()}</div>
+            <div className='flex justify-end pt-4'>
+                {/* <Button variant="destructive">Delete Organization</Button> */}
+                {/* <DeleteOrg /> */}
+            </div>
             </Card>
 
         </Layout.Body>
