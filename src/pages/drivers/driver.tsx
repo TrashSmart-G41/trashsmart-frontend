@@ -7,6 +7,9 @@ import { UserNav } from '@/components/user-nav'
 // import { cleaners } from './data/cleaners'
 // import { MixerHorizontalIcon } from '@radix-ui/react-icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { fetchDriver } from './data/services'
 
 import {
   Card,
@@ -57,6 +60,48 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function Driver() {
+  const url = window.location.href
+  const driverId = url.split('/').pop()?.slice(-3)
+  //const driverId = useParams<{ driverId: string }>()
+  const [driver, setDriver] = useState<any | null>(null)
+  
+  //console.log('Raw driverId from URL:', driverId)
+
+  useEffect(() => {
+    const loadDriver = async () => {
+      try {
+        const data: any = await fetchDriver(driverId)
+
+        if (!data) {
+          throw new Error('Driver data is missing or invalid')
+        }
+
+        const mappedData = {
+          id: `00${data.id}`,
+          fullName: `${data.firstName || ''} ${data.lastName || ''}`.trim(),
+          contactNo: data.contactNo,
+          status: data.status,
+          email: data.email,
+          address: data.address,
+          dob: data.dob,
+          nic: data.nic,
+          totalCollections: data.totalCollections,
+          currentStreak: data.currentStreak,
+          longestStreak: data.longestStreak,
+          totalActiveDays: data.totalActiveDays,
+          numberOfHolidays: data.numberOfHolidays,
+        }
+
+        setDriver(mappedData)
+      } catch (error) {
+        console.error('Failed to load driver:', error)
+      }
+    }
+
+loadDriver()
+  }, [driverId])
+  if (!driver) return <p>Loading driver information...</p>;
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -103,7 +148,7 @@ export default function Driver() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>John Smith</BreadcrumbPage>
+                  <BreadcrumbPage>{driver.fullName}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -114,7 +159,7 @@ export default function Driver() {
               <CardHeader className='p-0'>
                 <div className='flex flex-row items-center justify-start'>
                   <CardTitle className='text-2xl font-bold'>
-                    John Smith
+                    {driver.fullName}
                   </CardTitle>
                   <Button
                     variant='scale_btn'
@@ -130,12 +175,10 @@ export default function Driver() {
                     >
                       <circle cx='12' cy='12' r='12' fill='currentColor' />
                     </svg>
-                    Active
+                    {driver.status}
                   </Button>
                 </div>
-                <CardDescription>
-                  789 University Avenue, Cambridge, MA, USA
-                </CardDescription>
+                <CardDescription>{driver.address}</CardDescription>
               </CardHeader>
             </div>
           </div>
@@ -155,7 +198,7 @@ export default function Driver() {
                   Employee ID
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  EMP10001
+                  EMP-{driver.id}
                 </div>
               </div>
               <div className='mt-3'>
@@ -163,7 +206,7 @@ export default function Driver() {
                   Full Name
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  Mudiyanselage John Smith Wijesiri
+                  {driver.fullName}
                 </div>
               </div>
             </div>
@@ -174,7 +217,7 @@ export default function Driver() {
                   Contact Number
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  0774936421
+                  {driver.contactNo}
                 </div>
               </div>
               <div className='mt-3'>
@@ -182,7 +225,7 @@ export default function Driver() {
                   Address
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  123/4, Galle Road, Colombo 03
+                  {driver.address}
                 </div>
               </div>
             </div>
@@ -193,13 +236,13 @@ export default function Driver() {
                   Date of Birth
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  14-06-1968
+                  {driver.dob}
                 </div>
               </div>
               <div className='mt-3'>
                 <CardDescription className='text-[13px]'>NIC</CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  19686860163v
+                  {driver.nic}
                 </div>
               </div>
             </div>
@@ -213,7 +256,8 @@ export default function Driver() {
                 Total Collections{' '}
               </div>
               <div className='flex items-center text-[25px] font-semibold text-muted-foreground'>
-                112 <TrendingUp className='mx-2 h-4 w-4 text-primary' />{' '}
+                {driver.totalCollections}
+                <TrendingUp className='mx-2 h-4 w-4 text-primary' />{' '}
                 <span className='text-[13px] font-normal text-primary'>
                   1.7%
                 </span>
@@ -224,7 +268,7 @@ export default function Driver() {
                 Current Streak
               </div>
               <div className='text-[25px] font-semibold text-muted-foreground'>
-                3
+                {driver.currentStreak}
               </div>
             </div>
             <div className='mt-4'>
@@ -232,7 +276,7 @@ export default function Driver() {
                 Longest Streak
               </div>
               <div className='text-[25px] font-semibold text-muted-foreground'>
-                10
+                {driver.longestStreak}
               </div>
             </div>
             <div className='mt-4'>
@@ -240,7 +284,7 @@ export default function Driver() {
                 Total Working Days
               </div>
               <div className='text-[25px] font-semibold text-muted-foreground'>
-                245
+                {driver.totalActiveDays}
               </div>
             </div>
             <div className='mt-4'>
@@ -248,7 +292,7 @@ export default function Driver() {
                 No. of Leaves
               </div>
               <div className='text-[25px] font-semibold text-muted-foreground'>
-                2
+                {driver.numberOfHolidays}
               </div>
             </div>
           </Card>
