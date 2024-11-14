@@ -205,10 +205,10 @@ importers:
         specifier: ^15.5.11
         version: 15.5.11
       '@typescript-eslint/eslint-plugin':
-        specifier: ^6.14.0
+        specifier: ^6.19.1
         version: 6.19.1(@typescript-eslint/parser@6.19.1(eslint@8.56.0)(typescript@5.4.5))(eslint@8.56.0)(typescript@5.4.5)
       '@typescript-eslint/parser':
-        specifier: ^6.14.0
+        specifier: ^6.19.1
         version: 6.19.1(eslint@8.56.0)(typescript@5.4.5)
       '@vitejs/plugin-react-swc':
         specifier: ^3.6.0
@@ -217,7 +217,7 @@ importers:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
       eslint:
-        specifier: ^8.55.0
+        specifier: ^8.56.0
         version: 8.56.0
       eslint-plugin-react-hooks:
         specifier: ^4.6.0
@@ -1959,8 +1959,8 @@ packages:
     resolution: {integrity: sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==}
     engines: {node: '>=6'}
 
-  caniuse-lite@1.0.30001611:
-    resolution: {integrity: sha512-19NuN1/3PjA3QI8Eki55N8my4LzfkMCRLgCVfrl/slbSAchQfV0+GwjPrK3rq37As4UCLlM/DHajbKkAqbv92Q==}
+  caniuse-lite@1.0.30001680:
+    resolution: {integrity: sha512-rPQy70G6AGUMnbwS1z6Xg+RkHYPAi18ihs47GH0jcxIG7wArmPgY3XbS2sRdBbxJljp3thdT8BIqv9ccCypiPA==}
 
   chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
@@ -5261,7 +5261,7 @@ snapshots:
   autoprefixer@10.4.19(postcss@8.4.38):
     dependencies:
       browserslist: 4.23.0
-      caniuse-lite: 1.0.30001611
+      caniuse-lite: 1.0.30001680
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -5301,7 +5301,7 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001611
+      caniuse-lite: 1.0.30001680
       electron-to-chromium: 1.4.740
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
@@ -5339,7 +5339,7 @@ snapshots:
 
   camelcase@5.3.1: {}
 
-  caniuse-lite@1.0.30001611: {}
+  caniuse-lite@1.0.30001680: {}
 
   chalk@2.4.2:
     dependencies:
