@@ -8,7 +8,7 @@ import { UserNav } from '@/components/user-nav'
 // import { MixerHorizontalIcon } from '@radix-ui/react-icons'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+//import { useParams } from 'react-router-dom'
 import { fetchDriver } from './data/services'
 
 import {
@@ -61,7 +61,7 @@ const chartConfig = {
 
 export default function Driver() {
   const url = window.location.href
-  const driverId = url.split('/').pop()?.slice(-3)
+  const driverId = url.split('/').pop()?.slice(-3) as string
   //const driverId = useParams<{ driverId: string }>()
   const [driver, setDriver] = useState<any | null>(null)
   
