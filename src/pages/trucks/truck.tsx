@@ -7,6 +7,8 @@ import { UserNav } from '@/components/user-nav'
 // import { cleaners } from './data/cleaners'
 // import { MixerHorizontalIcon } from '@radix-ui/react-icons'
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { useEffect, useState } from 'react'
+import { fetchGarbageTruck } from './data/services.tsx'
 
 import {
   Card,
@@ -31,6 +33,39 @@ import CollectionData from './collection_data'
 import GoogleMap from '../../components/custom/map'
 
 export default function Truck() {
+  const url = window.location.href
+  const truckID = url.split('/').pop()?.slice(-3) as string
+  const [truck, setTruck] = useState<any | null>(null)
+  console.log('Raw driverId from URL:', truckID)
+
+  useEffect(() => {
+    const loadTruck = async () => {
+      try {
+        const data: any = await fetchGarbageTruck(truckID)
+        console.log(data)
+
+        if (!data) {
+          throw new Error('Truck data is missing or invalid')
+        }
+
+        const mappedData = {
+          truck_id: `00${data.id}`,
+          licence_plate_number: data.licencePlateNo,
+          max_load_capacity: data.maxVolume,
+          status: data.truckStatus,
+          mileage: data.mileage,
+        }
+
+        setTruck(mappedData)
+      } catch (error) {
+        console.error('Failed to load truck:', error)
+      }
+    }
+
+    loadTruck()
+  }, [truckID])
+  if (!truck) return <p>Loading truck information...</p>
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -56,7 +91,7 @@ export default function Truck() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>ABC-1234</BreadcrumbPage>
+                  <BreadcrumbPage>{truck.licence_plate_number}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -67,7 +102,7 @@ export default function Truck() {
               <CardHeader className='p-0'>
                 <div className='flex flex-row items-center justify-start'>
                   <CardTitle className='text-2xl font-bold text-muted-foreground'>
-                    ABC-1234
+                    {truck.licence_plate_number}
                   </CardTitle>
                   <Button
                     variant='scale_btn'
@@ -83,7 +118,7 @@ export default function Truck() {
                     >
                       <circle cx='12' cy='12' r='12' fill='currentColor' />
                     </svg>
-                    Collecting
+                    {truck.status}
                   </Button>
                 </div>
               </CardHeader>
