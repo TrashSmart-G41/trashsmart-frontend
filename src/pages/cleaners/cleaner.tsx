@@ -35,6 +35,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import { useEffect, useState } from 'react'
+import { fetchCleaner } from './data/services'
+// import { date } from 'zod'
+// import { clear } from 'console'
+// import { EditCleaner } from './components/edit-cleaner-form'
+import { EditSingleCleaner } from './components/edit-single-cleaner'
 const chartData = [
   { month: 'January', collections: 2 },
   { month: 'February', collections: 5 },
@@ -57,6 +63,74 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function Cleaner() {
+
+  const [ cleaner, setCleaner ] = useState({})
+
+  const url = window.location.href;
+  const contId = url.split('/').pop()?.slice(-3);
+  // console.log(contId)
+
+  useEffect(() => {
+    const loadCleaner = async () => {
+      try {
+        const data: any = await fetchCleaner(contId)
+        console.log(data)
+        const mappedData = {
+          id: `CLN-${data.id.toString().padStart(3, '0')}`,
+          full_name: `${data.firstName} ${data.lastName}`,
+          contactNo: data.contactNo,
+          address: data.address,
+          date_of_birth: data.dob,
+          nic: data.nic,
+          status: data.status,
+          total_collections: data.totalCollections,
+          current_streak: data.currentStreak,
+          longest_streak: data.longestStreak,
+          total_working_days: data.totalActiveDays,
+          no_of_holidays: data.numberOfHolidays,
+          last_collection_date: data.lastCollectionDate,
+          communal_bins: data.communalBins
+        }
+
+        setCleaner(mappedData);
+        console.log(cleaner)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    loadCleaner()
+  }, [])
+
+  const getDateRange = () => {
+    const currentDate = new Date();
+    const pastDate = new Date();
+    pastDate.setMonth(currentDate.getMonth() - 12);
+  
+    const formatDate = (date: Date) =>
+      date.toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      });
+  
+    const startDate = formatDate(pastDate);
+    const endDate = formatDate(currentDate);
+  
+    return `${startDate} to ${endDate}`;
+  };
+
+  const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const handleEditClick = () => {
+    setIsEditOpen(true);
+  };
+
+  // const closeEditModal = () => {
+  //   setIsEditOpen(false);
+  // };
+
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -74,6 +148,7 @@ export default function Cleaner() {
             variant='outline'
             size='sm'
             className='hidde n absolute right-2 top-2 ml-auto h-8 lg:flex'
+            onClick={handleEditClick}
           >
             {/* <MixerHorizontalIcon className='mr-2 h-4 w-4' /> */}
             <svg
@@ -91,6 +166,8 @@ export default function Cleaner() {
             Edit
           </Button>
 
+          {isEditOpen && <EditSingleCleaner contId={contId} /> }
+
           <div className='px-4 pt-4'>
             <Breadcrumb>
               <BreadcrumbList>
@@ -103,7 +180,7 @@ export default function Cleaner() {
                 </BreadcrumbItem>
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>John Smith</BreadcrumbPage>
+                  <BreadcrumbPage>{cleaner?.full_name}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
@@ -114,7 +191,7 @@ export default function Cleaner() {
               <CardHeader className='p-0'>
                 <div className='flex flex-row items-center justify-start'>
                   <CardTitle className='text-2xl font-bold'>
-                    John Smith
+                    {cleaner?.full_name}
                   </CardTitle>
                   <Button
                     variant='scale_btn'
@@ -130,11 +207,11 @@ export default function Cleaner() {
                     >
                       <circle cx='12' cy='12' r='12' fill='currentColor' />
                     </svg>
-                    Active
+                    {cleaner?.status}
                   </Button>
                 </div>
                 <CardDescription>
-                  789 University Avenue, Cambridge, MA, USA
+                  {cleaner?.address}
                 </CardDescription>
               </CardHeader>
             </div>
@@ -155,7 +232,7 @@ export default function Cleaner() {
                   Employee ID
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  EMP10001
+                  {cleaner.id}
                 </div>
               </div>
               <div className='mt-3'>
@@ -163,7 +240,7 @@ export default function Cleaner() {
                   Full Name
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  Mudiyanselage John Smith Wijesiri
+                  {cleaner?.full_name}
                 </div>
               </div>
             </div>
@@ -174,7 +251,7 @@ export default function Cleaner() {
                   Contact Number
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  0774936421
+                  {cleaner?.contactNo}
                 </div>
               </div>
               <div className='mt-3'>
@@ -182,7 +259,7 @@ export default function Cleaner() {
                   Address
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  123/4, Galle Road, Colombo 03
+                  {cleaner.address}
                 </div>
               </div>
             </div>
@@ -193,13 +270,13 @@ export default function Cleaner() {
                   Date of Birth
                 </CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  14-06-1968
+                  {cleaner?.date_of_birth}
                 </div>
               </div>
               <div className='mt-3'>
                 <CardDescription className='text-[13px]'>NIC</CardDescription>
                 <div className='font-medium text-muted-foreground'>
-                  19686860163v
+                  {cleaner?.nic}
                 </div>
               </div>
             </div>
@@ -213,7 +290,7 @@ export default function Cleaner() {
                 Total Collections{' '}
               </div>
               <div className='flex items-center text-[25px] font-semibold text-muted-foreground'>
-                112 <TrendingUp className='mx-2 h-4 w-4 text-primary' />{' '}
+                {cleaner?.total_collections} <TrendingUp className='mx-2 h-4 w-4 text-primary' />{' '}
                 <span className='text-[13px] font-normal text-primary'>
                   1.7%
                 </span>
@@ -224,7 +301,7 @@ export default function Cleaner() {
                 Current Streak
               </div>
               <div className='text-[25px] font-semibold text-muted-foreground'>
-                3
+                {cleaner.current_streak}
               </div>
             </div>
             <div className='mt-4'>
@@ -232,7 +309,7 @@ export default function Cleaner() {
                 Longest Streak
               </div>
               <div className='text-[25px] font-semibold text-muted-foreground'>
-                10
+                {cleaner.longest_streak}
               </div>
             </div>
             <div className='mt-4'>
@@ -240,7 +317,7 @@ export default function Cleaner() {
                 Total Working Days
               </div>
               <div className='text-[25px] font-semibold text-muted-foreground'>
-                245
+                {cleaner.total_working_days}
               </div>
             </div>
             <div className='mt-4'>
@@ -248,7 +325,7 @@ export default function Cleaner() {
                 No. of Leaves
               </div>
               <div className='text-[25px] font-semibold text-muted-foreground'>
-                2
+                {cleaner.no_of_holidays}
               </div>
             </div>
           </Card>
@@ -258,7 +335,7 @@ export default function Cleaner() {
               Collection Analysis
             </div>
             <CardDescription className='text-[11px]'>
-              01-01-2022 to 31-12-2022
+              {getDateRange()}
             </CardDescription>
             <ChartContainer config={chartConfig} className='h-[340px] w-full'>
               <LineChart
