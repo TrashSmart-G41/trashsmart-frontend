@@ -15,10 +15,10 @@ export default function UpcomingAuctions() {
         const mappedData = data.map((auc: any) => ({
           id: `AUC-${auc.id.toString().padStart(3, '0')}`,
           wasteType: auc.auctionWasteType.charAt(0).toUpperCase() + auc.auctionWasteType.slice(1).toLowerCase(),
-          weight: auc.weight,
-          startDate: auc.startDate,
-          endDate: auc.endDate,
-          min_bid: auc.minimumBidAmount,
+          weight: `${auc.weight} KG`,
+          startDate: auc.startDate.slice(0, 10),
+          endDate: auc.endDate.slice(0, 10),
+          min_bid: `Rs. ${auc.minimumBidAmount}`,
         }))
 
         // const sortedData = mappedData.sort((a: any, b: any) =>

@@ -35,14 +35,14 @@ export function DataTableToolbar<TData>({
             <DataTableFacetedFilter
               column={table.getColumn('wasteType')}
               title='Waste Type'
-              options={statuses}
+              options={types}
             />
           )}
-          {table.getColumn('startDate') && (
+          {table.getColumn('status') && (
             <DataTableFacetedFilter
-              column={table.getColumn('startDate')}
-              title='Start Date'
-              options={types}
+              column={table.getColumn('status')}
+              title='Status'
+              options={statuses}
             />
           )}
         </div>

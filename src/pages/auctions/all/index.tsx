@@ -15,17 +15,17 @@ export default function CanceledAuctions() {
         const mappedData = data.map((auc: any) => ({
           id: `AUC-${auc.id.toString().padStart(3, '0')}`,
           wasteType: auc.auctionWasteType.charAt(0).toUpperCase() + auc.auctionWasteType.slice(1).toLowerCase(),
-          weight: auc.weight,
-          startDate: auc.startDate,
-          endDate: auc.endDate,
-          min_bid: auc.minimumBidAmount,
-          status: auc.status
+          weight: `${auc.weight} KG`,
+          startDate: auc.startDate.slice(0, 10),
+          endDate: auc.endDate.slice(0, 10),
+          min_bid: `Rs. ${auc.minimumBidAmount}`,
+          status: auc.status,
         }))
 
-        // const sortedData = mappedData.sort((a: any, b: any) =>
-        //   b.auction_id.localeCompare(a.auction_id)
-        // )
-        setAuctions(mappedData);
+        const sortedData = mappedData.sort((a: any, b: any) =>
+          b.id.localeCompare(a.id)
+        )
+        setAuctions(sortedData);
       } catch (e) {
         console.error("Failed to load Auctions", e);
       }
