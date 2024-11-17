@@ -3,7 +3,7 @@ import GeneralError from './pages/errors/general-error'
 import NotFoundError from './pages/errors/not-found-error'
 import MaintenanceError from './pages/errors/maintenance-error'
 
-const router = (isAuthenticated: boolean, isContractor: boolean) =>
+const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:boolean) =>
   createBrowserRouter([
     // Auth routes
     {
@@ -63,6 +63,11 @@ const router = (isAuthenticated: boolean, isContractor: boolean) =>
         if (isContractor) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.default }
+        }
+        else if(isOrganization)
+        {
+          const AppShell = await import('./components/app-shell')
+          return { Component: AppShell.AppShell_Ins }
         }
         const Home = await import('@/pages/home')
         return { Component: Home.default }

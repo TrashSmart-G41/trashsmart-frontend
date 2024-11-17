@@ -8,6 +8,7 @@ import axios from 'axios'
 interface AuthContextProps {
   isAuthenticated: boolean
   isContractor: boolean
+  isOrganization: boolean
   logout: () => void
 }
 
@@ -18,6 +19,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isContractor, setIsContractor] = useState(false)
+  const [isOrganization, setIsOrganization] = useState(false)
+
   // const navigate = useNavigate()
 
   useEffect(() => {
@@ -28,6 +31,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         setIsAuthenticated(true)
         if (decoded.role === 'CONTRACTOR') {
           setIsContractor(true)
+        }
+        else if (decoded.role === 'ORGANIZATION')
+        {
+          setIsOrganization(true)
         }
       } catch (error) {
         console.error('Invalid token:', error)
@@ -52,7 +59,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isContractor, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isContractor, isOrganization, logout }}>
       {children}
     </AuthContext.Provider>
   )
