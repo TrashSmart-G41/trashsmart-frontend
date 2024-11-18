@@ -45,9 +45,9 @@ const nic = z.string().nonempty({
   message: 'NIC cannot be empty.',
 })
 
-const totalCollections = z.number().nullable()
-const currentStreak = z.number().nullable()
-const longestStreak = z.number().nullable()
+//const totalCollections = z.number().nullable()
+//const currentStreak = z.number().nullable()
+//const longestStreak = z.number().nullable()
 const totalActiveDays = z.number().nullable()
 const numberOfHolidays = z.number().nullable()
 
@@ -58,9 +58,9 @@ const FormSchema = z.object({
   address: address,
   dob: dob,
   nic: nic,
-  totalCollections: totalCollections,
-  currentStreak: currentStreak,
-  longestStreak: longestStreak,
+  //totalCollections: totalCollections,
+  //currentStreak: currentStreak,
+  //longestStreak: longestStreak,
   totalActiveDays: totalActiveDays,
   numberOfHolidays: numberOfHolidays,
 })
@@ -75,9 +75,9 @@ export function EditSingleDriver({ contId }: { contId: string }) {
       contactNo: '',
       dob: '',
       nic: '',
-      totalCollections: 0,
-      currentStreak: 0,
-      longestStreak: 0,
+      //totalCollections: 0,
+      //currentStreak: 0,
+      //longestStreak: 0,
       totalActiveDays: 0,
       numberOfHolidays: 0,
     },
@@ -97,9 +97,9 @@ export function EditSingleDriver({ contId }: { contId: string }) {
                 contactNo: string
                 dob: string
                 nic: string
-                totalCollections: number
-                currentStreak: number
-                longestStreak: number
+                //totalCollections: number
+                //currentStreak: number
+                //longestStreak: number
                 totalActiveDays: number
                 numberOfHolidays: number
               }
@@ -214,7 +214,7 @@ export function EditSingleDriver({ contId }: { contId: string }) {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name='totalCollections'
                 render={({ field }) => (
@@ -231,8 +231,8 @@ export function EditSingleDriver({ contId }: { contId: string }) {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-              <FormField
+              /> */}
+              {/* <FormField
                 control={form.control}
                 name='currentStreak'
                 render={({ field }) => (
@@ -249,8 +249,8 @@ export function EditSingleDriver({ contId }: { contId: string }) {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-              <FormField
+              /> */}
+              {/* <FormField
                 control={form.control}
                 name='longestStreak'
                 render={({ field }) => (
@@ -267,7 +267,7 @@ export function EditSingleDriver({ contId }: { contId: string }) {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <FormField
                 control={form.control}
                 name='totalActiveDays'
