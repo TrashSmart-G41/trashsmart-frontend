@@ -9,8 +9,8 @@ import { DataTableColumnHeader } from './data-table-column-header'
 // import { statuses, regions } from '../data/data'
 import { Organization } from '../org/data/schema'
 import { Button } from '@/components/custom/button'
-import { EditOrganization } from '/Users/mashawickramasinghe/Desktop/UCSC/3rd Year/Group Project 2/trashsmart-frontend/src/pages/organizations/components/edit-organization-form.tsx'
-import { DeleteOrganization } from '/Users/mashawickramasinghe/Desktop/UCSC/3rd Year/Group Project 2/trashsmart-frontend/src/pages/organizations/components/delete-organization.tsx'
+import { EditOrganization } from '@/pages/organizations/components/edit-organization-form.tsx'
+import { DeleteOrganization } from '@/pages/organizations/components/delete-organization.tsx'
 
 export const columns: ColumnDef<Organization>[] = [
   {

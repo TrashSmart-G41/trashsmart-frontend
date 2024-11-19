@@ -157,18 +157,14 @@ export const columns: ColumnDef<CommunalBin>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      // const navigate = useNavigate()
-      // const handleButtonClick = () => {
-      //   navigate(`/cleaners/${row.getValue('employee_id')}`)
-      // }
-      console.log(row)
-
+      const binId = String(row.getValue('bin_id') || '').slice(-3)
+      console.log(binId)
+  
       return (
-        <div className='mr-4 flex items-center justify-end'>
-          <CommunalDialog />
-          {/* <DataTableRowActions row={row} /> */}
+        <div className="mr-4 flex items-center justify-end">
+          <CommunalDialog binId={binId} />
         </div>
       )
     },
-  },
+  }
 ]

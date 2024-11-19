@@ -12,8 +12,59 @@ import {
 // import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
 // import { Badge } from "@/components/ui/badge"
+import { useEffect, useState } from 'react'
+import { fetchCommunalBin } from '../data/services.tsx'
+import { deleteCommunalBin } from '../data/services.tsx'
 
-export function CommunalDialog() {
+export function CommunalDialog({ binId }: { binId: string }) {
+  console.log(binId)
+  const [binData, setBinData] = useState<any | null>(null)
+
+  useEffect(() => {
+    const loadBin = async () => {
+      try {
+        const data: any = await fetchCommunalBin(binId)
+        console.log(data)
+
+        if (!data) {
+          throw new Error('Bin data is missing or invalid')
+        }
+
+        const mappedData = {
+          bin_id: `SB-${data.id.toString().padStart(3, '0')}`,
+          location: `${data.longitude} , ${data.latitude}`,
+          type: `${data.wasteType} - ${data.binSize}`,
+          installed_date: data.installationDate,
+          last_maintenance_date: data.lastMaintenanceDate,
+          fill_level: data.fillLevel,
+          last_collection_date: data.lastCollectionDate,
+        }
+
+        setBinData(mappedData)
+      } catch (error) {
+        console.error('Failed to load bin:', error)
+      }
+    }
+
+    loadBin()
+  }, [binId])
+
+  const handleDelete = async () => {
+    try {
+      const confirmation = confirm('Are you sure you want to delete this bin?')
+      if (!confirmation) return
+
+      await deleteCommunalBin(binId)
+      alert('Bin deleted successfully')
+      window.location.reload()
+    } catch (error) {
+      console.error('Failed to delete bin:', error)
+      alert('Failed to delete the bin. Please try again.')
+    }
+  }
+
+  if (!binData) return <p>Loading bin information...</p>
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -26,8 +77,8 @@ export function CommunalDialog() {
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader className='flex flex-col items-center justify-center'>
-          <DialogTitle>SB-9A5D4B3E</DialogTitle>
-          <DialogDescription>Mega - 50 Liters</DialogDescription>
+          <DialogTitle>{binData.bin_id}</DialogTitle>
+          <DialogDescription>{binData.type}</DialogDescription>
         </DialogHeader>
         <div className='gap-y-4'>
           <Card className='p-4'>
@@ -37,7 +88,7 @@ export function CommunalDialog() {
                   Location
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                  Hyde Park, London, UK
+                {binData.location}
                 </div>
               </div>
               <div className='flex items-center justify-center'>
@@ -58,7 +109,7 @@ export function CommunalDialog() {
                   Installation Date
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                  29-04-2024
+                {binData.installed_date}
                 </div>
               </div>
               {/* <div className="flex justify-center items-center">
@@ -76,7 +127,7 @@ export function CommunalDialog() {
                   Fill Level
                 </div>
                 <div className='text-sm font-medium text-destructive '>
-                  Full
+                {binData.fill_level}
                 </div>
               </div>
               <div className='flex items-center justify-center'>
@@ -98,7 +149,7 @@ export function CommunalDialog() {
                   Maintenance History
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                  Last maintenance on 14-05-2024
+                  Last maintenance on {binData.last_maintenance_date}
                 </div>
               </div>
               {/* <div className="flex justify-center items-center">
@@ -110,7 +161,9 @@ export function CommunalDialog() {
           </Card>
         </div>
         <DialogFooter>
-          <Button variant='destructive'>Delete Bin</Button>
+        <Button variant='destructive' onClick={handleDelete}>
+            Delete Bin
+          </Button>
           <Button>+ Maintenance request</Button>
         </DialogFooter>
       </DialogContent>
