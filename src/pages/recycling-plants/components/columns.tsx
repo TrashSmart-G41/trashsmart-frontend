@@ -136,7 +136,7 @@ export const columns: ColumnDef<RecyclingPlant>[] = [
       const contId = String(row.getValue('id') || '').slice(-3)
 
       const handleButtonClick = () => {
-        navigate(`/recycling-plant/${row.getValue('id')}`)
+        navigate(`/recycling-plants/${row.getValue('id')}`)
       }
 
       return (

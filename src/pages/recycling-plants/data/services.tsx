@@ -29,3 +29,8 @@ export const deleteRecyclingPlant = async (id: string) => {
   const response = await request('DELETE', url)
   return response
 }
+
+export const fetchAllRecyclingPlants = async () => {
+  const response = await request('GET', API_URL)
+  return response.data
+}

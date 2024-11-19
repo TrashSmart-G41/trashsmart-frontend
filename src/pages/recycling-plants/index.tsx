@@ -14,11 +14,13 @@ import {
   // CardFooter,
 } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
-import { fetchRecyclingPlants } from './data/services'
-import LocationPicker from '@/components/custom/location_picker'
+import { fetchAllRecyclingPlants, fetchRecyclingPlants } from './data/services'
+// import LocationPicker from '@/components/custom/location_picker'
 
 export default function Tasks() {
   const [ recyclingPlants, setRecyclingPlants ] = useState([])
+  const [ allCount, setAllCount ] = useState(0)
+  const [ activeCount, setActiveCount ] = useState(0)
 
   useEffect(() => {
     const loadRecyclingPlants = async () => {
@@ -35,7 +37,13 @@ export default function Tasks() {
         const sortedData = mappedData.sort((a: any, b: any) =>
           b.id.localeCompare(a.id)
         )
+        setActiveCount(mappedData.length)
+
         setRecyclingPlants(sortedData)
+
+        const allData: any = await fetchAllRecyclingPlants()
+        setAllCount(allData.length)
+
       } catch (error) {
         console.error('Failed to load Recycling Plants:', error)
       }
@@ -43,6 +51,8 @@ export default function Tasks() {
 
     loadRecyclingPlants()
   }, [])
+
+
 
   return (
     <Layout>
@@ -84,7 +94,7 @@ export default function Tasks() {
             <CardContent>
               <div className='flex flex-row items-center'>
                 <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                  16
+                  {allCount}
                 </div>
                 {/* <div className='flex flex-row text-primary'>
                   <TrendingUp className='pr-1' />
@@ -122,7 +132,7 @@ export default function Tasks() {
             <CardContent>
               <div className='flex flex-row items-center'>
                 <div className='pr-2 text-4xl font-semibold text-primary'>
-                  14
+                  {activeCount}
                 </div>
                 {/* <div className='flex flex-row text-primary'>
                   <TrendingUp className='pr-1' />
@@ -193,7 +203,7 @@ export default function Tasks() {
             </div>
           </div>
         </Card>
-        <LocationPicker/>
+        {/* <LocationPicker/> */}
       </Layout.Body>
     </Layout>
   )

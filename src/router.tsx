@@ -242,6 +242,12 @@ const router = (isAuthenticated: boolean, isContractor: boolean) =>
             Component: (await import('@/pages/recycling-plants')).default
         })
         },
+        {
+          path: 'recycling-plants/:id',
+          lazy: async () => ({
+            Component: (await import('@/pages/recycling-plants/info')).default
+        })
+        },
       ],
     },
     {

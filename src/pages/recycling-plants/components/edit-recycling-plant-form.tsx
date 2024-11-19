@@ -55,7 +55,7 @@ const FormSchema = z.object({
   profileURL: z.string().min(1, {
     message: 'ProfileURL is required.',
   }),
-  BRN: z.string().min(3, {
+  brn: z.string().min(3, {
     message: 'Recycling Plant BRN is required.',
   }),
 })
@@ -71,7 +71,7 @@ export function EditRecyclingPlant({ contId }: { contId: string }) {
       address: '',
       contactNo: '',
       profileURL: '',
-      BRN: '',
+      brn: '',
     },
   })
 
@@ -89,7 +89,7 @@ export function EditRecyclingPlant({ contId }: { contId: string }) {
                 address: string
                 contactNo: string
                 prfileURL: string
-                BRN: string
+                brn: string
               }
             )
           })
@@ -223,7 +223,7 @@ export function EditRecyclingPlant({ contId }: { contId: string }) {
               />
               <FormField
                 control={form.control}
-                name='BRN'
+                name='brn'
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Business Registration No.</FormLabel>
