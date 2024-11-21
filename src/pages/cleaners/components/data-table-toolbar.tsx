@@ -62,7 +62,7 @@ export function DataTableToolbar<TData>({
       {/* <DataTableViewOptions table={table} /> */}
       <PopupForm
         formContent={AddCleanerForm}
-        buttonContent={'+ Register new personnel'}
+        buttonContent={'+ Register New Personnel'}
       />
     </div>
   )

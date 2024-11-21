@@ -14,15 +14,15 @@ import {
 } from '@/components/ui/alert-dialog'
 
 import { Button } from '@/components/ui/button'
-import { CalendarIcon } from 'lucide-react'
-import { format } from 'date-fns'
-import { cn } from '@/lib/utils'
-import { Calendar } from '@/components/ui/calendar'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+// import { CalendarIcon } from 'lucide-react'
+// import { format } from 'date-fns'
+// import { cn } from '@/lib/utils'
+// import { Calendar } from '@/components/ui/calendar'
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from '@/components/ui/popover'
 import {
   Form,
   FormControl,
@@ -33,36 +33,66 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+// import { toast } from '@/components/ui/use-toast'
+import { addCleaner } from '../data/services'
 import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
-  full_name: z.string(),
-  contact_number: z.string(),
-  address: z.string(),
-  date_of_birth: z.string(),
+  firstName: z.string().min(2, {
+    message:'First name must be at least 2 characters'
+  }),
+  lastName: z.string().min(2, {
+    message:'Last name must be at least 2 characters'
+  }),
+  email: z.string().email({
+    message: 'Invalid email address.',
+  }),
+  contactNo: z.string().regex(/^0\d{9}$/, {
+    message: 'Contact number must start with 0 and be exactly 10 digits.',
+  })
+  .length(10, {
+    message: 'Contact number must be exactly 10 digits.',
+  }),
+  address: z.string().min(5, {
+    message: 'Address must be at least 5 characters.',
+  }),
+  dob: z.string(),
+  nic: z.string().length(12, {
+    message: 'NIC must be exactly 12 digits.',
+  }),
 })
 
 export function AddCleanerForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      full_name: '',
-      contact_number: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      contactNo: '',
       address: '',
-      date_of_birth: '',
+      dob: '',
+      nic: '',
     },
   })
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+    console.log(data)
+    // Close the popup immediately
     document.getElementById('continue')?.click()
+    try {
+      const addCln = async () => {
+        const response = await addCleaner(data)
+        if (response.status === 200) {
+          console.log(response)
+          window.location.reload()
+        }
+      }
+      addCln()
+      toast({description: 'Cleaner added successfully'})
+    } catch (error) {
+      console.error(error)
+      toast({description: 'Failed to add the Cleaner'})    }
   }
 
   return (
@@ -73,10 +103,10 @@ export function AddCleanerForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
-          name='full_name'
+          name='firstName'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Full Name</FormLabel>
+              <FormLabel>First Name</FormLabel>
               <FormControl>
                 <Input placeholder='' {...field} />
               </FormControl>
@@ -86,7 +116,33 @@ export function AddCleanerForm() {
         />
         <FormField
           control={form.control}
-          name='contact_number'
+          name='lastName'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Last Name</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='email'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='contactNo'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Contact Number</FormLabel>
@@ -110,7 +166,7 @@ export function AddCleanerForm() {
             </FormItem>
           )}
         />
-        <FormField
+        {/* <FormField
           control={form.control}
           name='date_of_birth'
           render={({ field }) => (
@@ -147,6 +203,32 @@ export function AddCleanerForm() {
                   />
                 </PopoverContent>
               </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        /> */}
+        <FormField
+          control={form.control}
+          name='dob'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Date of Birth</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='nic'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>NIC</FormLabel>
+              <FormControl>
+                <Input placeholder='' {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
