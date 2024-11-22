@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from 'react'
 import { fetchCommunalBin } from '../data/services.tsx'
 import { deleteCommunalBin } from '../data/services.tsx'
+import { addMaintenanceRequest } from '../../maintenance/data/services.tsx'
 
 export function CommunalDialog({ binId }: { binId: string }) {
   console.log(binId)
@@ -63,6 +64,21 @@ export function CommunalDialog({ binId }: { binId: string }) {
     }
   }
 
+  const handleAdd = async () => {
+    try {
+      const requestData = {
+        bin_id: binId,
+        otherNotes: '',
+      }
+
+      await addMaintenanceRequest(requestData, binId)
+      window.location.reload()
+    } catch (error) {
+      console.error('Failed to create request:', error)
+      alert('Failed to create request. Please try again.')
+    }
+  }
+
   if (!binData) return <p>Loading bin information...</p>
 
   return (
@@ -88,16 +104,17 @@ export function CommunalDialog({ binId }: { binId: string }) {
                   Location
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                {binData.location}
+                  {binData.location}
                 </div>
               </div>
               <div className='flex items-center justify-center'>
-                <Button
+                {/* <Button
                   variant='ghost'
                   className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
+                  onClick={handleEdit}
                 >
                   Change Location
-                </Button>
+                </Button> */}
               </div>
             </div>
           </Card>
@@ -109,7 +126,7 @@ export function CommunalDialog({ binId }: { binId: string }) {
                   Installation Date
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                {binData.installed_date}
+                  {binData.installed_date}
                 </div>
               </div>
               {/* <div className="flex justify-center items-center">
@@ -126,18 +143,20 @@ export function CommunalDialog({ binId }: { binId: string }) {
                 <div className='text-[12px] text-muted-foreground'>
                   Fill Level
                 </div>
-                <div className='text-sm font-medium text-destructive '>
-                {binData.fill_level}
+                <div className='text-sm font-medium text-destructive'>
+                  {binData.fill_level}
                 </div>
               </div>
               <div className='flex items-center justify-center'>
-                <Button
-                  variant='scale_btn'
-                  size='scale_btn'
-                  className='h-8 bg-cyan-500/25 text-cyan-500'
-                >
-                  Request Sent
-                </Button>
+                {binData.fill_level > 75 && (
+                  <Button
+                    variant='scale_btn'
+                    size='scale_btn'
+                    className='h-8 bg-cyan-500/25 text-cyan-500'
+                  >
+                    Request Sent
+                  </Button>
+                )}
               </div>
             </div>
           </Card>
@@ -161,10 +180,10 @@ export function CommunalDialog({ binId }: { binId: string }) {
           </Card>
         </div>
         <DialogFooter>
-        <Button variant='destructive' onClick={handleDelete}>
+          <Button variant='destructive' onClick={handleDelete}>
             Delete Bin
           </Button>
-          <Button>+ Maintenance request</Button>
+          <Button onClick={handleAdd}>+ Maintenance request</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

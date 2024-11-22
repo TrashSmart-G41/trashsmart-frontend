@@ -31,11 +31,17 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/use-toast'
+
+import { addMaintenanceRequest } from '../data/services.tsx'
+import { fetchCommercialBins } from '@/pages/bins/commercial/data/services.tsx'
+import { fetchCommunalBins } from '@/pages/bins/communal/data/services.tsx'
+import { useEffect, useState } from 'react'
+import { CommercialBin } from '../../commercial/data/schema.ts'
+//import { CommunalBin } from '../../communal/data/schema.ts'
 
 const FormSchema = z.object({
   bin_id: z.string(),
-  reason: z.string(),
+  otherNotes: z.string(),
 })
 
 export function RequestForm() {
@@ -43,20 +49,55 @@ export function RequestForm() {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       bin_id: '',
-      reason: '',
+      otherNotes: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  const [bins, setBins] = useState<CommercialBin[]>([])
+
+  useEffect(() => {
+    const loadBins = async () => {
+      try {
+        // Fetch commercial bins
+        const commercialData: any = await fetchCommercialBins()
+        const commercialMapped: CommercialBin[] = commercialData.map(
+          (bin: any) => ({
+            bin_id: `SB-${bin.id.toString().padStart(3, '0')}`,
+          })
+        )
+
+        // Fetch communal bins
+        const communalData: any = await fetchCommunalBins()
+        const communalMapped: CommercialBin[] = communalData.map(
+          (bin: any) => ({
+            bin_id: `SB-${bin.id.toString().padStart(3, '0')}`,
+          })
+        )
+
+        setBins([...commercialMapped, ...communalMapped])
+      } catch (error) {
+        console.error('Failed to load bins:', error)
+      }
+    }
+    loadBins()
+  }, [])
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     document.getElementById('continue')?.click()
+    try {
+      const binId = data.bin_id.slice(-3)
+      console.log(binId)
+      const addrequest = async () => {
+        const response = await addMaintenanceRequest(data, binId)
+        if (response.status === 200) {
+          console.log('Request added successfully!')
+          window.location.reload()
+        }
+      }
+      addrequest()
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
 
   return (
@@ -78,18 +119,21 @@ export function RequestForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value='small'>Small</SelectItem>
-                  <SelectItem value='medium'>Medium</SelectItem>
-                  <SelectItem value='large'>Large</SelectItem>
+                  {bins.map((bin) => (
+                    <SelectItem key={bin.bin_id} value={bin.bin_id}>
+                      {bin.bin_id}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
-          name='reason'
+          name='otherNotes'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Reason</FormLabel>

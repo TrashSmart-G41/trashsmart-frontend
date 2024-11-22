@@ -12,7 +12,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/dashtabs'
-import Insights from './insights'
+import Insights from './insights/insights'
 import CommunalBins from './communal'
 import CommercialBins from './commercial'
 import Maintenance from './maintenance'

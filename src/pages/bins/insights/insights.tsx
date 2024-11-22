@@ -13,6 +13,9 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 // import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
 import { TrendingUp } from 'lucide-react'
+// import { binCount } from './data/services'
+// import { FULLbinCount } from './data/services'
+// import { requestCount } from '@/pages/bins/maintenance/data/services.tsx'
 
 import {
   ChartConfig,
@@ -20,7 +23,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
-import { TopTen } from './components/insights/top10'
+import { TopTen } from '../components/insights/top10'
 const chartData = [
   { month: 'January', desktop: 186 },
   { month: 'February', desktop: 305 },
@@ -106,7 +109,7 @@ export default function Insights() {
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                  TOTAL MAINTENANCE
+                  TOTAL MAINTENANCES
                 </CardTitle>
               </CardHeader>
               <CardContent>
