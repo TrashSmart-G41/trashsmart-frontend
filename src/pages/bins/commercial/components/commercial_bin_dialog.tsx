@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/dialog'
 import { fetchCommercialBin } from '../data/services.tsx'
 import { deleteCommercialBin } from '../data/services.tsx'
+import { addMaintenanceRequest } from '../../maintenance/data/services.tsx'
 
 export function CommercialDialog({ binId }: { binId: string }) {
   console.log(binId)
@@ -57,6 +58,21 @@ export function CommercialDialog({ binId }: { binId: string }) {
     } catch (error) {
       console.error('Failed to delete bin:', error)
       alert('Failed to delete the bin. Please try again.')
+    }
+  }
+
+  const handleAdd = async () => {
+    try {
+      const requestData = {
+        bin_id: binId,
+        otherNotes: '',
+      }
+
+      await addMaintenanceRequest(requestData, binId)
+      window.location.reload()
+    } catch (error) {
+      console.error('Failed to create request:', error)
+      alert('Failed to create request. Please try again.')
     }
   }
 
@@ -161,7 +177,7 @@ export function CommercialDialog({ binId }: { binId: string }) {
           <Button variant='destructive' onClick={handleDelete}>
             Delete Bin
           </Button>
-          <Button>+ Maintenance request</Button>
+          <Button onClick={handleAdd}>+ Maintenance request</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -52,7 +52,7 @@ const longitude = z
     const num = parseFloat(value)
     return !isNaN(num)
   })
-  .transform((value) => parseFloat(value)) // Transform to number
+  .transform((value) => parseFloat(value)) 
 
 const latitude = z
   .string()
