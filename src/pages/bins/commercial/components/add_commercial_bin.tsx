@@ -14,11 +14,15 @@ import {
 } from '@/components/ui/alert-dialog'
 
 import { Button } from '@/components/ui/button'
-import { CalendarIcon } from 'lucide-react'
-import { format } from 'date-fns'
-import { cn } from '@/lib/utils'
+// import { CalendarIcon } from 'lucide-react'
+// import { format } from 'date-fns'
+// import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
-import { Calendar } from '@/components/ui/calendar'
+// import { Calendar } from '@/components/ui/calendar'
+import { addCommercialBin } from '../data/services.tsx'
+import { fetchOrganizations } from '@/pages/organizations/data/services.tsx'
+import { useEffect, useState } from 'react'
+
 import {
   Form,
   FormControl,
@@ -28,11 +32,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -41,38 +45,87 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/use-toast'
+
+const longitude = z
+  .string()
+  .refine((value) => {
+    const num = parseFloat(value)
+    return !isNaN(num)
+  })
+  .transform((value) => parseFloat(value)) // Transform to number
+
+const latitude = z
+  .string()
+  .refine((value) => {
+    const num = parseFloat(value)
+    return !isNaN(num)
+  })
+  .transform((value) => parseFloat(value))
 
 const FormSchema = z.object({
-  bin_id: z.string(),
-  organization: z.string(),
-  location: z.string(),
-  type: z.string(),
-  purchase_date: z.string(),
+  //bin_id: z.string(),
+  longitude: longitude,
+  latitude: latitude,
+  wasteType: z.string(),
+  binSize: z.string(),
+  organization_id: z.string(),
+  //purchase_date: z.string(),
 })
 
+interface Organization {
+  org_id: string
+  firstName: string
+}
+
 export function CommercialBinForm() {
+  const [organizations, setOrganizations] = useState<Organization[]>([])
+
+  useEffect(() => {
+    const loadOrganizations = async () => {
+      try {
+        const data: any = await fetchOrganizations()
+        const mappedData: Organization[] = data.map((organization: any) => ({
+          org_id: organization.id,
+          firstName: organization.firstName,
+        }))
+        setOrganizations(mappedData)
+      } catch (error) {
+        console.error('Failed to load organizations:', error)
+      }
+    }
+    loadOrganizations()
+  }, [])
+
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      bin_id: '',
-      organization: '',
-      location: '',
-      type: '',
-      purchase_date: '',
+      //bin_id: '',
+      longitude: 0.0,
+      latitude: 0.0,
+      wasteType: '',
+      binSize: '',
+      organization_id: '',
+      //purchase_date: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function handleFormSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data)
     document.getElementById('continue')?.click()
+    try {
+      const organizationId = data.organization_id
+      console.log(organizationId)
+      const addcommercialbin = async () => {
+        const response = await addCommercialBin(data, organizationId)
+        if (response.status === 200) {
+          console.log('Bin added successfully!')
+          window.location.reload()
+        }
+      }
+      addcommercialbin()
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
 
   return (
@@ -80,8 +133,11 @@ export function CommercialBinForm() {
       <h2 className='w-full text-center text-lg font-semibold'>
         Add Commercial Bin
       </h2>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
-        <FormField
+      <form
+        onSubmit={form.handleSubmit(handleFormSubmit)}
+        className='w-full space-y-6'
+      >
+        {/* <FormField
           control={form.control}
           name='bin_id'
           render={({ field }) => (
@@ -93,23 +149,78 @@ export function CommercialBinForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
-          name='organization'
+          name='organization_id'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Organization</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+              <Select onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder='Select Organization' {...field} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value='small'>Small</SelectItem>
-                  <SelectItem value='medium'>Medium</SelectItem>
-                  <SelectItem value='large'>Large</SelectItem>
+                  {organizations.map((org) => (
+                    <SelectItem key={org.org_id} value={org.org_id}>
+                      {' '}
+                      {/* Use org_id as the value */}
+                      {org.firstName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='longitude'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location (Longitude)</FormLabel>
+              <FormControl>
+                <Input placeholder='Enter location longitude' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='latitude'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location (Latitude)</FormLabel>
+              <FormControl>
+                <Input placeholder='Enter location latitude' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='wasteType'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Waste Type</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Waste Type' {...field} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='BIO_DEGRADABLE'>Bio-degradable</SelectItem>
+                  <SelectItem value='NON_BIO_DEGRADABLE'>
+                    Non Bio-degradable
+                  </SelectItem>
+                  <SelectItem value='RECYCLABLE'>Recyclable</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -118,31 +229,27 @@ export function CommercialBinForm() {
         />
         <FormField
           control={form.control}
-          name='location'
+          name='binSize'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Location</FormLabel>
-              <FormControl>
-                <Input placeholder='' {...field} />
-              </FormControl>
+              <FormLabel>Bin Size</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Bin Size' {...field} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='GENERAL'>General</SelectItem>
+                  <SelectItem value='MEDIUM'>Medium</SelectItem>
+                  <SelectItem value='MEGA'>Mega</SelectItem>
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name='type'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Type/Capacity</FormLabel>
-              <FormControl>
-                <Input placeholder='Type-Capacity' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
+        {/* <FormField
           control={form.control}
           name='purchase_date'
           render={({ field }) => (
@@ -182,19 +289,21 @@ export function CommercialBinForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <Separator />
-        <Button
+        {/* <Button
           className='bg-white text-gray-500 hover:bg-gray-100'
           type='submit'
         >
           + Add another
-        </Button>
+        </Button> */}
 
         <AlertDialogFooter>
           <div className='flex w-full items-center justify-center gap-2'>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
+
             <Button type='submit'>Add</Button>
+
             <AlertDialogAction className='hidden' id='continue'>
               Continue
             </AlertDialogAction>
