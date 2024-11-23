@@ -7,8 +7,8 @@ import { Input } from '@/components/ui/input'
 
 import { statuses, types } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
-// import { PopupForm } from '@/components/custom/popupform'
-// import { AddCommunalBinForm } from './add_communal_bin'
+import { PopupForm } from '@/components/custom/popupform'
+import { AddAuctionForm } from './add_auction_form'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -58,6 +58,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {/* <DataTableViewOptions table={table} /> */}
+      <PopupForm formContent={AddAuctionForm} buttonContent={'+ Add Auction'} />
     </div>
   )
 }
