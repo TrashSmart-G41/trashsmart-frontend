@@ -12,6 +12,7 @@ import { CommunalBin } from '../data/schema'
 // import { Button } from '@/components/custom/button'
 // import { DataTableRowActions } from './data-table-row-actions'
 import { CommunalDialog } from './communal_bin_dialog'
+import { EditBin } from './edit-bin-form'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -157,18 +158,15 @@ export const columns: ColumnDef<CommunalBin>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      // const navigate = useNavigate()
-      // const handleButtonClick = () => {
-      //   navigate(`/cleaners/${row.getValue('employee_id')}`)
-      // }
-      console.log(row)
-
+      const binId = String(row.getValue('bin_id') || '').slice(-3)
+      console.log(binId)
+  
       return (
-        <div className='mr-4 flex items-center justify-end'>
-          <CommunalDialog />
-          {/* <DataTableRowActions row={row} /> */}
+        <div className="mr-4 flex items-center justify-end">
+          <CommunalDialog binId={binId} />
+          <EditBin contId={binId} />
         </div>
       )
     },
-  },
+  }
 ]

@@ -15,11 +15,11 @@ import {
 
 import { Button } from '@/components/ui/button'
 
-import { CalendarIcon } from 'lucide-react'
-import { format } from 'date-fns'
-import { cn } from '@/lib/utils'
+// import { CalendarIcon } from 'lucide-react'
+// import { format } from 'date-fns'
+// import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
-import { Calendar } from '@/components/ui/calendar'
+// import { Calendar } from '@/components/ui/calendar'
 import {
   Form,
   FormControl,
@@ -29,41 +29,73 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from '@/components/ui/popover'
 import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/use-toast'
+// import { toast } from '@/components/ui/use-toast'
+import { addCommunalBin } from '../data/services.tsx'
+// import { useEffect, useState } from 'react'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
+const longitude = z
+  .string()
+  .refine((value) => {
+    const num = parseFloat(value)
+    return !isNaN(num)
+  })
+  .transform((value) => parseFloat(value)) 
+
+const latitude = z
+  .string()
+  .refine((value) => {
+    const num = parseFloat(value)
+    return !isNaN(num)
+  })
+  .transform((value) => parseFloat(value))
+  
 const FormSchema = z.object({
-  bin_id: z.string(),
-  location: z.string(),
-  type: z.string(),
-  installation_date: z.string(),
+  longitude: longitude,
+  latitude: latitude,
+  wasteType: z.string(),
+  binSize: z.string(),
+  //installation_date: z.string(),
 })
 
 export function AddCommunalBinForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      bin_id: '',
-      location: '',
-      type: '',
+      longitude: 0.0,
+      latitude: 0.0,
+      wasteType: '',
+      binSize: '',
     },
   })
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    console.log(data)
     document.getElementById('continue')?.click()
+    try {
+      const addcommunalbin = async () => {
+        const response = await addCommunalBin(data)
+        if (response.status === 200) {
+          console.log('Bin added successfully!')
+          window.location.reload()
+        }
+      }
+      addcommunalbin()
+    } catch (error) {
+      console.error('Error:', error)
+    }
   }
 
   return (
@@ -72,7 +104,7 @@ export function AddCommunalBinForm() {
         Add Communal Bin
       </h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
-        <FormField
+        {/* <FormField
           control={form.control}
           name='bin_id'
           render={({ field }) => (
@@ -84,15 +116,15 @@ export function AddCommunalBinForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
-          name='location'
+          name='longitude'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Location</FormLabel>
+              <FormLabel>Location (Longitude)</FormLabel>
               <FormControl>
-                <Input placeholder='' {...field} />
+                <Input placeholder='Enter location longitude' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -100,18 +132,64 @@ export function AddCommunalBinForm() {
         />
         <FormField
           control={form.control}
-          name='type'
+          name='latitude'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Type/Capacity</FormLabel>
+              <FormLabel>Location (Latitude)</FormLabel>
               <FormControl>
-                <Input placeholder='Type-Capacity' {...field} />
+                <Input placeholder='Enter location latitude' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
+          control={form.control}
+          name='wasteType'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Waste Type</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Waste Type' {...field} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='BIO_DEGRADABLE'>Bio-degradable</SelectItem>
+                  <SelectItem value='NON_BIO_DEGRADABLE'>
+                    Non Bio-degradable
+                  </SelectItem>
+                  <SelectItem value='RECYCLABLE'>Recyclable</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='binSize'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Bin Size</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Select Bin Size' {...field} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='GENERAL'>General</SelectItem>
+                  <SelectItem value='MEDIUM'>Medium</SelectItem>
+                  <SelectItem value='MEGA'>Mega</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* <FormField
           control={form.control}
           name='installation_date'
           render={({ field }) => (
@@ -147,19 +225,21 @@ export function AddCommunalBinForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <Separator />
-        <Button
+        {/* <Button
           className='bg-white text-gray-500 hover:bg-gray-100'
           type='submit'
         >
           + Add another
-        </Button>
+        </Button> */}
 
         <AlertDialogFooter>
           <div className='flex w-full items-center justify-center gap-2'>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
+
             <Button type='submit'>Add</Button>
+
             <AlertDialogAction className='hidden' id='continue'>
               Continue
             </AlertDialogAction>

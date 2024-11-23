@@ -13,6 +13,10 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 // import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
 import { TrendingUp } from 'lucide-react'
+import { binCount } from './data/services'
+import { FULLbinCount } from './data/services'
+import { requestCount } from '@/pages/bins/maintenance/data/services.tsx'
+import { useEffect, useState } from 'react'
 
 import {
   ChartConfig,
@@ -20,7 +24,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
-import { TopTen } from './components/insights/top10'
+import { TopTen } from '../components/insights/top10'
 const chartData = [
   { month: 'January', desktop: 186 },
   { month: 'February', desktop: 305 },
@@ -52,6 +56,27 @@ const chartConfig2 = {
 } satisfies ChartConfig
 
 export default function Insights() {
+
+  const [binCounts, setBinCount] = useState(0)
+  const [fullBinCount, setFullBinCount] = useState(0)
+  const [reqCount, setReqCount] = useState(0)
+
+  useEffect(() => {
+    const loadCount = async () => {
+      try {
+        const data: any = await binCount()
+        const data2: any = await FULLbinCount()
+        const data3: any = await requestCount()
+        setBinCount(data)
+        setFullBinCount(data2)
+        setReqCount(data3)
+      } catch (error) {
+        console.error('Failed to load count:', error)
+      }
+    }
+    loadCount()
+  }, [])
+
   return (
     <>
       <Tabs
@@ -70,7 +95,7 @@ export default function Insights() {
               <CardContent>
                 <div className='flex flex-row items-center'>
                   <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                    1224
+                    {binCounts}
                   </div>
                 </div>
               </CardContent>
@@ -84,7 +109,7 @@ export default function Insights() {
               <CardContent>
                 <div className='flex flex-row items-center'>
                   <div className='pr-2 text-4xl font-semibold text-primary'>
-                    226
+                    {fullBinCount}
                   </div>
                 </div>
               </CardContent>
@@ -106,13 +131,13 @@ export default function Insights() {
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                  TOTAL MAINTENANCE
+                  TOTAL MAINTENANCES
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className='flex flex-row items-center'>
                   <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                    24
+                    {reqCount}
                   </div>
                 </div>
               </CardContent>

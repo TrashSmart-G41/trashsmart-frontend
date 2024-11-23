@@ -8,11 +8,11 @@ import router from '@/router'
 import '@/index.css'
 
 function App() {
-  const { isAuthenticated, isContractor } = useAuth()
+  const { isAuthenticated, isContractor, isOrganization } = useAuth()
 
   return (
     <ThemeProvider defaultTheme='system' storageKey='vite-ui-theme'>
-      <RouterProvider router={router(isAuthenticated, isContractor)} />
+      <RouterProvider router={router(isAuthenticated, isContractor, isOrganization)} />
       <Toaster />
     </ThemeProvider>
   )

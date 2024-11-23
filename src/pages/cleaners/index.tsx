@@ -4,10 +4,39 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { cleaners } from './data/cleaners'
 import { Card } from '@/components/ui/card'
+import { useEffect, useState } from 'react'
+import { fetchCleaners } from './data/services'
 
 export default function Tasks() {
+
+  const [ cleaner, setCleaner ] = useState([])
+
+  useEffect(() => {
+    const loadCleaner = async () => {
+      try {
+        const data: any = await fetchCleaners()
+        const mappedData = data.map((cleaner: any) => ({
+          id: `CLN-${cleaner.id.toString().padStart(3, '0')}`,
+          full_name: `${cleaner.firstName} ${cleaner.lastName}`,
+          contactNo: cleaner.contactNo,
+          region: cleaner.address.split(' ').pop(),
+          status: cleaner.status
+        }))
+
+        const sortedData = mappedData.sort((a: any, b: any) =>
+          b.id.localeCompare(a.id)
+        )
+
+        setCleaner(sortedData);
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    loadCleaner()
+  }, [])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -30,7 +59,7 @@ export default function Tasks() {
           </div>
 
           <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-            <DataTable data={cleaners} columns={columns} />
+            <DataTable data={cleaner} columns={columns} />
           </div>
         </Card>
       </Layout.Body>

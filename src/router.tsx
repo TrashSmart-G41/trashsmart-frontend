@@ -3,7 +3,7 @@ import GeneralError from './pages/errors/general-error'
 import NotFoundError from './pages/errors/not-found-error'
 import MaintenanceError from './pages/errors/maintenance-error'
 
-const router = (isAuthenticated: boolean, isContractor: boolean) =>
+const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:boolean) =>
   createBrowserRouter([
     // Auth routes
     {
@@ -63,6 +63,11 @@ const router = (isAuthenticated: boolean, isContractor: boolean) =>
         if (isContractor) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.default }
+        }
+        else if(isOrganization)
+        {
+          const AppShell = await import('./components/app-shell')
+          return { Component: AppShell.AppShell_Ins }
         }
         const Home = await import('@/pages/home')
         return { Component: Home.default }
@@ -232,7 +237,7 @@ const router = (isAuthenticated: boolean, isContractor: boolean) =>
       ],
     },
     {
-      path: '/insitute',
+      path: '/organization',
       lazy: async () => {
         const AppShell = (await import('./components/app-shell')).AppShell_Ins
         return { Component: AppShell }
@@ -246,32 +251,32 @@ const router = (isAuthenticated: boolean, isContractor: boolean) =>
           }),
         },
         {
-          path: '/insitute/bins',
+          path: '/organization/bins',
           lazy: async () => ({
             Component: (await import('@/insitute_pages/bins')).default,
           }),
         },
         {
-          path: '/insitute/cleaners',
+          path: '/organization/cleaners',
           lazy: async () => ({
             Component: (await import('@/insitute_pages/cleaners')).default,
           }),
         },
         {
-          path: '/insitute/cleaners/:employee_id',
+          path: '/organization/cleaners/:employee_id',
           lazy: async () => ({
             Component: (await import('@/insitute_pages/cleaners/cleaner'))
               .default,
           }),
         },
         {
-          path: '/insitute/requests',
+          path: '/organization/requests',
           lazy: async () => ({
             Component: (await import('@/pages/requests')).default,
           }),
         },
         {
-          path: '/insitute/dispatches',
+          path: '/organization/dispatches',
           lazy: async () => ({
             Component: (await import('@/pages/dispatches')).default,
           }),
