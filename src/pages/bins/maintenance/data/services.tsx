@@ -34,5 +34,5 @@ export const deleteMaintenanceRequest = async (id: string) => {
 export const requestCount = async () => {
   const url = `${API_URL}/count`
   const response = await request('GET', url)
-  return response
+  return response.data
 }
