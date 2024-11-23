@@ -237,7 +237,7 @@ const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:
       ],
     },
     {
-      path: '/insitute',
+      path: '/organization',
       lazy: async () => {
         const AppShell = (await import('./components/app-shell')).AppShell_Ins
         return { Component: AppShell }
@@ -251,32 +251,32 @@ const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:
           }),
         },
         {
-          path: '/insitute/bins',
+          path: '/organization/bins',
           lazy: async () => ({
             Component: (await import('@/insitute_pages/bins')).default,
           }),
         },
         {
-          path: '/insitute/cleaners',
+          path: '/organization/cleaners',
           lazy: async () => ({
             Component: (await import('@/insitute_pages/cleaners')).default,
           }),
         },
         {
-          path: '/insitute/cleaners/:employee_id',
+          path: '/organization/cleaners/:employee_id',
           lazy: async () => ({
             Component: (await import('@/insitute_pages/cleaners/cleaner'))
               .default,
           }),
         },
         {
-          path: '/insitute/requests',
+          path: '/organization/requests',
           lazy: async () => ({
             Component: (await import('@/pages/requests')).default,
           }),
         },
         {
-          path: '/insitute/dispatches',
+          path: '/organization/dispatches',
           lazy: async () => ({
             Component: (await import('@/pages/dispatches')).default,
           }),

@@ -344,7 +344,7 @@ export const sidelinks_insitutes: SideLink[] = [
   {
     title: 'Dashboard',
     label: '',
-    href: '/insitute',
+    href: '/organization',
     icon: (
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -362,7 +362,7 @@ export const sidelinks_insitutes: SideLink[] = [
   {
     title: 'Bins',
     // label: '3',
-    href: '/insitute/bins',
+    href: '/organization/bins',
     icon: (
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -380,7 +380,7 @@ export const sidelinks_insitutes: SideLink[] = [
   {
     title: 'Cleaners',
     // label: '3',
-    href: '/insitute/cleaners',
+    href: '/organization/cleaners',
     icon: (
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -408,7 +408,7 @@ export const sidelinks_insitutes: SideLink[] = [
   {
     title: 'Requests',
     // label: '3',
-    href: '/insitute/requests',
+    href: '/organization/requests',
     icon: (
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -430,7 +430,7 @@ export const sidelinks_insitutes: SideLink[] = [
   {
     title: 'Dispatches',
     // label: '3',
-    href: '/insitute/dispatches',
+    href: '/organization/dispatches',
     icon: (
       <svg
         xmlns='http://www.w3.org/2000/svg'
