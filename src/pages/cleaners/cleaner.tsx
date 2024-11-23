@@ -64,7 +64,22 @@ const chartConfig = {
 
 export default function Cleaner() {
 
-  const [ cleaner, setCleaner ] = useState({})
+  const [cleaner, setCleaner] = useState({
+    id: '',
+    full_name: '',
+    contactNo: '',
+    address: '',
+    date_of_birth: '',
+    nic: '',
+    status: '',
+    total_collections: 0,
+    current_streak: 0,
+    longest_streak: 0,
+    total_working_days: 0,
+    no_of_holidays: 0,
+    last_collection_date: '',
+    communal_bins: [],
+  });  
 
   const url = window.location.href;
   const contId = url.split('/').pop()?.slice(-3);
