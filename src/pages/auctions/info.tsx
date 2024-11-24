@@ -1,4 +1,5 @@
 import { Card, 
+    CardContent, 
     CardDescription,
     CardHeader,
     CardTitle
@@ -12,9 +13,20 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { useState, useEffect } from 'react'
 import { fetchAuction } from './all/data/services'
-import { DeleteAuc } from './components/info/delete-popup'
-import { CancelAuc } from './components/info/cancel-popup'
-import { LogicallyDeleteAuc } from './components/info/logically-delete-popup'
+import { DeleteAuc } from './components/popups/delete-popup'
+import { CancelAuc } from './components/popups/cancel-popup'
+import { LogicallyDeleteAuc } from './components/popups/logically-delete-popup'
+import { fetchWinningPlant } from './live/data/services'
+import { Biddings } from './biddings'
+
+type BidData = {
+  id: string,
+  bidAmount: number,
+  recyclingPlants: {
+    id: string,
+    firstName: string,
+  }
+};
 
 type AuctionData = {
     id: string;
@@ -26,11 +38,18 @@ type AuctionData = {
     curr_bid: string,
     status: string,
     winningPlant: string,
+    registeredPlants: { id: string, firstName: string }[]
+    bids: BidData[]
   };
+
+  type PlantData = {
+    firstName: string
+  }
 
 const Info = () => {
 
     const [ auction, setAuction ] = useState<AuctionData | null>(null);
+    const [ plant, setPlant ] = useState<PlantData | null>(null);
 
     useEffect(() => {
       const url = window.location.href
@@ -45,13 +64,24 @@ const Info = () => {
             id: `AUC-${data.id.toString().padStart(3, '0')}`,
             wasteType: data.auctionWasteType.charAt(0).toUpperCase() + data.auctionWasteType.slice(1).toLowerCase(),
             weight: data.weight,
-            startDate: data.startDate,
-            endDate: data.endDate,
+            startDate: data.startDate.slice(0, 10),
+            endDate: data.endDate.slice(0, 10),
             min_bid: data.minimumBidAmount,
             curr_bid: data.currentBid,
             status: data.status,
-            winningPlant: data.winningPlantId
+            winningPlant: data.winningPlantId,
+            registeredPlants: Array.isArray(data.registeredPlants) ? data.registeredPlants : [],
+            bids: Array.isArray(data.bids) ? data.bids.map((bid: any) => ({
+              id: bid.id,
+              bidAmount: bid.bidAmount,
+              recyclingPlants: {
+                id: `PLANT-${bid.recyclingPlant.id.toString().padStart(3, '0')}`,
+                firstName: bid.recyclingPlant.firstName
+              }
+            }))
+            : []
           }
+
           // console.log('Organization:', data)
           setAuction(mappedData)
           console.log('Auction:', auction)
@@ -62,6 +92,24 @@ const Info = () => {
       loadAuction()
     }
     , [])
+
+    useEffect(() => {
+      // if (!auction?.winningPlant) return;
+      console.log(auction?.winningPlant)
+      const loadWinningPlant = async () => {
+        try {
+          const data: any = await fetchWinningPlant(auction?.winningPlant ?? '');
+          const mappedData: PlantData = {
+            firstName: data.firstName,
+          };
+          setPlant(mappedData);
+        } catch (err) {
+          console.error('Failed to load winning plant:', err);
+        }
+      };
+    
+      loadWinningPlant();
+    }, [auction]);
 
     const renderActionComponent = () => {
       const url = window.location.href
@@ -310,20 +358,20 @@ const Info = () => {
                 </div>
 
                 <div>
-                    {/* <div>
+                    <div>
                     <CardDescription className='text-[13px]'>
-                        Winning Bid
+                        No. of Registered Plants
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        $ {auction?.curr_bid ?? '000'}.00
+                        {auction?.registeredPlants.length}
                     </div>
-                    </div> */}
+                    </div>
                     <div className='my-3'>
                     <CardDescription className='text-[13px]'>
                         Winning Plant
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        {auction?.winningPlant}
+                        {plant?.firstName}
                     </div>
                     </div>
                 </div>
@@ -333,6 +381,47 @@ const Info = () => {
             {/* <div className='flex justify-end pt-4'>
                 <DeleteAuc />
             </div> */}
+
+            <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-6'>
+              <Card className='col-span-1 p-1 lg:col-span-2'>
+                  {/* <div className='font-normal text-muted-foreground'>
+                    Registered Plants{' '}
+                  </div> */}
+                  <CardHeader>
+                    <CardTitle>Registered Plants</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    {Array.isArray(auction?.registeredPlants) && auction.registeredPlants.length > 0 ? (
+                      <ul className='mt-2'>
+                        {auction?.registeredPlants.map((plant, index) => (
+                          <li key={index} className='py-2 border-b last:border-none'>
+                            <div className='font-medium text-gray-500 gap-y-px'>
+                              {plant?.firstName} - <span className='text-sm'>{`PLANT-${plant.id.toString().padStart(3, '0')}`}</span>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <div className='mt-2 text-sm text-muted-foreground'>No plants registered yet.</div>
+                    )}
+                  </CardContent>
+              </Card>
+
+              <Card className='col-span-1 p-1 lg:col-span-4'>
+                <CardHeader>
+                  <CardTitle>Biddings</CardTitle>
+                  <CardDescription>Based on bid amounts</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {auction?.bids ? (
+                    <Biddings bids={auction.bids} />
+                  ) : (
+                    <div>No bids available</div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
             <div className='flex justify-end pt-4'>{renderActionComponent()}</div>
             </Card>
 

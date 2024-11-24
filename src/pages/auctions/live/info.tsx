@@ -11,7 +11,7 @@ import ThemeSwitch from '@/components/theme-switch'
 // import GoogleMap from '../../components/custom/map'
 import { UserNav } from '@/components/user-nav'
 import { useState, useEffect } from 'react'
-import { fetchLiveAuction } from './data/services'
+import { fetchLiveAuction, fetchWinningPlant } from './data/services'
 
 type AuctionData = {
     id: string;
@@ -25,9 +25,14 @@ type AuctionData = {
     winningPlant: string,
   };
 
+  type PlantData = {
+    firstName: string
+  }
+
 const Info = () => {
 
     const [ auction, setAuction ] = useState<AuctionData | null>(null);
+    const [ plant, setPlant ] = useState<PlantData | null>(null);
 
     useEffect(() => {
       const url = window.location.href
@@ -56,9 +61,30 @@ const Info = () => {
           console.error('Failed to load auction:', error)
         }
       }
+
+      
+
       loadAuction()
     }
     , [])
+
+    useEffect(() => {
+      // if (!auction?.winningPlant) return;
+      console.log(auction?.winningPlant)
+      const loadWinningPlant = async () => {
+        try {
+          const data: any = await fetchWinningPlant(auction?.winningPlant ?? '');
+          const mappedData: PlantData = {
+            firstName: data.firstName,
+          };
+          setPlant(mappedData);
+        } catch (err) {
+          console.error('Failed to load winning plant:', err);
+        }
+      };
+    
+      loadWinningPlant();
+    }, [auction]);
   return (
     <>
     <Layout>
@@ -265,7 +291,7 @@ const Info = () => {
                         Winning Plant
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        {auction?.winningPlant}
+                        {plant?.firstName}
                     </div>
                     </div>
                 </div>
