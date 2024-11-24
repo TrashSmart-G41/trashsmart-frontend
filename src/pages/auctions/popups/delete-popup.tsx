@@ -12,14 +12,14 @@ import {
 import { useToast } from '@/components/ui/use-toast'
 import { Button } from '@/components/custom/button'
 import { useNavigate } from 'react-router-dom'
-import { deletePastAuction } from '../../data/services'
+import { deleteUpcomingAuction } from '../data/services'
 
-export function LogicallyDeleteAuc({ contId }: { contId: string }) {
+export function DeleteAuc({ contId }: { contId: string }) {
   const navigate = useNavigate()
   const handleContinue = () => {
     try {
       const deleteAuc = async () => {
-        await deletePastAuction(contId)
+        await deleteUpcomingAuction(contId)
       }
       deleteAuc();
       navigate('/auctions')

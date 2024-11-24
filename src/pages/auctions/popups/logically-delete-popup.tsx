@@ -12,20 +12,20 @@ import {
 import { useToast } from '@/components/ui/use-toast'
 import { Button } from '@/components/custom/button'
 import { useNavigate } from 'react-router-dom'
-import { cancelAuction } from '../../data/services'
+import { deletePastAuction } from '../data/services'
 
-export function CancelAuc({ contId }: { contId: string }) {
+export function LogicallyDeleteAuc({ contId }: { contId: string }) {
   const navigate = useNavigate()
   const handleContinue = () => {
     try {
       const deleteAuc = async () => {
-        await cancelAuction(contId)
+        await deletePastAuction(contId)
       }
       deleteAuc();
       navigate('/auctions')
       window.location.reload()
       toast({
-        description: 'Auction canceled successfully!',
+        description: 'Auction deleted successfully!',
         // className: 'bg-card text-destructive',
       })
     } catch (error) {
@@ -33,13 +33,11 @@ export function CancelAuc({ contId }: { contId: string }) {
     }
   }
 
-  
-
   const { toast } = useToast()
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant='destructive'>Cancel Auction</Button>
+        <Button variant='destructive'>Delete Auction</Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
