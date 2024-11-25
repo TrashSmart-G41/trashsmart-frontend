@@ -156,6 +156,13 @@ const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:
         },
 
         {
+          path: 'auctions/:id',
+          lazy: async () => ({
+            Component: (await import('@/pages/auctions/info')).default,
+          }),
+        },
+
+        {
           path: 'chats',
           lazy: async () => ({
             Component: (await import('@/components/coming-soon')).default,
@@ -234,6 +241,18 @@ const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:
             },
           ],
         },
+        {
+          path: 'recycling-plants',
+          lazy: async () => ({
+            Component: (await import('@/pages/recycling-plants')).default
+        })
+        },
+        {
+          path: 'recycling-plants/:id',
+          lazy: async () => ({
+            Component: (await import('@/pages/recycling-plants/info')).default
+        })
+        },
       ],
     },
     {
@@ -282,6 +301,17 @@ const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:
           }),
         },
       ],
+    },
+    {
+      path: '/recycling-plant',
+      lazy: async () => {
+        const AppShell = (await import('./components/app-shell')).AppShell_Ins
+        return { Component: AppShell }
+      },
+      errorElement: <GeneralError />,
+      children: [
+        
+      ]
     },
 
     {

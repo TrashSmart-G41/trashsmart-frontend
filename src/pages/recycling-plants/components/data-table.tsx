@@ -92,13 +92,11 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => {
-                const status = (row.original as any).status
+                // const status = (row.original as any).status;
                 return (
                   <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && 'selected'}
-                    className={`${status === 'todo' ? 'bg-green-300' : ''}
-                    `}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
