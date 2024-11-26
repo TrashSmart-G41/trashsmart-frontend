@@ -36,28 +36,23 @@ import { Input } from '@/components/ui/input'
 //import { toast } from '@/components/ui/use-toast'
 import { addDriver } from '../data/services'
 
-const firstNameSchema = z.string().refine(
-  (value) => value.trim().length > 0,
-  {
-    message: 'First name is required.',
-  }
-);
+const firstNameSchema = z.string().refine((value) => value.trim().length > 0, {
+  message: 'First name is required.',
+})
 
-const lastNameSchema = z.string().refine(
-  (value) => value.trim().length > 0,
-  {
-    message: 'Last name is required.',
-  }
-);
+const lastNameSchema = z.string().refine((value) => value.trim().length > 0, {
+  message: 'Last name is required.',
+})
 
 const contactNumberSchema = z.string().refine(
   (value) => /^\d{10,}$/.test(value), // Adjust the minimum length as needed
   {
-    message: 'Contact Number should contain only digits and be at least 10 digits long.',
+    message:
+      'Contact Number should contain only digits and be at least 10 digits long.',
   }
-);
+)
 
-const addressSchema = z.string().optional();
+const addressSchema = z.string().optional()
 
 // const dateOfBirthSchema = z.string().refine(
 //   (value) => /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/.test(value),
@@ -66,7 +61,7 @@ const addressSchema = z.string().optional();
 //   }
 // );
 
-const password = z.string().optional();
+const password = z.string().optional()
 
 const FormSchema = z.object({
   firstName: firstNameSchema,
@@ -74,7 +69,7 @@ const FormSchema = z.object({
   contactNo: contactNumberSchema,
   address: addressSchema,
   //dob: dateOfBirthSchema,
-  password: password
+  password: password,
 })
 
 export function AddDriverForm() {
@@ -86,7 +81,7 @@ export function AddDriverForm() {
       contactNo: '',
       address: '',
       //dob: ''
-      password: 'password123'
+      password: 'password123',
     },
   })
 

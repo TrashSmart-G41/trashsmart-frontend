@@ -11,7 +11,6 @@ import { fetchDriver } from './data/services'
 import { Button } from '@/components/custom/button'
 import { EditSingleDriver } from './components/edit-single-driver-form.tsx'
 
-
 import {
   Card,
   // CardContent,
@@ -65,13 +64,13 @@ export default function Driver() {
   const driverId = url.split('/').pop()?.slice(-3) as string
   //const driverId = useParams<{ driverId: string }>()
   const [driver, setDriver] = useState<any | null>(null)
-  
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
   const handleButtonClick = () => {
-    setIsEditModalOpen(true);
-  };
-  
+    setIsEditModalOpen(true)
+  }
+
   //console.log('Raw driverId from URL:', driverId)
 
   useEffect(() => {
@@ -105,9 +104,9 @@ export default function Driver() {
       }
     }
 
-loadDriver()
+    loadDriver()
   }, [driverId])
-  if (!driver) return <p>Loading driver information...</p>;
+  if (!driver) return <p>Loading driver information...</p>
 
   return (
     <Layout>
@@ -122,7 +121,8 @@ loadDriver()
 
       <Layout.Body>
         <Card className='relative mt-2'>
-          <Button onClick={handleButtonClick}
+          <Button
+            onClick={handleButtonClick}
             variant='outline'
             size='sm'
             className='hidde n absolute right-2 top-2 ml-auto h-8 lg:flex'

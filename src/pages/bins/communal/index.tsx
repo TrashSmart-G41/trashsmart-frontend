@@ -12,7 +12,7 @@ export default function CommunalBins() {
     const loadCommunalBins = async () => {
       try {
         const data: any = await fetchCommunalBins()
-        console.log(data);
+        console.log(data)
         const mappedData: any = data.map((communalbin: any) => ({
           //   const locationName = await getLocationName(
           //   commercialbin.latitude,
@@ -24,7 +24,7 @@ export default function CommunalBins() {
           type: `${communalbin.wasteType} - ${communalbin.binSize}`,
           installed_date: communalbin.installationDate,
           fill_level: communalbin.fillLevel,
-          status: communalbin.binStatus
+          status: communalbin.binStatus,
         }))
 
         const sortedData = mappedData.sort((a: any, b: any) =>

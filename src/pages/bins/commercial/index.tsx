@@ -30,7 +30,7 @@ export default function CommercialBins() {
     const loadCommercialBins = async () => {
       try {
         const data: any = await fetchCommercialBins()
-        console.log(data);
+        console.log(data)
         const mappedData: any = data.map((commercialbin: any) => ({
           //   const locationName = await getLocationName(
           //   commercialbin.latitude,
@@ -43,7 +43,7 @@ export default function CommercialBins() {
           type: `${commercialbin.wasteType} - ${commercialbin.binSize}`,
           purchased_date: commercialbin.purchaseDate,
           fill_level: commercialbin.fillLevel,
-          status: commercialbin.binStatus
+          status: commercialbin.binStatus,
         }))
 
         const sortedData = mappedData.sort((a: any, b: any) =>

@@ -12,7 +12,9 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme='system' storageKey='vite-ui-theme'>
-      <RouterProvider router={router(isAuthenticated, isContractor, isOrganization)} />
+      <RouterProvider
+        router={router(isAuthenticated, isContractor, isOrganization)}
+      />
       <Toaster />
     </ThemeProvider>
   )

@@ -29,11 +29,14 @@ import {
 
 import { Input } from '@/components/ui/input'
 import { useEffect } from 'react'
-import { fetchMaintenanceRequest, updateMaintenanceRequest } from '../data/services'
+import {
+  fetchMaintenanceRequest,
+  updateMaintenanceRequest,
+} from '../data/services'
 
 const FormSchema = z.object({
   requestStatus: z.string(),
-  otherNotes: z.string()
+  otherNotes: z.string(),
 })
 
 export function EditReq({ contId }: { contId: string }) {
@@ -42,7 +45,7 @@ export function EditReq({ contId }: { contId: string }) {
     resolver: zodResolver(FormSchema),
     defaultValues: {
       requestStatus: '',
-      otherNotes: ''
+      otherNotes: '',
     },
   })
 
@@ -121,12 +124,8 @@ export function EditReq({ contId }: { contId: string }) {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value='TO_DO'>
-                          To-do
-                        </SelectItem>
-                        <SelectItem value='COMPLETED'>
-                          Completed
-                        </SelectItem>
+                        <SelectItem value='TO_DO'>To-do</SelectItem>
+                        <SelectItem value='COMPLETED'>Completed</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

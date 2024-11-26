@@ -9,21 +9,21 @@ export default function Maintenance() {
 
   useEffect(() => {
     const formatDate = (timestamp: string | number) => {
-      const date = new Date(timestamp);
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
-      const day = String(date.getDate()).padStart(2, '0');
-      const hours = String(date.getHours()).padStart(2, '0');
-      const minutes = String(date.getMinutes()).padStart(2, '0');
-      const seconds = String(date.getSeconds()).padStart(2, '0');
-      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-    };
-  
+      const date = new Date(timestamp)
+      const year = date.getFullYear()
+      const month = String(date.getMonth() + 1).padStart(2, '0') // Months are 0-based
+      const day = String(date.getDate()).padStart(2, '0')
+      const hours = String(date.getHours()).padStart(2, '0')
+      const minutes = String(date.getMinutes()).padStart(2, '0')
+      const seconds = String(date.getSeconds()).padStart(2, '0')
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+    }
+
     const loadRequests = async () => {
       try {
-        const data: any = await fetchMaintenanceRequests();
-        console.log(data);
-  
+        const data: any = await fetchMaintenanceRequests()
+        console.log(data)
+
         const mappedData: any = data.map((request: any) => ({
           maintenance_id: `MNT-${request.id.toString().padStart(3, '0')}`,
           bin_id: `SB-${request.smartBin?.id.toString().padStart(3, '0')}`,
@@ -31,20 +31,20 @@ export default function Maintenance() {
           date: formatDate(request.createdTimeStamp), // Apply the formatting here
           status: request.requestStatus,
           other_notes: request.otherNotes,
-        }));
-  
+        }))
+
         const sortedData = mappedData.sort((a: any, b: any) =>
           b.maintenance_id.localeCompare(a.bin_id)
-        );
-  
-        setMaintenanceRequests(sortedData);
+        )
+
+        setMaintenanceRequests(sortedData)
       } catch (error) {
-        console.error('Failed to load data:', error);
+        console.error('Failed to load data:', error)
       }
-    };
-  
-    loadRequests();
-  }, []);  
+    }
+
+    loadRequests()
+  }, [])
 
   return (
     <Card className='mt-2 rounded-xl bg-card p-4'>

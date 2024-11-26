@@ -130,13 +130,13 @@ export const columns: ColumnDef<Record>[] = [
     cell: ({ row }) => {
       const reqId = String(row.getValue('maintenance_id') || '').slice(-3)
       console.log(reqId)
-  
+
       return (
-        <div className="mr-4 flex items-center justify-end">
+        <div className='mr-4 flex items-center justify-end'>
           <EditReq contId={reqId} />
           <DeleteReq contId={reqId} />
         </div>
       )
     },
-  }
+  },
 ]

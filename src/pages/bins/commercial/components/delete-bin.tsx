@@ -44,7 +44,8 @@ export function DeleteBin({ contId }: { contId: string }) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this bin and remove all data from our servers.
+            This action cannot be undone. This will permanently delete this bin
+            and remove all data from our servers.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
