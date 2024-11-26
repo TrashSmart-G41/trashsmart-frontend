@@ -8,16 +8,16 @@ import {
 } from '@/components/ui/table'
 
 type BidData = {
-  id: string,
-  bidAmount: number,
+  id: string
+  bidAmount: number
   recyclingPlants: {
-    id: string,
-    firstName: string,
+    id: string
+    firstName: string
   }
-};
+}
 
 type BiddingProps = {
-  bids: BidData[];
+  bids: BidData[]
 }
 
 export function Biddings({ bids }: BiddingProps) {
@@ -35,7 +35,9 @@ export function Biddings({ bids }: BiddingProps) {
               </TableRow>
             </TableHeader>
           </Table>
-          <div className='max-h-[200px] overflow-y-auto'> {/* Fixed height and scroll */}
+          <div className='max-h-[200px] overflow-y-auto'>
+            {' '}
+            {/* Fixed height and scroll */}
             <Table>
               <TableBody>
                 {bids.map((bid, index) => (
@@ -46,10 +48,10 @@ export function Biddings({ bids }: BiddingProps) {
                           index === 0
                             ? 'bg-primary'
                             : index === 1
-                            ? 'bg-primary/70'
-                            : index === 2
-                            ? 'bg-primary/60'
-                            : 'bg-background'
+                              ? 'bg-primary/70'
+                              : index === 2
+                                ? 'bg-primary/60'
+                                : 'bg-background'
                         }`}
                       >
                         #{index + 1}
@@ -70,7 +72,5 @@ export function Biddings({ bids }: BiddingProps) {
         <div className='p-4 text-center text-gray-500'>No bids available.</div>
       )}
     </div>
-  );
+  )
 }
-
-

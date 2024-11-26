@@ -124,13 +124,12 @@ export const columns: ColumnDef<CommercialBin>[] = [
     cell: ({ row }) => {
       const binId = String(row.getValue('bin_id') || '').slice(-3)
       console.log(binId)
-  
+
       return (
-        <div className="mr-4 flex items-center justify-end">
+        <div className='mr-4 flex items-center justify-end'>
           <CommercialDialog binId={binId} />
         </div>
       )
     },
-  }
-  
+  },
 ]

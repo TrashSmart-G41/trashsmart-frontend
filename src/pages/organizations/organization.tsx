@@ -32,12 +32,14 @@ import { fetchOrganization } from './data/services'
 // import Map2 from '@/components/custom/map2'
 
 type OrganizationData = {
-  firstName: string;
-  address: string;
-};
+  firstName: string
+  address: string
+}
 
 export default function Organization() {
-  const [organization, setOrganization] = useState<OrganizationData | null>(null);
+  const [organization, setOrganization] = useState<OrganizationData | null>(
+    null
+  )
 
   useEffect(() => {
     const url = window.location.href
@@ -47,8 +49,8 @@ export default function Organization() {
     const loadOrganization = async () => {
       try {
         const data: any = await fetchOrganization(id ?? '')
-        const mappedData:OrganizationData = {
-          firstName : data.firstName,
+        const mappedData: OrganizationData = {
+          firstName: data.firstName,
           address: data.address,
         }
         // console.log('Organization:', data)
@@ -59,8 +61,7 @@ export default function Organization() {
       }
     }
     loadOrganization()
-  }
-  , [])
+  }, [])
   return (
     <>
       <Layout>
@@ -110,9 +111,7 @@ export default function Organization() {
                       Large Scale
                     </Button>
                   </div>
-                  <CardDescription>
-                    {organization?.address}
-                  </CardDescription>
+                  <CardDescription>{organization?.address}</CardDescription>
                   <CardDescription className='pt-3 text-muted-foreground/60'>
                     Joined on 27-03-2024 20:14 PM
                   </CardDescription>

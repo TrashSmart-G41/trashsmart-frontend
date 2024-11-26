@@ -3,7 +3,11 @@ import GeneralError from './pages/errors/general-error'
 import NotFoundError from './pages/errors/not-found-error'
 import MaintenanceError from './pages/errors/maintenance-error'
 
-const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:boolean) =>
+const router = (
+  isAuthenticated: boolean,
+  isContractor: boolean,
+  isOrganization: boolean
+) =>
   createBrowserRouter([
     // Auth routes
     {
@@ -63,9 +67,7 @@ const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:
         if (isContractor) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.default }
-        }
-        else if(isOrganization)
-        {
+        } else if (isOrganization) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.AppShell_Ins }
         }
@@ -244,14 +246,14 @@ const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:
         {
           path: 'recycling-plants',
           lazy: async () => ({
-            Component: (await import('@/pages/recycling-plants')).default
-        })
+            Component: (await import('@/pages/recycling-plants')).default,
+          }),
         },
         {
           path: 'recycling-plants/:id',
           lazy: async () => ({
-            Component: (await import('@/pages/recycling-plants/info')).default
-        })
+            Component: (await import('@/pages/recycling-plants/info')).default,
+          }),
         },
       ],
     },
@@ -309,9 +311,7 @@ const router = (isAuthenticated: boolean, isContractor: boolean, isOrganization:
         return { Component: AppShell }
       },
       errorElement: <GeneralError />,
-      children: [
-        
-      ]
+      children: [],
     },
 
     {

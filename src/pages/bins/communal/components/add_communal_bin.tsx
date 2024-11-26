@@ -52,7 +52,7 @@ const longitude = z
     const num = parseFloat(value)
     return !isNaN(num)
   })
-  .transform((value) => parseFloat(value)) 
+  .transform((value) => parseFloat(value))
 
 const latitude = z
   .string()
@@ -61,7 +61,7 @@ const latitude = z
     return !isNaN(num)
   })
   .transform((value) => parseFloat(value))
-  
+
 const FormSchema = z.object({
   longitude: longitude,
   latitude: latitude,

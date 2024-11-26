@@ -10,7 +10,7 @@ export const commercialBinSchema = z.object({
   purchased_date: z.string(),
   fill_level: z.number(),
   status: z.string(),
-  last_maintenance_date: z.string()
+  last_maintenance_date: z.string(),
 })
 
 export type CommercialBin = z.infer<typeof commercialBinSchema>

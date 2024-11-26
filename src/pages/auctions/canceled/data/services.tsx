@@ -12,5 +12,3 @@ export const fetchCanceledAuction = async (id: string) => {
   const response = await request('GET', url)
   return response.data
 }
-
-

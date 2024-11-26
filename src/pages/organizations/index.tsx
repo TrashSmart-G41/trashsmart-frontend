@@ -27,7 +27,9 @@ export default function Tasks() {
         const mappedData = data.map((org: any) => ({
           id: `ORG-${org.id.toString().padStart(3, '0')}`,
           firstName: org.firstName,
-          scale: org.scale.charAt(0).toUpperCase() + org.scale.slice(1).toLowerCase(),
+          scale:
+            org.scale.charAt(0).toUpperCase() +
+            org.scale.slice(1).toLowerCase(),
           address: org.address,
           totalWaste: org.totalWaste.toString(),
         }))
@@ -193,7 +195,7 @@ export default function Tasks() {
             </div>
           </div>
         </Card>
-        <LocationPicker/>
+        <LocationPicker />
       </Layout.Body>
     </Layout>
   )

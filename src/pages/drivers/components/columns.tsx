@@ -57,17 +57,13 @@ export const columns: ColumnDef<Driver>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
-        title="Full Name"
-        className="text-center text-[14px]"
+        title='Full Name'
+        className='text-center text-[14px]'
       />
     ),
     cell: ({ row }) => {
-      const fullName = row.getValue('fullName') as string; // Cast to string
-      return (
-        <div className="flex items-center space-x-2">
-          {fullName}
-        </div>
-      );
+      const fullName = row.getValue('fullName') as string // Cast to string
+      return <div className='flex items-center space-x-2'>{fullName}</div>
     },
     enableSorting: true,
     enableHiding: false,
@@ -177,7 +173,7 @@ export const columns: ColumnDef<Driver>[] = [
       const handleButtonClick = () => {
         navigate(`/drivers/${row.getValue('id')}`)
       }
-  
+
       return (
         <div className='mr-4 flex items-center justify-end'>
           <Button
@@ -194,5 +190,5 @@ export const columns: ColumnDef<Driver>[] = [
         </div>
       )
     },
-  },  
+  },
 ]

@@ -2,7 +2,7 @@ import { request } from '@/lib/axiosHelper'
 const API_URL = 'api/v1/recyclingPlant'
 
 export const fetchRecyclingPlants = async () => {
-  const url = `${API_URL}/active`;
+  const url = `${API_URL}/active`
   const response = await request('GET', url)
   return response.data
 }

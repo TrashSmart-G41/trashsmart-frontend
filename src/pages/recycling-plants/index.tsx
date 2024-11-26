@@ -18,9 +18,9 @@ import { fetchAllRecyclingPlants, fetchRecyclingPlants } from './data/services'
 // import LocationPicker from '@/components/custom/location_picker'
 
 export default function Tasks() {
-  const [ recyclingPlants, setRecyclingPlants ] = useState([])
-  const [ allCount, setAllCount ] = useState(0)
-  const [ activeCount, setActiveCount ] = useState(0)
+  const [recyclingPlants, setRecyclingPlants] = useState([])
+  const [allCount, setAllCount] = useState(0)
+  const [activeCount, setActiveCount] = useState(0)
 
   useEffect(() => {
     const loadRecyclingPlants = async () => {
@@ -43,7 +43,6 @@ export default function Tasks() {
 
         const allData: any = await fetchAllRecyclingPlants()
         setAllCount(allData.length)
-
       } catch (error) {
         console.error('Failed to load Recycling Plants:', error)
       }
@@ -51,8 +50,6 @@ export default function Tasks() {
 
     loadRecyclingPlants()
   }, [])
-
-
 
   return (
     <Layout>

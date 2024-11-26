@@ -21,7 +21,7 @@ export function DeleteAuc({ contId }: { contId: string }) {
       const deleteAuc = async () => {
         await deleteUpcomingAuction(contId)
       }
-      deleteAuc();
+      deleteAuc()
       navigate('/auctions')
       window.location.reload()
       toast({

@@ -5,33 +5,35 @@ import { Card } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 
 export default function CanceledAuctions() {
-  const [ auctions, setAuctions ] = useState([]);
+  const [auctions, setAuctions] = useState([])
 
   useEffect(() => {
     const loadAuctions = async () => {
       try {
-        const data :any = await fetchCanceledAuctions();
-        console.log(data);
+        const data: any = await fetchCanceledAuctions()
+        console.log(data)
         const mappedData = data.map((auc: any) => ({
           id: `AUC-${auc.id.toString().padStart(3, '0')}`,
-          wasteType: auc.auctionWasteType.charAt(0).toUpperCase() + auc.auctionWasteType.slice(1).toLowerCase(),
+          wasteType:
+            auc.auctionWasteType.charAt(0).toUpperCase() +
+            auc.auctionWasteType.slice(1).toLowerCase(),
           weight: auc.weight,
           startDate: auc.startDate,
           endDate: auc.endDate,
           min_bid: auc.minimumBidAmount,
-          curr_bid: auc.currentBid
+          curr_bid: auc.currentBid,
         }))
 
         // const sortedData = mappedData.sort((a: any, b: any) =>
         //   b.auction_id.localeCompare(a.auction_id)
         // )
-        setAuctions(mappedData);
+        setAuctions(mappedData)
       } catch (e) {
-        console.error("Failed to load Auctions", e);
+        console.error('Failed to load Auctions', e)
       }
     }
 
-    loadAuctions();
+    loadAuctions()
   }, [])
 
   return (

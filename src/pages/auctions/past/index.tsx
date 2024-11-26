@@ -5,33 +5,35 @@ import { Card } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 
 export default function PastAuctions() {
-  const [ auctions, setAuctions ] = useState([]);
+  const [auctions, setAuctions] = useState([])
 
   useEffect(() => {
     const loadAuctions = async () => {
       try {
-        const data :any = await fetchPastAuctions();
-        console.log(data);
+        const data: any = await fetchPastAuctions()
+        console.log(data)
         const mappedData = data.map((auc: any) => ({
           id: `AUC-${auc.id.toString().padStart(3, '0')}`,
-          wasteType: auc.auctionWasteType.charAt(0).toUpperCase() + auc.auctionWasteType.slice(1).toLowerCase(),
+          wasteType:
+            auc.auctionWasteType.charAt(0).toUpperCase() +
+            auc.auctionWasteType.slice(1).toLowerCase(),
           weight: `${auc.weight} KG`,
           startDate: auc.startDate.slice(0, 10),
           endDate: auc.endDate.slice(0, 10),
           min_bid: `Rs. ${auc.minimumBidAmount}`,
-          curr_bid: `Rs. ${auc?.currentBid ? auc.currentBid : "N/A"}`
+          curr_bid: `Rs. ${auc?.currentBid ? auc.currentBid : 'N/A'}`,
         }))
 
         // const sortedData = mappedData.sort((a: any, b: any) =>
         //   b.auction_id.localeCompare(a.auction_id)
         // )
-        setAuctions(mappedData);
+        setAuctions(mappedData)
       } catch (e) {
-        console.error("Failed to load Auctions", e);
+        console.error('Failed to load Auctions', e)
       }
     }
 
-    loadAuctions();
+    loadAuctions()
   }, [])
 
   return (

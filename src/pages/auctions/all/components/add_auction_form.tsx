@@ -45,15 +45,18 @@ import { Input } from '@/components/ui/input'
 import { toast } from '@/components/ui/use-toast'
 import { addAuction } from '../data/services'
 
-const isDateInPast = (date: string) => new Date(date) < new Date();
+const isDateInPast = (date: string) => new Date(date) < new Date()
 
-const FormSchema = z.object({
-  auctionWasteType: z.string().min(1, { message: 'Waste Type is required.' }),
-  weight: z.string().min(1, { message: 'Weight is required.' }),
-  startDate: z.string().min(1, { message: 'Start Date is required.' }),
-  endDate: z.string().min(1, { message: 'End Date is required.' }),
-  minimumBidAmount: z.string().min(1, { message: 'Minimum Bid is required.' }),
-})
+const FormSchema = z
+  .object({
+    auctionWasteType: z.string().min(1, { message: 'Waste Type is required.' }),
+    weight: z.string().min(1, { message: 'Weight is required.' }),
+    startDate: z.string().min(1, { message: 'Start Date is required.' }),
+    endDate: z.string().min(1, { message: 'End Date is required.' }),
+    minimumBidAmount: z
+      .string()
+      .min(1, { message: 'Minimum Bid is required.' }),
+  })
   .refine((data) => !isDateInPast(data.startDate), {
     message: 'Start Date cannot be in the past.',
     path: ['startDate'],
@@ -61,7 +64,7 @@ const FormSchema = z.object({
   .refine((data) => new Date(data.endDate) > new Date(data.startDate), {
     message: 'End Date must be after Start Date.',
     path: ['endDate'],
-  });
+  })
 
 export function AddAuctionForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -76,19 +79,18 @@ export function AddAuctionForm() {
   })
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    
     document.getElementById('continue')?.click()
     try {
       const addAuc = async () => {
         const response = await addAuction(data)
         if (response.status === 200) {
           toast({
-            description: "Auction added successfully"
+            description: 'Auction added successfully',
           })
           window.location.reload()
         }
       }
-       
+
       addAuc()
     } catch (e) {
       console.error(e)
@@ -97,9 +99,7 @@ export function AddAuctionForm() {
 
   return (
     <Form {...form}>
-      <h2 className='w-full text-center text-lg font-semibold'>
-        Add Auction 
-      </h2>
+      <h2 className='w-full text-center text-lg font-semibold'>Add Auction</h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}

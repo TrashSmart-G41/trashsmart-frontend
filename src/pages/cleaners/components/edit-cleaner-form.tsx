@@ -19,12 +19,12 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-  } from '@/components/ui/select'
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import { Input } from '@/components/ui/input'
 import { useEffect } from 'react'
@@ -37,46 +37,47 @@ import { toast } from '@/components/ui/use-toast'
 // import { Calendar } from '@/components/ui/calendar'
 
 const FormSchema = z.object({
-    firstName: z.string().min(2, {
-      message:'First name must be at least 2 characters'
-    }),
-    lastName: z.string().min(2, {
-      message:'Last name must be at least 2 characters'
-    }),
-    email: z.string().email({
-        message: 'Invalid email address.',
-    }),
-    contactNo: z.string().regex(/^0\d{9}$/, {
+  firstName: z.string().min(2, {
+    message: 'First name must be at least 2 characters',
+  }),
+  lastName: z.string().min(2, {
+    message: 'Last name must be at least 2 characters',
+  }),
+  email: z.string().email({
+    message: 'Invalid email address.',
+  }),
+  contactNo: z
+    .string()
+    .regex(/^0\d{9}$/, {
       message: 'Contact number must start with 0 and be exactly 10 digits.',
     })
     .length(10, {
       message: 'Contact number must be exactly 10 digits.',
     }),
-    address: z.string().min(5, {
-      message: 'Address must be at least 5 characters.',
-    }),
-    dob: z.string(),
-    nic: z.string().length(12, {
-      message: 'NIC must be exactly 12 digits.',
-    }),
-    status: z.string()
+  address: z.string().min(5, {
+    message: 'Address must be at least 5 characters.',
+  }),
+  dob: z.string(),
+  nic: z.string().length(12, {
+    message: 'NIC must be exactly 12 digits.',
+  }),
+  status: z.string(),
 })
 
 export function EditCleaner({ contId }: { contId: any }) {
-
   // let desc: string = ''
   const id = contId.slice(-3, contId.length)
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        contactNo: '',
-        address: '',
-        dob: '',
-        nic: '',
-        status: '',
+      firstName: '',
+      lastName: '',
+      email: '',
+      contactNo: '',
+      address: '',
+      dob: '',
+      nic: '',
+      status: '',
     },
   })
 
@@ -88,13 +89,13 @@ export function EditCleaner({ contId }: { contId: any }) {
           .then((data) => {
             return form.reset(
               data as {
-                firstName: string,
-                lastName: string,
-                email: string,
-                contactNo: string,
-                address: string,
-                dob: string,
-                nic: string,
+                firstName: string
+                lastName: string
+                email: string
+                contactNo: string
+                address: string
+                dob: string
+                nic: string
                 status: string
               }
             )
@@ -118,7 +119,7 @@ export function EditCleaner({ contId }: { contId: any }) {
       const editCln = async () => {
         const response = await updateCleaner(data, id)
         if (response.status === 200) {
-          toast({description: 'Cleaner updated successfully!'})
+          toast({ description: 'Cleaner updated successfully!' })
           window.location.reload()
         }
       }

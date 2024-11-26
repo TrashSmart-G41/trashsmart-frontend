@@ -23,7 +23,7 @@ export default function Tasks() {
           fullName: `${driver.firstName || ''} ${driver.lastName || ''}`.trim(),
           contactNo: driver.contactNo,
           status: driver.status,
-        }));
+        }))
         const sortedData = mappedData.sort((a: any, b: any) =>
           b.id.localeCompare(a.id)
         )

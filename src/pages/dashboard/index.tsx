@@ -68,31 +68,33 @@ const chartConfig2 = {
 } satisfies ChartConfig
 
 export default function Dashboard() {
-    const [organizations, setOrganizations] = useState([])
-  
-    useEffect(() => {
-      const loadOrganizations = async () => {
-        try {
-          const data: any = await fetchOrganizations()
-          const mappedData = data.map((org: any) => ({
-            id: `ORG-${org.id.toString().padStart(3, '0')}`,
-            firstName: org.firstName,
-            scale: org.scale.charAt(0).toUpperCase() + org.scale.slice(1).toLowerCase(),
-            address: org.address,
-            totalWaste: org.totalWaste.toString(),
-          }))
-          // setOrganizations(mappedData)
-          const sortedData = mappedData.sort((a: any, b: any) =>
-            b.id.localeCompare(a.id)
-          )
-          setOrganizations(sortedData)
-        } catch (error) {
-          console.error('Failed to load organizations:', error)
-        }
+  const [organizations, setOrganizations] = useState([])
+
+  useEffect(() => {
+    const loadOrganizations = async () => {
+      try {
+        const data: any = await fetchOrganizations()
+        const mappedData = data.map((org: any) => ({
+          id: `ORG-${org.id.toString().padStart(3, '0')}`,
+          firstName: org.firstName,
+          scale:
+            org.scale.charAt(0).toUpperCase() +
+            org.scale.slice(1).toLowerCase(),
+          address: org.address,
+          totalWaste: org.totalWaste.toString(),
+        }))
+        // setOrganizations(mappedData)
+        const sortedData = mappedData.sort((a: any, b: any) =>
+          b.id.localeCompare(a.id)
+        )
+        setOrganizations(sortedData)
+      } catch (error) {
+        console.error('Failed to load organizations:', error)
       }
-  
-      loadOrganizations()
-    }, [])
+    }
+
+    loadOrganizations()
+  }, [])
   return (
     <Layout>
       {/* ===== Top Heading ===== */}

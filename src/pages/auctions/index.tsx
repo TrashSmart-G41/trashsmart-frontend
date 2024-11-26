@@ -48,8 +48,6 @@ export default function Tasks() {
             <TabsTrigger value='canceled' className='flex-1 text-center'>
               CANCELED
             </TabsTrigger>
-
-
           </TabsList>
           <TabsContent value='all'>
             <AllAuctions />
@@ -66,7 +64,6 @@ export default function Tasks() {
           <TabsContent value='canceled'>
             <CanceledAuctions />
           </TabsContent>
- 
         </Tabs>
       </Layout.Body>
     </Layout>

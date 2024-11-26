@@ -1,4 +1,4 @@
-import { request } from "@/lib/axiosHelper";
+import { request } from '@/lib/axiosHelper'
 const API_URL = 'api/v1/auction'
 
 export const fetchAllAuctions = async () => {
@@ -13,9 +13,9 @@ export const fetchAuction = async (id: string) => {
 }
 
 export const deleteUpcomingAuction = async (id: string) => {
-    const url = `${API_URL}/upcoming/${id}`
-    const response = await request('DELETE', url)
-    return response.data
+  const url = `${API_URL}/upcoming/${id}`
+  const response = await request('DELETE', url)
+  return response.data
 }
 
 export const deletePastAuction = async (id: string) => {

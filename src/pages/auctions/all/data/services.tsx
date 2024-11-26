@@ -16,4 +16,3 @@ export const addAuction = async (data: any) => {
   const response = await request('POST', API_URL, data)
   return response
 }
-

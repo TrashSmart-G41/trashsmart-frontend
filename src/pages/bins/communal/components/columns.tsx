@@ -160,13 +160,13 @@ export const columns: ColumnDef<CommunalBin>[] = [
     cell: ({ row }) => {
       const binId = String(row.getValue('bin_id') || '').slice(-3)
       console.log(binId)
-  
+
       return (
-        <div className="mr-4 flex items-center justify-end">
+        <div className='mr-4 flex items-center justify-end'>
           <CommunalDialog binId={binId} />
           <EditBin contId={binId} />
         </div>
       )
     },
-  }
+  },
 ]

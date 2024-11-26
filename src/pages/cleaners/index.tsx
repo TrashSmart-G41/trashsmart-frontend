@@ -9,8 +9,7 @@ import { useEffect, useState } from 'react'
 import { fetchCleaners } from './data/services'
 
 export default function Tasks() {
-
-  const [ cleaner, setCleaner ] = useState([])
+  const [cleaner, setCleaner] = useState([])
 
   useEffect(() => {
     const loadCleaner = async () => {
@@ -21,14 +20,14 @@ export default function Tasks() {
           full_name: `${cleaner.firstName} ${cleaner.lastName}`,
           contactNo: cleaner.contactNo,
           region: cleaner.address.split(' ').pop(),
-          status: cleaner.status
+          status: cleaner.status,
         }))
 
         const sortedData = mappedData.sort((a: any, b: any) =>
           b.id.localeCompare(a.id)
         )
 
-        setCleaner(sortedData);
+        setCleaner(sortedData)
       } catch (err) {
         console.error(err)
       }

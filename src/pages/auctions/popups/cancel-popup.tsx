@@ -21,7 +21,7 @@ export function CancelAuc({ contId }: { contId: string }) {
       const deleteAuc = async () => {
         await cancelAuction(contId)
       }
-      deleteAuc();
+      deleteAuc()
       navigate('/auctions')
       window.location.reload()
       toast({
@@ -32,8 +32,6 @@ export function CancelAuc({ contId }: { contId: string }) {
       console.log(error)
     }
   }
-
-  
 
   const { toast } = useToast()
   return (

@@ -1,7 +1,8 @@
-import { Card, 
-    CardDescription,
-    CardHeader,
-    CardTitle
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/components/ui/card'
 import { Button } from '@/components/custom/button'
 // import { DeleteOrg } from './components/info/delete-popup'
@@ -14,54 +15,54 @@ import { useState, useEffect } from 'react'
 import { fetchCanceledAuction } from './data/services'
 
 type AuctionData = {
-    id: string;
-    wasteType: string;
-    weight: string,
-    startDate: string,
-    endDate: string,
-    min_bid: string,
-    curr_bid: string,
-    status: string,
-    winningPlant: string,
-  };
+  id: string
+  wasteType: string
+  weight: string
+  startDate: string
+  endDate: string
+  min_bid: string
+  curr_bid: string
+  status: string
+  winningPlant: string
+}
 
 const Info = () => {
+  const [auction, setAuction] = useState<AuctionData | null>(null)
 
-    const [ auction, setAuction ] = useState<AuctionData | null>(null);
+  useEffect(() => {
+    const url = window.location.href
+    const id = url.split('/').pop()?.slice(-1)
+    console.log('id:', id)
 
-    useEffect(() => {
-      const url = window.location.href
-      const id = url.split('/').pop()?.slice(-1)
-      console.log('id:', id)
-  
-      const loadAuction = async () => {
-        try {
-          const data: any = await fetchCanceledAuction(id ?? '')
-          console.log(data);
-          const mappedData: AuctionData = {
-            id: `AUC-${data.id.toString().padStart(3, '0')}`,
-            wasteType: data.auctionWasteType.charAt(0).toUpperCase() + data.auctionWasteType.slice(1).toLowerCase(),
-            weight: data.weight,
-            startDate: data.startDate,
-            endDate: data.endDate,
-            min_bid: data.minimumBidAmount,
-            curr_bid: data.currentBid,
-            status: data.status,
-            winningPlant: data.winningPlantId
-          }
-          // console.log('Organization:', data)
-          setAuction(mappedData)
-          console.log('Auction:', auction)
-        } catch (error) {
-          console.error('Failed to load auction:', error)
+    const loadAuction = async () => {
+      try {
+        const data: any = await fetchCanceledAuction(id ?? '')
+        console.log(data)
+        const mappedData: AuctionData = {
+          id: `AUC-${data.id.toString().padStart(3, '0')}`,
+          wasteType:
+            data.auctionWasteType.charAt(0).toUpperCase() +
+            data.auctionWasteType.slice(1).toLowerCase(),
+          weight: data.weight,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          min_bid: data.minimumBidAmount,
+          curr_bid: data.currentBid,
+          status: data.status,
+          winningPlant: data.winningPlantId,
         }
+        // console.log('Organization:', data)
+        setAuction(mappedData)
+        console.log('Auction:', auction)
+      } catch (error) {
+        console.error('Failed to load auction:', error)
       }
-      loadAuction()
     }
-    , [])
+    loadAuction()
+  }, [])
   return (
     <>
-    <Layout>
+      <Layout>
         {/* ===== Top Heading ===== */}
         <Layout.Header sticky>
           <Search />
@@ -91,13 +92,12 @@ const Info = () => {
                     <CardTitle className='text-2xl font-bold text-muted-foreground'>
                       {auction?.id}
                     </CardTitle>
-                    
+
                     <Button
                       variant='scale_btn'
                       size='scale_btn'
                       className='ml-4 bg-cyan-500/25 text-cyan-500'
                     >
-                        
                       <svg
                         className='mr-2 inline-block'
                         xmlns='http://www.w3.org/2000/svg'
@@ -109,7 +109,6 @@ const Info = () => {
                       </svg>
                       {auction?.status}
                     </Button>
-                    
                   </div>
                   <CardDescription className=''>
                     {auction?.wasteType}
@@ -138,112 +137,111 @@ const Info = () => {
               </div>
             </div>
           </Card>
-            <Card className='rounded-xl bg-card p-4'>
+          <Card className='rounded-xl bg-card p-4'>
             <div className='border-md relative rounded-md border p-4 '>
-                <Button
+              <Button
                 variant='outline'
                 size='sm'
                 className='hidde n absolute right-2 top-2 ml-auto h-8 lg:flex'
-                >
+              >
                 {/* <MixerHorizontalIcon className='mr-2 h-4 w-4' /> */}
                 <svg
-                    className='mr-2 h-4 w-4'
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='18'
-                    height='18'
-                    viewBox='0 0 24 24'
+                  className='mr-2 h-4 w-4'
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='18'
+                  height='18'
+                  viewBox='0 0 24 24'
                 >
-                    <path
+                  <path
                     fill='currentColor'
                     d='M3.548 20.938h16.9a.5.5 0 0 0 0-1h-16.9a.5.5 0 0 0 0 1M9.71 17.18a2.6 2.6 0 0 0 1.12-.65l9.54-9.54a1.75 1.75 0 0 0 0-2.47l-.94-.93a1.79 1.79 0 0 0-2.47 0l-9.54 9.53a2.5 2.5 0 0 0-.64 1.12L6.04 17a.74.74 0 0 0 .19.72a.77.77 0 0 0 .53.22Zm.41-1.36a1.47 1.47 0 0 1-.67.39l-.97.26l-1-1l.26-.97a1.5 1.5 0 0 1 .39-.67l.38-.37l1.99 1.99Zm1.09-1.08l-1.99-1.99l6.73-6.73l1.99 1.99Zm8.45-8.45L18.65 7.3l-1.99-1.99l1.01-1.02a.75.75 0 0 1 1.06 0l.93.94a.754.754 0 0 1 0 1.06'
-                    />
+                  />
                 </svg>
                 Edit
-                </Button>
+              </Button>
 
-                <div className='pb-4 font-semibold'>General Information</div>
+              <div className='pb-4 font-semibold'>General Information</div>
 
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
-                    <div>
-                        <CardDescription className='text-[13px]'>
-                            Waste Type
-                        </CardDescription>
-                        <div className='mt-1 font-medium text-muted-foreground'>
-                            {auction?.wasteType}
-                        </div>
-                    </div>
-                    <div>
-                        <CardDescription className='text-[13px]'>
-                            Waste Weight
-                        </CardDescription>
-                        <div className='mt-1 font-medium text-muted-foreground'>
-                            {auction?.weight} KG
-                        </div>
-                    </div>
-                    <div>
-                    <CardDescription className='text-[13px]'>
-                        Start Date
-                    </CardDescription>
-                    <div className='mt-1 font-medium text-muted-foreground'>
-                        {auction?.startDate}
-                    </div>
-                    </div>
-                    <div>
-                    <CardDescription className='text-[13px]'>
-                        End Date
-                    </CardDescription>
-                    <div className='mt-1 font-medium text-muted-foreground'>
-                        {auction?.endDate}
-                    </div>
-                    </div>
+              <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+                <div>
+                  <CardDescription className='text-[13px]'>
+                    Waste Type
+                  </CardDescription>
+                  <div className='mt-1 font-medium text-muted-foreground'>
+                    {auction?.wasteType}
+                  </div>
                 </div>
+                <div>
+                  <CardDescription className='text-[13px]'>
+                    Waste Weight
+                  </CardDescription>
+                  <div className='mt-1 font-medium text-muted-foreground'>
+                    {auction?.weight} KG
+                  </div>
+                </div>
+                <div>
+                  <CardDescription className='text-[13px]'>
+                    Start Date
+                  </CardDescription>
+                  <div className='mt-1 font-medium text-muted-foreground'>
+                    {auction?.startDate}
+                  </div>
+                </div>
+                <div>
+                  <CardDescription className='text-[13px]'>
+                    End Date
+                  </CardDescription>
+                  <div className='mt-1 font-medium text-muted-foreground'>
+                    {auction?.endDate}
+                  </div>
+                </div>
+              </div>
             </div>
-
 
             {/*  */}
             <div className='border-md relative mt-5 rounded-md border p-4'>
-                <Button
+              <Button
                 variant='outline'
                 size='sm'
                 className='hidde n absolute right-2 top-2 ml-auto h-8 lg:flex'
-                >
+              >
                 {/* <MixerHorizontalIcon className='mr-2 h-4 w-4' /> */}
                 <svg
-                    className='mr-2 h-4 w-4'
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='18'
-                    height='18'
-                    viewBox='0 0 24 24'
+                  className='mr-2 h-4 w-4'
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='18'
+                  height='18'
+                  viewBox='0 0 24 24'
                 >
-                    <path
+                  <path
                     fill='currentColor'
                     d='M3.548 20.938h16.9a.5.5 0 0 0 0-1h-16.9a.5.5 0 0 0 0 1M9.71 17.18a2.6 2.6 0 0 0 1.12-.65l9.54-9.54a1.75 1.75 0 0 0 0-2.47l-.94-.93a1.79 1.79 0 0 0-2.47 0l-9.54 9.53a2.5 2.5 0 0 0-.64 1.12L6.04 17a.74.74 0 0 0 .19.72a.77.77 0 0 0 .53.22Zm.41-1.36a1.47 1.47 0 0 1-.67.39l-.97.26l-1-1l.26-.97a1.5 1.5 0 0 1 .39-.67l.38-.37l1.99 1.99Zm1.09-1.08l-1.99-1.99l6.73-6.73l1.99 1.99Zm8.45-8.45L18.65 7.3l-1.99-1.99l1.01-1.02a.75.75 0 0 1 1.06 0l.93.94a.754.754 0 0 1 0 1.06'
-                    />
+                  />
                 </svg>
                 Edit
-                </Button>
+              </Button>
 
-                <div className='pb-4 font-semibold'>Bid Information</div>
+              <div className='pb-4 font-semibold'>Bid Information</div>
 
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+              <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 <div>
-                    <div>
+                  <div>
                     <CardDescription className='text-[13px]'>
-                        Base Price
+                      Base Price
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        $ {auction?.min_bid}.00
+                      $ {auction?.min_bid}.00
                     </div>
-                    </div>
-                    <div className='my-3'>
+                  </div>
+                  <div className='my-3'>
                     <CardDescription className='text-[13px]'>
-                        Winning Bid
+                      Winning Bid
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        $ {auction?.curr_bid ?? '000'}.00
+                      $ {auction?.curr_bid ?? '000'}.00
                     </div>
-                    </div>
-                    {/* <div className='my-3'>
+                  </div>
+                  {/* <div className='my-3'>
                     <CardDescription className='text-[13px]'>Address</CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
                         789 University Avenue, Cambridge, MA, USA
@@ -252,7 +250,7 @@ const Info = () => {
                 </div>
 
                 <div>
-                    {/* <div>
+                  {/* <div>
                     <CardDescription className='text-[13px]'>
                         Winning Bid
                     </CardDescription>
@@ -260,24 +258,23 @@ const Info = () => {
                         $ {auction?.curr_bid ?? '000'}.00
                     </div>
                     </div> */}
-                    <div className='my-3'>
+                  <div className='my-3'>
                     <CardDescription className='text-[13px]'>
-                        Winning Plant
+                      Winning Plant
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        {auction?.winningPlant}
+                      {auction?.winningPlant}
                     </div>
-                    </div>
+                  </div>
                 </div>
-                </div>
+              </div>
             </div>
 
             <div className='flex justify-end pt-4'>
-                {/* <Button variant="destructive">Delete Organization</Button> */}
-                {/* <DeleteOrg /> */}
+              {/* <Button variant="destructive">Delete Organization</Button> */}
+              {/* <DeleteOrg /> */}
             </div>
-            </Card>
-
+          </Card>
         </Layout.Body>
       </Layout>
     </>

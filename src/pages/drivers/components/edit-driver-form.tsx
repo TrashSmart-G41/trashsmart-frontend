@@ -34,22 +34,21 @@ import { fetchDriver, updateDriver } from '../data/services'
 
 const firstName = z.string().nonempty({
   message: 'First name cannot be empty.',
-});
+})
 
 const lastName = z.string().nonempty({
   message: 'Last name cannot be empty.',
-});
+})
 
 const contactNo = z.string().regex(/^\d+$/, {
   message: 'Contact number should contain only digits.',
-});
+})
 
-const status = z.string().refine(
-  (value) => value === 'ACTIVE' || value === 'UNAVAILABLE',
-  {
+const status = z
+  .string()
+  .refine((value) => value === 'ACTIVE' || value === 'UNAVAILABLE', {
     message: 'Status must be either "active" or "unavailable".',
-  }
-);
+  })
 
 const FormSchema = z.object({
   firstName: firstName,
@@ -104,13 +103,13 @@ export function EditDriver({ contId }: { contId: string }) {
       const editdriver = async () => {
         const response = await updateDriver(contId.slice(-3), data)
         if (response.status === 200) {
-          console.log("driver updated")
+          console.log('driver updated')
           window.location.reload()
         }
       }
       editdriver()
     } catch (error) {
-         console.error(error)
+      console.error(error)
       // desc = 'Error adding organization!'
     }
   }

@@ -19,8 +19,8 @@ export const fetchCommunalBin = async (id: string) => {
 // }
 
 export const addCommunalBin = async (data: any) => {
-  const response = await request('POST', API_URL, data);
-  return response;
+  const response = await request('POST', API_URL, data)
+  return response
 }
 
 export const updateCommunalBin = async (id: string, data: any) => {

@@ -1,7 +1,8 @@
-import { Card, 
+import {
+  Card,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from '@/components/ui/card'
 import {
   Table,
@@ -20,31 +21,29 @@ import { useEffect, useState } from 'react'
 import { fetchRecyclingPlant } from './data/services'
 import { fetchAuction } from '../auctions/data/services'
 
-
 type PlantData = {
-  id: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-  contactNo: string,
-  address: string,
+  id: string
+  firstName: string
+  lastName: string
+  email: string
+  contactNo: string
+  address: string
   profileURL: string
-  LocalDateTime: string,
-  brn: string,
+  LocalDateTime: string
+  brn: string
   auctions: []
 }
 
 type AuctionData = {
-  id: string,
-  auctionWasteType: string,
-  min_bid: number,
+  id: string
+  auctionWasteType: string
+  min_bid: number
   curr_bid: number
 }
 
 const Info = () => {
-
-  const [ plant, setPlant ] = useState<PlantData | null>(null)
-  const [ auctions, setAuctions ] = useState<AuctionData[]>([])
+  const [plant, setPlant] = useState<PlantData | null>(null)
+  const [auctions, setAuctions] = useState<AuctionData[]>([])
 
   const url = window.location.href
   const id = url.split('/').pop()?.slice(-1)
@@ -64,44 +63,42 @@ const Info = () => {
           profileURL: plant.profileURL,
           LocalDateTime: plant.localDateTime,
           brn: plant.brn,
-          auctions: Array.isArray(plant.auctions) ? plant.auctions : []
+          auctions: Array.isArray(plant.auctions) ? plant.auctions : [],
         }
 
         setPlant(mappedData)
 
         if (mappedData.auctions.length > 0) {
-          loadAuctions(mappedData.auctions);
+          loadAuctions(mappedData.auctions)
         }
-
       } catch (error) {
         console.error('Failed to load Recycling Plants:', error)
       }
     }
 
     loadPlant()
-    }, [])
+  }, [])
 
-      const loadAuctions = async (auctionIds: string[]) =>{
-        try {
-          const auctionPromises = auctionIds.map((auctionId) =>
-            fetchAuction(auctionId)
-          );
+  const loadAuctions = async (auctionIds: string[]) => {
+    try {
+      const auctionPromises = auctionIds.map((auctionId) =>
+        fetchAuction(auctionId)
+      )
 
-          const auctionResults = await Promise.all(auctionPromises);
+      const auctionResults = await Promise.all(auctionPromises)
 
-          const mappedAuctions = auctionResults.map((auc: any) => ({
-            id: auc.id,
-            auctionWasteType: auc.auctionWasteType,
-            min_bid: auc.minimumBidAmount,
-            curr_bid: auc.currentBid
-          }));
-  
-          setAuctions(mappedAuctions);
+      const mappedAuctions = auctionResults.map((auc: any) => ({
+        id: auc.id,
+        auctionWasteType: auc.auctionWasteType,
+        min_bid: auc.minimumBidAmount,
+        curr_bid: auc.currentBid,
+      }))
 
-        } catch (err) {
-          console.error(err)
-        }
-      }
+      setAuctions(mappedAuctions)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return (
     <>
@@ -124,13 +121,12 @@ const Info = () => {
                     <CardTitle className='text-2xl font-bold text-muted-foreground'>
                       {plant?.id}
                     </CardTitle>
-                    
+
                     <Button
                       variant='scale_btn'
                       size='scale_btn'
                       className='ml-4 bg-cyan-500/25 text-cyan-500'
                     >
-                        
                       <svg
                         className='mr-2 inline-block'
                         xmlns='http://www.w3.org/2000/svg'
@@ -142,7 +138,6 @@ const Info = () => {
                       </svg>
                       ACTIVE
                     </Button>
-                    
                   </div>
                   <CardDescription className=''>
                     {plant?.firstName}
@@ -168,138 +163,140 @@ const Info = () => {
                     />
                   </svg>
                 </Button>
-
               </div>
             </div>
           </Card>
-          
-            <Card className='rounded-xl bg-card p-4'>
+
+          <Card className='rounded-xl bg-card p-4'>
             <div className='border-md relative rounded-md border p-4 '>
-                <Button
+              <Button
                 variant='outline'
                 size='sm'
                 className='hidde n absolute right-2 top-2 ml-auto h-8 lg:flex'
-                >
+              >
                 {/* <MixerHorizontalIcon className='mr-2 h-4 w-4' /> */}
                 <svg
-                    className='mr-2 h-4 w-4'
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='18'
-                    height='18'
-                    viewBox='0 0 24 24'
+                  className='mr-2 h-4 w-4'
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='18'
+                  height='18'
+                  viewBox='0 0 24 24'
                 >
-                    <path
+                  <path
                     fill='currentColor'
                     d='M3.548 20.938h16.9a.5.5 0 0 0 0-1h-16.9a.5.5 0 0 0 0 1M9.71 17.18a2.6 2.6 0 0 0 1.12-.65l9.54-9.54a1.75 1.75 0 0 0 0-2.47l-.94-.93a1.79 1.79 0 0 0-2.47 0l-9.54 9.53a2.5 2.5 0 0 0-.64 1.12L6.04 17a.74.74 0 0 0 .19.72a.77.77 0 0 0 .53.22Zm.41-1.36a1.47 1.47 0 0 1-.67.39l-.97.26l-1-1l.26-.97a1.5 1.5 0 0 1 .39-.67l.38-.37l1.99 1.99Zm1.09-1.08l-1.99-1.99l6.73-6.73l1.99 1.99Zm8.45-8.45L18.65 7.3l-1.99-1.99l1.01-1.02a.75.75 0 0 1 1.06 0l.93.94a.754.754 0 0 1 0 1.06'
-                    />
+                  />
                 </svg>
                 Edit
-                </Button>
+              </Button>
 
-                <div className='pb-4 font-semibold'>General Information</div>
+              <div className='pb-4 font-semibold'>General Information</div>
 
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
-                    <div>
-                        <CardDescription className='text-[13px]'>
-                            Plant Name
-                        </CardDescription>
-                        <div className='mt-1 font-medium text-muted-foreground'>
-                            {plant?.firstName}
-                        </div>
-                    </div>
-                    <div>
-                        <CardDescription className='text-[13px]'>
-                            Contact Person's Name
-                        </CardDescription>
-                        <div className='mt-1 font-medium text-muted-foreground'>
-                            {plant?.lastName}
-                        </div>
-                    </div>
-                    <div>
-                    <CardDescription className='text-[13px]'>
-                        Business Registration Number
-                    </CardDescription>
-                    <div className='mt-1 font-medium text-muted-foreground'>
-                        {plant?.brn}
-                    </div>
-                    </div>
-                    <div>
-                    <CardDescription className='text-[13px]'>
-                        Address
-                    </CardDescription>
-                    <div className='mt-1 font-medium text-muted-foreground'>
-                        {plant?.address}
-                    </div>
-                    </div>
+              <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+                <div>
+                  <CardDescription className='text-[13px]'>
+                    Plant Name
+                  </CardDescription>
+                  <div className='mt-1 font-medium text-muted-foreground'>
+                    {plant?.firstName}
+                  </div>
                 </div>
+                <div>
+                  <CardDescription className='text-[13px]'>
+                    Contact Person's Name
+                  </CardDescription>
+                  <div className='mt-1 font-medium text-muted-foreground'>
+                    {plant?.lastName}
+                  </div>
+                </div>
+                <div>
+                  <CardDescription className='text-[13px]'>
+                    Business Registration Number
+                  </CardDescription>
+                  <div className='mt-1 font-medium text-muted-foreground'>
+                    {plant?.brn}
+                  </div>
+                </div>
+                <div>
+                  <CardDescription className='text-[13px]'>
+                    Address
+                  </CardDescription>
+                  <div className='mt-1 font-medium text-muted-foreground'>
+                    {plant?.address}
+                  </div>
+                </div>
+              </div>
             </div>
-
 
             {/*  */}
             <div className='border-md relative mt-5 rounded-md border p-4'>
-                <Button
+              <Button
                 variant='outline'
                 size='sm'
                 className='hidde n absolute right-2 top-2 ml-auto h-8 lg:flex'
-                >
+              >
                 {/* <MixerHorizontalIcon className='mr-2 h-4 w-4' /> */}
                 <svg
-                    className='mr-2 h-4 w-4'
-                    xmlns='http://www.w3.org/2000/svg'
-                    width='18'
-                    height='18'
-                    viewBox='0 0 24 24'
+                  className='mr-2 h-4 w-4'
+                  xmlns='http://www.w3.org/2000/svg'
+                  width='18'
+                  height='18'
+                  viewBox='0 0 24 24'
                 >
-                    <path
+                  <path
                     fill='currentColor'
                     d='M3.548 20.938h16.9a.5.5 0 0 0 0-1h-16.9a.5.5 0 0 0 0 1M9.71 17.18a2.6 2.6 0 0 0 1.12-.65l9.54-9.54a1.75 1.75 0 0 0 0-2.47l-.94-.93a1.79 1.79 0 0 0-2.47 0l-9.54 9.53a2.5 2.5 0 0 0-.64 1.12L6.04 17a.74.74 0 0 0 .19.72a.77.77 0 0 0 .53.22Zm.41-1.36a1.47 1.47 0 0 1-.67.39l-.97.26l-1-1l.26-.97a1.5 1.5 0 0 1 .39-.67l.38-.37l1.99 1.99Zm1.09-1.08l-1.99-1.99l6.73-6.73l1.99 1.99Zm8.45-8.45L18.65 7.3l-1.99-1.99l1.01-1.02a.75.75 0 0 1 1.06 0l.93.94a.754.754 0 0 1 0 1.06'
-                    />
+                  />
                 </svg>
                 Edit
-                </Button>
+              </Button>
 
-                <div className='pb-4 font-semibold'>Contact Information</div>
+              <div className='pb-4 font-semibold'>Contact Information</div>
 
-                <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+              <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 <div>
-                    <div>
+                  <div>
                     <CardDescription className='text-[13px]'>
-                        Email
+                      Email
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        {plant?.email}
+                      {plant?.email}
                     </div>
-                    </div>
-                    <div className='my-3'>
+                  </div>
+                  <div className='my-3'>
                     <CardDescription className='text-[13px]'>
-                        Contact No
+                      Contact No
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        {plant?.contactNo}
+                      {plant?.contactNo}
                     </div>
-                    </div>
-                    <div className='my-3'>
+                  </div>
+                  <div className='my-3'>
                     <CardDescription className='text-[13px]'>
-                        ProfileURL
+                      ProfileURL
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        {plant?.profileURL}
+                      {plant?.profileURL}
                     </div>
-                    </div>
+                  </div>
                 </div>
+              </div>
             </div>
-            </div>
-            
+
             <div className='border-md relative mt-5 rounded-md border p-4'>
               <div className='pb-4 font-semibold'>Participated Auctions</div>
-              <div className='rounded-lg border m-2 w-1/2'> {/* Restrict width to 50% and align left */}
+              <div className='m-2 w-1/2 rounded-lg border'>
+                {' '}
+                {/* Restrict width to 50% and align left */}
                 {auctions.length > 0 ? (
                   <Table>
                     <TableHeader className='bg-background'>
                       <TableRow>
                         <TableHead>Auction ID</TableHead>
                         <TableHead>Waste Type</TableHead>
-                        <TableHead className='text-right'>Minimum Bid</TableHead>
+                        <TableHead className='text-right'>
+                          Minimum Bid
+                        </TableHead>
                         <TableHead className='text-right'>Final Bid</TableHead>
                       </TableRow>
                     </TableHeader>
@@ -308,20 +305,24 @@ const Info = () => {
                         <TableRow key={auction.id}>
                           <TableCell>{`AUC-${auction.id.toString().padStart(3, '0')}`}</TableCell>
                           <TableCell>{auction?.auctionWasteType}</TableCell>
-                          <TableCell className='text-right'>${auction.min_bid.toFixed(2)}</TableCell>
-                          <TableCell className='text-right'>${auction.curr_bid.toFixed(2)}</TableCell>
+                          <TableCell className='text-right'>
+                            ${auction.min_bid.toFixed(2)}
+                          </TableCell>
+                          <TableCell className='text-right'>
+                            ${auction.curr_bid.toFixed(2)}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
                   </Table>
                 ) : (
-                  <div className='p-4 text-gray-500'>Haven't participated in any auctions.</div>
+                  <div className='p-4 text-gray-500'>
+                    Haven't participated in any auctions.
+                  </div>
                 )}
               </div>
             </div>
-
-            </Card>
-
+          </Card>
         </Layout.Body>
       </Layout>
     </>

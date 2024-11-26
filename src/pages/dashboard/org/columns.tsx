@@ -84,11 +84,11 @@ export const columns: ColumnDef<Organization>[] = [
     cell: ({ row }) => {
       const navigate = useNavigate()
       const contId = String(row.getValue('id') || '').slice(-3)
-  
+
       const handleButtonClick = () => {
         navigate(`/organizations/${row.getValue('id')}`)
       }
-  
+
       return (
         <div className='mr-4 flex items-center justify-end'>
           <Button
@@ -105,5 +105,4 @@ export const columns: ColumnDef<Organization>[] = [
       )
     },
   },
-  
 ]

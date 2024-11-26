@@ -56,7 +56,6 @@ const chartConfig2 = {
 } satisfies ChartConfig
 
 export default function Insights() {
-
   const [binCounts, setBinCount] = useState(0)
   const [fullBinCount, setFullBinCount] = useState(0)
   const [reqCount, setReqCount] = useState(0)
