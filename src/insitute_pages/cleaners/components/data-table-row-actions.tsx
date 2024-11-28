@@ -15,6 +15,8 @@ import {
   // DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { EditCleaner } from './edit-cleaner-form'
+import { DeleteCleaner } from './delete-cleaner'
 
 // import { labels } from '../data/data'
 // import { cleanerSchema } from '../data/schema'
@@ -23,12 +25,9 @@ interface DataTableRowActionsProps<TData> {
   row: Row<TData>
 }
 
-export function DataTableRowActions<TData>(
-  {
-    // row,
-  }: DataTableRowActionsProps<TData>
-) {
-  // const cleaner = cleanerSchema.parse(row.original)
+export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
+
+  const contId = row.getValue('id')
 
   return (
     <DropdownMenu>
@@ -42,27 +41,15 @@ export function DataTableRowActions<TData>(
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-        <DropdownMenuItem>Edit</DropdownMenuItem>
-        {/* <DropdownMenuItem>Make a copy</DropdownMenuItem>
-        <DropdownMenuItem>Favorite</DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>Labels</DropdownMenuSubTrigger>
-          <DropdownMenuSubContent>
-            <DropdownMenuRadioGroup value={cleaner.employee_id}> */}
-        {/* {labels.map((label) => (
-                <DropdownMenuRadioItem key={label.value} value={label.value}>
-                  {label.label}
-                </DropdownMenuRadioItem>
-              ))} */}
-        {/* </DropdownMenuRadioGroup>
-          </DropdownMenuSubContent>
-        </DropdownMenuSub>
-        <DropdownMenuSeparator /> */}
-        <DropdownMenuItem>
-          Delete
-          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-        </DropdownMenuItem>
+      <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+        <EditCleaner contId={contId} />
+      </DropdownMenuItem>
+
+      <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+        <DeleteCleaner contId={contId} />
+        <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+      </DropdownMenuItem>
+
       </DropdownMenuContent>
     </DropdownMenu>
   )
