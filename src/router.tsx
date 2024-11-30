@@ -311,7 +311,26 @@ const router = (
         return { Component: AppShell }
       },
       errorElement: <GeneralError />,
-      children: [],
+      children: [
+        {
+          index: true,
+          lazy: async () => ({
+            Component: (await import('./recycling-plant_pages/dashboard')).default,
+          }),
+        },
+        {
+          path: '/recycling-plant/:id',
+          lazy: async () => ({
+            Component: (await import('@/recycling-plant_pages/info/info')).default,
+          }),
+        },
+        {
+          path: '/recycling-plant/history',
+          lazy: async () => ({
+            Component: (await import('@/recycling-plant_pages/history')).default,
+          }),
+        },
+      ]
     },
 
     {
