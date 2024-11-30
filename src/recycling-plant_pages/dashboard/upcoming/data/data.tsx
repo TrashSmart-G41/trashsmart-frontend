@@ -19,27 +19,27 @@ export const statuses = [
 
 export const types = [
   {
-    label: 'POLYTHENE',
-    value: 'POLYTHENE',
+    label: 'Polythene',
+    value: 'Polythene',
   },
   {
-    label: 'PLASTIC',
-    value: 'PLASTIC',
+    label: 'Plastic',
+    value: 'Plastic',
   },
   {
-    label: 'METAL',
-    value: 'METAL',
+    label: 'Metal',
+    value: 'Metal',
   },
   {
-    label: 'GLASS',
-    value: 'GLASS',
+    label: 'Glass',
+    value: 'Glass',
   },
   {
-    label: 'WOOD',
-    value: 'WOOD',
+    label: 'Wood',
+    value: 'Wood',
   },
   {
-    label: 'ELECTRONICS',
-    value: 'ELECTRONICS',
+    label: 'Electronics',
+    value: 'Electronics',
   },
 ]

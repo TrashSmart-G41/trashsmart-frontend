@@ -138,7 +138,7 @@ export const columns: ColumnDef<AllAuctions>[] = [
       // const contId = String(row.getValue('id') || '').slice(-3)
 
       const handleButtonClick = () => {
-        navigate(`/auctions/${row.getValue('id')}`)
+        navigate(`/recycling-plant/${row.getValue('id')}`)
       }
 
       return (

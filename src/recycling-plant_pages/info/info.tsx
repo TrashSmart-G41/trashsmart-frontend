@@ -1,5 +1,6 @@
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -12,7 +13,19 @@ import ThemeSwitch from '@/components/theme-switch'
 // import GoogleMap from '../../components/custom/map'
 import { UserNav } from '@/components/user-nav'
 import { useState, useEffect } from 'react'
-import { fetchLiveAuction, fetchWinningPlant } from './data/services'
+import { fetchAuction } from './services'
+import { fetchWinningPlant } from '../dashboard/live/data/services'
+import { Biddings } from './biddings'
+// import BiddingPopup from './biddingPopup'
+
+type BidData = {
+  id: string
+  bidAmount: number
+  recyclingPlants: {
+    id: string
+    firstName: string
+  }
+}
 
 type AuctionData = {
   id: string
@@ -20,10 +33,12 @@ type AuctionData = {
   weight: string
   startDate: string
   endDate: string
-  min_bid: string
-  curr_bid: string
+  min_bid: number
+  curr_bid: number
   status: string
   winningPlant: string
+  registeredPlants: { id: string; firstName: string }[]
+  bids: BidData[]
 }
 
 type PlantData = {
@@ -33,6 +48,7 @@ type PlantData = {
 const Info = () => {
   const [auction, setAuction] = useState<AuctionData | null>(null)
   const [plant, setPlant] = useState<PlantData | null>(null)
+  // const [currentBid, setCurrentBid] = useState<number>(auction?.curr_bid || 0);
 
   useEffect(() => {
     const url = window.location.href
@@ -41,7 +57,7 @@ const Info = () => {
 
     const loadAuction = async () => {
       try {
-        const data: any = await fetchLiveAuction(id ?? '')
+        const data: any = await fetchAuction(id ?? '')
         console.log(data)
         const mappedData: AuctionData = {
           id: `AUC-${data.id.toString().padStart(3, '0')}`,
@@ -49,13 +65,27 @@ const Info = () => {
             data.auctionWasteType.charAt(0).toUpperCase() +
             data.auctionWasteType.slice(1).toLowerCase(),
           weight: data.weight,
-          startDate: data.startDate,
-          endDate: data.endDate,
+          startDate: data.startDate.slice(0, 10),
+          endDate: data.endDate.slice(0, 10),
           min_bid: data.minimumBidAmount,
           curr_bid: data.currentBid,
           status: data.status,
           winningPlant: data.winningPlantId,
+          registeredPlants: Array.isArray(data.registeredPlants)
+            ? data.registeredPlants
+            : [],
+          bids: Array.isArray(data.bids)
+            ? data.bids.map((bid: any) => ({
+                id: bid.id,
+                bidAmount: bid.bidAmount,
+                recyclingPlants: {
+                  id: `PLANT-${bid.recyclingPlant.id.toString().padStart(3, '0')}`,
+                  firstName: bid.recyclingPlant.firstName,
+                },
+              }))
+            : [],
         }
+
         // console.log('Organization:', data)
         setAuction(mappedData)
         console.log('Auction:', auction)
@@ -63,7 +93,6 @@ const Info = () => {
         console.error('Failed to load auction:', error)
       }
     }
-
     loadAuction()
   }, [])
 
@@ -84,6 +113,32 @@ const Info = () => {
 
     loadWinningPlant()
   }, [auction])
+
+  // const renderActionComponent = () => {
+  //   // const url = window.location.href
+  //   // const contId = String(url.split('/').pop()?.slice(-1))
+  //   switch (auction?.status) {
+  //     // case 'UPCOMING':
+  //     //   return <DeleteAuc contId={contId} />
+  //     case 'LIVE':
+  //       return 
+  //         <div>
+  //           <BiddingPopup
+  //             minimumBidAmount={auction?.min_bid || 0}
+  //             currentBid={currentBid}
+  //             onBid={(amount) => {
+  //               setCurrentBid(amount);
+  //               console.log(`Bid placed: $${amount}`);
+  //             }}
+  //           />
+  //         </div>
+  //     // case 'PAST':
+  //     //   return <LogicallyDeleteAuc contId={contId} />
+  //     default:
+  //       return null
+  //   }
+  // }
+
   return (
     <>
       <Layout>
@@ -158,6 +213,7 @@ const Info = () => {
                     />
                   </svg>
                 </Button>
+       
               </div>
             </div>
           </Card>
@@ -254,7 +310,7 @@ const Info = () => {
                       Base Price
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                      $ {auction?.min_bid}.00
+                      Rs. {auction?.min_bid}.00
                     </div>
                   </div>
                   <div className='my-3'>
@@ -262,26 +318,20 @@ const Info = () => {
                       Winning Bid
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                      $ {auction?.curr_bid ?? '000'}.00
+                      Rs. {auction?.curr_bid ?? '000'}.00
                     </div>
                   </div>
-                  {/* <div className='my-3'>
-                    <CardDescription className='text-[13px]'>Address</CardDescription>
-                    <div className='mt-1 font-medium text-muted-foreground'>
-                        789 University Avenue, Cambridge, MA, USA
-                    </div>
-                    </div> */}
                 </div>
 
                 <div>
-                  {/* <div>
+                  <div>
                     <CardDescription className='text-[13px]'>
-                        Winning Bid
+                      No. of Registered Plants
                     </CardDescription>
                     <div className='mt-1 font-medium text-muted-foreground'>
-                        $ {auction?.curr_bid ?? '000'}.00
+                      {auction?.registeredPlants.length}
                     </div>
-                    </div> */}
+                  </div>
                   <div className='my-3'>
                     <CardDescription className='text-[13px]'>
                       Winning Plant
@@ -294,9 +344,48 @@ const Info = () => {
               </div>
             </div>
 
-            <div className='flex justify-end pt-4'>
-              {/* <Button variant="destructive">Delete Organization</Button> */}
-              {/* <DeleteOrg /> */}
+            <div className='mt-4 grid grid-cols-1 gap-4 lg:grid-cols-6'>
+              <Card className='col-span-1 p-1 lg:col-span-2'>
+                <CardHeader>
+                  <CardTitle>Registered Plants</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {Array.isArray(auction?.registeredPlants) &&
+                  auction.registeredPlants.length > 0 ? (
+                    <ul className='mt-2'>
+                      {auction?.registeredPlants.map((plant, index) => (
+                        <li
+                          key={index}
+                          className='border-b py-2 last:border-none'
+                        >
+                          <div className='gap-y-px font-medium text-gray-500'>
+                            {plant?.firstName} -{' '}
+                            <span className='text-sm'>{`PLANT-${plant.id.toString().padStart(3, '0')}`}</span>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <div className='mt-2 text-sm text-muted-foreground'>
+                      No plants registered yet.
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card className='col-span-1 p-1 lg:col-span-4'>
+                <CardHeader>
+                  <CardTitle>Biddings</CardTitle>
+                  <CardDescription>Based on bid amounts</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {auction?.bids ? (
+                    <Biddings bids={auction.bids} />
+                  ) : (
+                    <div>No bids available</div>
+                  )}
+                </CardContent>
+              </Card>
             </div>
           </Card>
         </Layout.Body>

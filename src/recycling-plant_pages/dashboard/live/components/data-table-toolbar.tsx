@@ -1,14 +1,9 @@
 import { Cross2Icon } from '@radix-ui/react-icons'
 import { Table } from '@tanstack/react-table'
-
 import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
-// import { DataTableViewOptions } from '../components/data-table-view-options'
-
-import { statuses, types } from '../data/data'
+import { types } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
-// import { PopupForm } from '@/components/custom/popupform'
-// import { AddCommunalBinForm } from './add_communal_bin'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -37,13 +32,6 @@ export function DataTableToolbar<TData>({
             <DataTableFacetedFilter
               column={table.getColumn('wasteType')}
               title='Waste Type'
-              options={statuses}
-            />
-          )}
-          {table.getColumn('startDate') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('startDate')}
-              title='Start Date'
               options={types}
             />
           )}
@@ -59,8 +47,7 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      {/* <DataTableViewOptions table={table} /> */}
-      {/* <PopupForm formContent={AddCommunalBinForm} buttonContent={'+ Add Bin'} /> */}
+
     </div>
   )
 }

@@ -1,45 +1,45 @@
 export const statuses = [
   {
-    label: 'Empty',
-    value: 'Empty',
+    label: 'LIVE',
+    value: 'LIVE',
   },
   {
-    label: 'Normal',
-    value: 'Normal',
+    label: 'PAST',
+    value: 'PAST',
   },
   {
-    label: 'Full',
-    value: 'Full',
+    label: 'UPCOMING',
+    value: 'UPCOMING',
   },
   {
-    label: 'Almost Full',
-    value: 'Almost Full',
+    label: 'CANCELED',
+    value: 'CANCELED',
   },
 ]
 
 export const types = [
   {
-    label: 'Recyclable-20 liters',
-    value: 'Recyclable-20 liters',
+    label: 'Polythene',
+    value: 'Polythene',
   },
   {
-    label: 'General-20 liters',
-    value: 'General-20 liters',
+    label: 'Plastic',
+    value: 'Plastic',
   },
   {
-    label: 'Recyclable-50 liters',
-    value: 'Recyclable-50 liters',
+    label: 'Metal',
+    value: 'Metal',
   },
   {
-    label: 'General-50 liters',
-    value: 'General-50 liters',
+    label: 'Glass',
+    value: 'Glass',
   },
   {
-    label: 'Recyclable-150 liters',
-    value: 'Recyclable-150 liters',
+    label: 'Wood',
+    value: 'Wood',
   },
   {
-    label: 'General-150 liters',
-    value: 'General-150 liters',
+    label: 'Electronics',
+    value: 'Electronics',
   },
 ]

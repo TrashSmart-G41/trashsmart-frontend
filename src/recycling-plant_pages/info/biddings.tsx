@@ -58,9 +58,9 @@ export function Biddings({ bids }: BiddingProps) {
                       </div>
                     </TableCell>
                     <TableCell>{bid.recyclingPlants.firstName}</TableCell>
-                    <TableCell>{bid.recyclingPlants.id}</TableCell>
+                    <TableCell className='text-right'>{bid.recyclingPlants.id}</TableCell>
                     <TableCell className='text-right'>
-                      ${bid.bidAmount.toFixed(2)}
+                      Rs. {bid.bidAmount.toFixed(2)}
                     </TableCell>
                   </TableRow>
                 ))}

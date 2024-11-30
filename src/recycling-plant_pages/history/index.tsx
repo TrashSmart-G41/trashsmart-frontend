@@ -41,10 +41,7 @@ export default function PastAuctions() {
           curr_bid: `Rs. ${auc?.currentBid ? auc.currentBid : 'N/A'}`,
         }))
 
-        const sortedData = mappedData.sort((a: any, b: any) =>
-          b.auction_id.localeCompare(a.auction_id)
-        )
-        setAuctions(sortedData)
+        setAuctions(mappedData)
       } catch (e) {
         console.error('Failed to load Auctions', e)
       }

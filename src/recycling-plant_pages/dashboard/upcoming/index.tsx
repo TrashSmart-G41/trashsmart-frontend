@@ -4,15 +4,25 @@ import { fetchUpcomingAuctions } from './data/services'
 import { Card } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 
+interface Auction {
+  id: string;
+  wasteType: string;
+  weight: string;
+  startDate: string;
+  endDate: string;
+  min_bid: string;
+  registeredPlants: number[];
+}
+
 export default function UpcomingAuctions() {
-  const [auctions, setAuctions] = useState([])
+  const [auctions, setAuctions] = useState<Auction[]>([])
 
   useEffect(() => {
     const loadAuctions = async () => {
       try {
         const data: any = await fetchUpcomingAuctions()
         console.log(data)
-        const mappedData = data.map((auc: any) => ({
+        const mappedData = data.map((auc: any): Auction => ({
           id: `AUC-${auc.id.toString().padStart(3, '0')}`,
           wasteType:
             auc.auctionWasteType.charAt(0).toUpperCase() +
@@ -21,11 +31,9 @@ export default function UpcomingAuctions() {
           startDate: auc.startDate.slice(0, 10),
           endDate: auc.endDate.slice(0, 10),
           min_bid: `Rs. ${auc.minimumBidAmount}`,
+          registeredPlants: auc.registeredPlants.map((plant: any) => plant.id),
         }))
 
-        // const sortedData = mappedData.sort((a: any, b: any) =>
-        //   b.auction_id.localeCompare(a.auction_id)
-        // )
         setAuctions(mappedData)
       } catch (e) {
         console.error('Failed to load Auctions', e)

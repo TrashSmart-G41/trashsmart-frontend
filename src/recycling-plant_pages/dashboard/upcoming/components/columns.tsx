@@ -1,17 +1,21 @@
 import { ColumnDef } from '@tanstack/react-table'
-// import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
-// import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-// import { DataTableRowActions } from './data-table-row-actions'
-
-// import { statuses, regions } from '../data/data'
-import { AllAuctions } from '../data/schema'
-// import { CommercialDialog } from './commercial_bin_dialog'
 import { Button } from '@/components/custom/button'
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import RegistrationPopup from '../../popups/RegistrationPopup'
+import { registerForAuction } from '../data/services'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
+
+export interface AllAuctions {
+  id: string;
+  weight: string;
+  startDate: string;
+  endDate: string;
+  wasteType: string;
+  min_bid: string;
+  registeredPlants: number[]; 
+}
 
 export const columns: ColumnDef<AllAuctions>[] = [
   {
@@ -120,13 +124,16 @@ export const columns: ColumnDef<AllAuctions>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const navigate = useNavigate()
-
-      // const contId = String(row.getValue('id') || '').slice(-3)
-
       const handleButtonClick = () => {
-        navigate(`/auctions/${row.getValue('id')}`)
+        navigate(`/recycling-plant/${row.getValue('id')}`)
       }
 
+      const token = localStorage.getItem('token') ?? '';
+      const decodeToken = jwtDecode<JwtPayload>(token) as { userId: number};
+      const currentPlantId = decodeToken?.userId;
+
+      const isRegistered = row.original?.registeredPlants.includes(currentPlantId) ?? false;
+      
       return (
         <>
           <div className='mr-4 flex items-center justify-end'>
@@ -137,8 +144,30 @@ export const columns: ColumnDef<AllAuctions>[] = [
             >
               View
             </Button>
-
-            {/* <DataTableRowActions row={row} /> */}
+            {isRegistered ? (
+                <Button
+                variant="ghost"
+                className="flex h-8 px-2 text-[12px] text-muted-foreground cursor-not-allowed"
+                disabled
+              >
+                Registered
+              </Button>
+            ) : (
+              <RegistrationPopup
+                auction={row.getValue('id')}
+                wasteType={row.getValue('wasteType')}
+                startDate={row.getValue('startDate')}
+                endDate={row.getValue('endDate')}
+                onRegister={async () => {
+                  const payload = {
+                    auctionId: parseInt((row.getValue('id') as string).replace('AUC-', ''), 10),
+                    recyclingPlantId: currentPlantId,
+                  };
+                  await registerForAuction(payload.auctionId, payload.recyclingPlantId);
+                  window.location.reload();
+                }}
+              />
+            )}
           </div>
         </>
       )

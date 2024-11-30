@@ -5,7 +5,7 @@ import { Button } from '@/components/custom/button'
 import { Input } from '@/components/ui/input'
 // import { DataTableViewOptions } from '../components/data-table-view-options'
 
-import { statuses, types } from '../data/data'
+import { types } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
 // import { PopupForm } from '@/components/custom/popupform'
 // import { AddAuctionForm } from './add_auction_form'
@@ -37,13 +37,6 @@ export function DataTableToolbar<TData>({
             <DataTableFacetedFilter
               column={table.getColumn('wasteType')}
               title='Waste Type'
-              options={statuses}
-            />
-          )}
-          {table.getColumn('startDate') && (
-            <DataTableFacetedFilter
-              column={table.getColumn('startDate')}
-              title='Start Date'
               options={types}
             />
           )}

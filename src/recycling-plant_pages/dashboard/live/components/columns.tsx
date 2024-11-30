@@ -1,20 +1,26 @@
 import { ColumnDef } from '@tanstack/react-table'
-// import React from 'react'
-// import { useNavigate } from 'react-router-dom'
-
-// import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-// import { DataTableRowActions } from './data-table-row-actions'
-
-// import { statuses, regions } from '../data/data'
-import { AllAuctions } from '../data/schema'
 import { useNavigate } from 'react-router-dom'
-// import { CommercialDialog } from './commercial_bin_dialog'
 import { Button } from '@/components/custom/button'
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import BiddingPopup from '../../popups/biddingPopup'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
+import RegistrationPopup from '../../popups/RegistrationPopup'
+import { registerForAuction } from '../data/services'
 
-export const columns: ColumnDef<AllAuctions>[] = [
+interface Auction {
+  id: string;
+  weight: string;
+  startDate: string;
+  endDate: string;
+  wasteType: string;
+  min_bid: string;
+  curr_bid: string;
+  registeredPlants: number[];
+}
+export const columns = (
+  handleBidSubmission: (auctionId: string, amount: number) => void
+): ColumnDef<Auction>[] => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -135,10 +141,27 @@ export const columns: ColumnDef<AllAuctions>[] = [
     cell: ({ row }) => {
       const navigate = useNavigate()
 
-      // const contId = String(row.getValue('id') || '').slice(-3)
-
       const handleButtonClick = () => {
         navigate(`/recycling-plant/${row.getValue('id')}`)
+      }
+
+      const token = localStorage.getItem('token') ?? '';
+      const decodeToken = jwtDecode<JwtPayload>(token) as { userId: number};
+      const currentPlantId = decodeToken?.userId;
+
+      const isRegistered = row.original.registeredPlants.includes(currentPlantId);
+      
+      const handleRegister = async (auctionId: string) => {
+        try {
+          const response = await registerForAuction(parseInt(auctionId.replace('AUC-', ''), 10), currentPlantId);
+          if (response.status === 200) {
+            console.log('Successfully registered');
+            window.location.reload();
+          }
+
+        } catch (error: any) {
+          console.error('Failed to register:', error);
+        }
       }
 
       return (
@@ -151,8 +174,26 @@ export const columns: ColumnDef<AllAuctions>[] = [
             >
               View
             </Button>
-
-            {/* <DataTableRowActions row={row} /> */}
+            {isRegistered ? (
+                <BiddingPopup
+                auction={row.getValue('id')}
+                wasteType={row.getValue('wasteType')}
+                minimumBidAmount={parseFloat((row.getValue('min_bid') as string).replace('Rs. ', ''))}
+                currentBid={parseFloat((row.getValue('curr_bid') as string).replace('Rs. ', ''))}
+                onBid={(amount) => {
+                  console.log(`Bid placed: ${amount}`);
+                  handleBidSubmission(row.getValue('id'), amount);
+                }}
+              />
+            ) : (
+              <RegistrationPopup
+                auction={row.getValue('id')}
+                wasteType={row.getValue('wasteType')}
+                startDate={row.getValue('startDate')}
+                endDate={row.getValue('endDate')}
+                onRegister={() => handleRegister(row.getValue('id') as string)}
+                />
+            )}
           </div>
         </>
       )

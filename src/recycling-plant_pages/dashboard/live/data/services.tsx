@@ -18,3 +18,15 @@ export const fetchWinningPlant = async (id: string) => {
   const response = await request('GET', url)
   return response.data
 }
+
+export const bidSubmission = async (auctionId: number, recyclingPlantId: number, bidAmount: number) => {
+  const url = `api/v1/bid/place?auctionId=${auctionId}&recyclingPlantId=${recyclingPlantId}&bidAmount=${bidAmount}`;
+  const response = await request('POST', url)
+  return response
+}
+
+export const registerForAuction = async (auctionId: number, recyclingPlantId: number) => {
+  const url = `${API_URL}/${auctionId}/register?recyclingPlantId=${recyclingPlantId}`;
+  const response = await request('POST', url)
+  return response
+}
