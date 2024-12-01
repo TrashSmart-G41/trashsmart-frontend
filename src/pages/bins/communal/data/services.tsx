@@ -34,3 +34,9 @@ export const deleteCommunalBin = async (id: string) => {
   const response = await request('DELETE', url)
   return response
 }
+
+export const assignCleaner = async (data: any, id: string) => {
+  const url = `${API_URL}/assign/${id}`
+  const response = await request('PUT', url, data)
+  return response
+}
