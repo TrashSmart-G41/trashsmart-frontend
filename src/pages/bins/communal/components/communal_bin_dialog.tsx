@@ -16,6 +16,8 @@ import { useEffect, useState } from 'react'
 import { fetchCommunalBin } from '../data/services.tsx'
 import { deleteCommunalBin } from '../data/services.tsx'
 import { addMaintenanceRequest } from '../../maintenance/data/services.tsx'
+import GoogleMap from '@/components/custom/googlemap'
+import MapMarker from '@/components/custom/mapmarker'
 
 export function CommunalDialog({ binId }: { binId: string }) {
   console.log(binId)
@@ -39,6 +41,8 @@ export function CommunalDialog({ binId }: { binId: string }) {
           last_maintenance_date: data.lastMaintenanceDate,
           fill_level: data.fillLevel,
           last_collection_date: data.lastCollectionDate,
+          longitude: data.longitude,
+          latitude: data.latitude,
         }
 
         setBinData(mappedData)
@@ -117,6 +121,11 @@ export function CommunalDialog({ binId }: { binId: string }) {
                 </Button> */}
               </div>
             </div>
+            <GoogleMap width='100%' height={200} scrollable={false}>
+                  <MapMarker latitude={binData.longitude} longitude={binData.latitude} />
+                  {/* <MapMarker latitude={6.912} longitude={79.852}  />
+          <MapMarker latitude={6.922} longitude={79.842}  /> */}
+                </GoogleMap>
           </Card>
 
           <Card className='my-2 p-4'>
