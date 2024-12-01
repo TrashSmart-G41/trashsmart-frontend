@@ -9,6 +9,7 @@ interface AuthContextProps {
   isAuthenticated: boolean
   isContractor: boolean
   isOrganization: boolean
+  isRecyclingPlant: boolean
   logout: () => void
 }
 
@@ -20,6 +21,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [isContractor, setIsContractor] = useState(false)
   const [isOrganization, setIsOrganization] = useState(false)
+  const [isRecyclingPlant, setIsRecyclingPlant] = useState(false)
 
   // const navigate = useNavigate()
 
@@ -33,6 +35,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setIsContractor(true)
         } else if (decoded.role === 'ORGANIZATION') {
           setIsOrganization(true)
+        }
+        else if (decoded.role === 'RECYCLING_PLANT') {
+          setIsRecyclingPlant(true)
         }
       } catch (error) {
         console.error('Invalid token:', error)
@@ -58,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isContractor, isOrganization, logout }}
+      value={{ isAuthenticated, isContractor, isOrganization, isRecyclingPlant, logout }}
     >
       {children}
     </AuthContext.Provider>

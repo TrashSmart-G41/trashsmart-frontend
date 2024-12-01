@@ -6,7 +6,8 @@ import MaintenanceError from './pages/errors/maintenance-error'
 const router = (
   isAuthenticated: boolean,
   isContractor: boolean,
-  isOrganization: boolean
+  isOrganization: boolean,
+  isRecyclingPlant: boolean
 ) =>
   createBrowserRouter([
     // Auth routes
@@ -70,6 +71,10 @@ const router = (
         } else if (isOrganization) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.AppShell_Ins }
+        }
+        else if (isRecyclingPlant) {
+          const AppShell = await import('./components/app-shell')
+          return { Component: AppShell.AppShell_Plant }
         }
         const Home = await import('@/pages/home')
         return { Component: Home.default }
@@ -307,7 +312,7 @@ const router = (
     {
       path: '/recycling-plant',
       lazy: async () => {
-        const AppShell = (await import('./components/app-shell')).AppShell_Ins
+        const AppShell = (await import('./components/app-shell')).AppShell_Plant
         return { Component: AppShell }
       },
       errorElement: <GeneralError />,

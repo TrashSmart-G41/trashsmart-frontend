@@ -4,7 +4,7 @@ import { Layout } from './custom/layout'
 import { Button } from './custom/button'
 import Nav from './nav'
 import { cn } from '@/lib/utils'
-import { sidelinks, sidelinks_insitutes } from '@/data/sidelinks'
+import { sidelinks, sidelinks_insitutes, sidelinks_plants } from '@/data/sidelinks'
 import LogoLg from '@/assets/logo2-lg.png'
 import LogoSm from '@/assets/trashsmart-icon.png'
 
@@ -12,6 +12,7 @@ interface SidebarProps extends React.HTMLAttributes<HTMLElement> {
   isCollapsed: boolean
   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>
   useInstituteLinks: boolean // New prop to choose between sidelinks and sidelinks_institutes
+  usePlantLinks: boolean // New prop to choose between sidelinks and sidelinks_plants
 }
 
 export default function Sidebar({
@@ -19,6 +20,7 @@ export default function Sidebar({
   isCollapsed,
   setIsCollapsed,
   useInstituteLinks, // Include new prop here
+  usePlantLinks, // Include new prop here
 }: SidebarProps) {
   const [navOpened, setNavOpened] = useState(false)
 
@@ -31,7 +33,16 @@ export default function Sidebar({
     }
   }, [navOpened])
 
-  const links = useInstituteLinks ? sidelinks_insitutes : sidelinks // Select links based on the new prop
+  // const links = useInstituteLinks ? sidelinks_insitutes : sidelinks // Select links based on the new prop
+  if(useInstituteLinks){
+    var links = sidelinks_insitutes
+  }
+  else if(usePlantLinks){
+    var links = sidelinks_plants
+  }
+  else{
+    var links = sidelinks
+  }
 
   return (
     <aside
