@@ -207,7 +207,7 @@ export default function Tasks() {
           <MapMarker latitude={6.922} longitude={79.842} />
         </GoogleMap>
 
-        //<LocationPicker />
+        {/* <LocationPicker /> */}
 
       </Layout.Body>
     </Layout>
