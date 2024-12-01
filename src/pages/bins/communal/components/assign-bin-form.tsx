@@ -43,6 +43,7 @@ export function AssignBin({ contId }: { contId: string }) {
     const loadCleaners = async () => {
       try {
         const data = await fetchCleaners();
+        // @ts-ignore
         const mappedData: Cleaner[] = data.map((cleaner: any) => ({
           id: cleaner.id,
           firstName: cleaner.firstName,
