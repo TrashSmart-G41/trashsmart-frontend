@@ -11,6 +11,7 @@ interface Auction {
   startDate: string;
   endDate: string;
   min_bid: string;
+  curr_bid: string;
   registeredPlants: number[];
 }
 
@@ -31,6 +32,7 @@ export default function UpcomingAuctions() {
           startDate: auc.startDate.slice(0, 10),
           endDate: auc.endDate.slice(0, 10),
           min_bid: `Rs. ${auc.minimumBidAmount}`,
+          curr_bid: `Rs. ${auc.minimumBidAmount}`,
           registeredPlants: auc.registeredPlants.map((plant: any) => plant.id),
         }))
 

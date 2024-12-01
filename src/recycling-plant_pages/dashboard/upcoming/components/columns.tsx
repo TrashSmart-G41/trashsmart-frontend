@@ -14,6 +14,7 @@ export interface AllAuctions {
   endDate: string;
   wasteType: string;
   min_bid: string;
+  curr_bid: string;
   registeredPlants: number[]; 
 }
 
@@ -156,8 +157,8 @@ export const columns: ColumnDef<AllAuctions>[] = [
               <RegistrationPopup
                 auction={row.getValue('id')}
                 wasteType={row.getValue('wasteType')}
-                startDate={row.getValue('startDate')}
-                endDate={row.getValue('endDate')}
+                min_bid={row.getValue('min_bid')}
+                curr_bid={row.getValue('curr_bid')}
                 onRegister={async () => {
                   const payload = {
                     auctionId: parseInt((row.getValue('id') as string).replace('AUC-', ''), 10),

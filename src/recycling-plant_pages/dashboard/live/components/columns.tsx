@@ -189,8 +189,8 @@ export const columns = (
               <RegistrationPopup
                 auction={row.getValue('id')}
                 wasteType={row.getValue('wasteType')}
-                startDate={row.getValue('startDate')}
-                endDate={row.getValue('endDate')}
+                min_bid={row.getValue('min_bid')}
+                curr_bid={row.getValue('curr_bid')}
                 onRegister={() => handleRegister(row.getValue('id') as string)}
                 />
             )}

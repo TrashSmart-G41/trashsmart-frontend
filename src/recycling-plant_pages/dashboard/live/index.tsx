@@ -39,7 +39,7 @@ export default function LiveAuctions() {
           startDate: auc.startDate.slice(0, 10),
           endDate: auc.endDate.slice(0, 10),
           min_bid: `Rs. ${auc.minimumBidAmount}`,
-          curr_bid: `Rs. ${auc.currentBid}`,
+          curr_bid: `Rs. ${auc.minimumBidAmount}`,
           registeredPlants: auc.registeredPlants.map((plant: any) => plant.id),
         }))
 

@@ -14,12 +14,12 @@ import { toast } from '@/components/ui/use-toast';
 interface RegistrationPopupProps {
     auction: string;
     wasteType: string;
-    startDate: string;
-    endDate: string;
+    min_bid: string;
+    curr_bid: string;
     onRegister: () => Promise<void>; // Function to handle registration
 }
 
-const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ auction, wasteType, startDate, endDate, onRegister }) => {
+const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ auction, wasteType, min_bid, curr_bid, onRegister }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -69,16 +69,16 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({ auction, wasteTyp
           <Card className='my-2 p-4'>
               <div className='grid grid-cols-3'>
                   <div className='col-span-2 grid'>
-                      <div className='text-[12px] text-muted-foreground'>Start Date</div>
-                      <div className='text-sm font-medium text-muted-foreground'>{startDate}</div>
+                      <div className='text-[12px] text-muted-foreground'>Minimum Bid</div>
+                      <div className='text-sm font-medium text-muted-foreground'>{min_bid}</div>
                   </div>
               </div>
           </Card>
           <Card className='my-2 p-4'>
               <div className='grid grid-cols-3'>
                   <div className='col-span-2 grid'>
-                      <div className='text-[12px] text-muted-foreground'>End Date</div>
-                      <div className='text-sm font-medium text-muted-foreground'>{endDate}</div>
+                      <div className='text-[12px] text-muted-foreground'>Current Bid</div>
+                      <div className='text-sm font-medium text-muted-foreground'>{curr_bid}</div>
                   </div>
               </div>
           </Card>
