@@ -105,45 +105,29 @@ export const columns: ColumnDef<CommercialBin>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  {
+    accessorKey: 'status',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Purchased Date'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('status')}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
 
-  // {
-  //   id: 'actions',
-  //   header: () => null,
-  //   cell: ({ row }: { row: { getValue: (key: string) => string; employee_id?: string } }) => {
-  //     const navigate = useNavigate()
-
-  //     const handleButtonClick = () => {
-  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
-  //     }
-
-  //     return (
-  //       <div className='mr-4 text-right'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8  px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //       </div>
-  //     )
-  //   },
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     id: 'actions',
     cell: ({ row }) => {
-      // const navigate = useNavigate()
-      // const handleButtonClick = () => {
-      //   navigate(`/cleaners/${row.getValue('employee_id')}`)
-      // }
-      console.log(row)
+      const binId = String(row.getValue('bin_id') || '').slice(-3)
+      console.log(binId)
 
       return (
         <div className='mr-4 flex items-center justify-end'>
-          <CommercialDialog />
-          {/* <DataTableRowActions row={row} /> */}
+          <CommercialDialog binId={binId} />
         </div>
       )
     },

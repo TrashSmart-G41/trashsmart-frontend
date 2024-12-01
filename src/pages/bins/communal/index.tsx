@@ -1,9 +1,44 @@
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { communalBins } from './data/communalBins'
+// import { communalBins } from './data/communalBins'
 import { Card } from '@/components/ui/card'
+import { fetchCommunalBins } from './data/services'
+import { useEffect, useState } from 'react'
 
 export default function CommunalBins() {
+  const [communalBins, setCommunalBins] = useState([])
+
+  useEffect(() => {
+    const loadCommunalBins = async () => {
+      try {
+        const data: any = await fetchCommunalBins()
+        console.log(data)
+        const mappedData: any = data.map((communalbin: any) => ({
+          //   const locationName = await getLocationName(
+          //   commercialbin.latitude,
+          //   commercialbin.longitude
+          // ),
+
+          bin_id: `SB-${communalbin.id.toString().padStart(3, '0')}`,
+          location: `${communalbin.longitude} , ${communalbin.latitude}`,
+          type: `${communalbin.wasteType} - ${communalbin.binSize}`,
+          installed_date: communalbin.installationDate,
+          fill_level: communalbin.fillLevel,
+          status: communalbin.binStatus,
+        }))
+
+        const sortedData = mappedData.sort((a: any, b: any) =>
+          b.bin_id.localeCompare(a.bin_id)
+        )
+        setCommunalBins(sortedData)
+      } catch (error) {
+        console.error('Failed to load commercial bins:', error)
+      }
+    }
+
+    loadCommunalBins()
+  }, [])
+
   return (
     <Card className='mt-2 rounded-xl bg-card p-4'>
       <div className='mb-2 flex items-center justify-between space-y-2'>

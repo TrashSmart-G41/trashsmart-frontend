@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/custom/button'
 import { Card } from '@/components/ui/card'
 import {
@@ -9,11 +10,74 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import { Badge } from "@/components/ui/badge"
+import { fetchCommercialBin } from '../data/services.tsx'
+import { deleteCommercialBin } from '../data/services.tsx'
+import { addMaintenanceRequest } from '../../maintenance/data/services.tsx'
 
-export function CommercialDialog() {
+export function CommercialDialog({ binId }: { binId: string }) {
+  console.log(binId)
+  const [binData, setBinData] = useState<any | null>(null)
+
+  useEffect(() => {
+    const loadBin = async () => {
+      try {
+        const data: any = await fetchCommercialBin(binId)
+        console.log(data)
+
+        if (!data) {
+          throw new Error('Bin data is missing or invalid')
+        }
+
+        const mappedData = {
+          bin_id: `SB-${data.id.toString().padStart(3, '0')}`,
+          location: `${data.longitude} , ${data.latitude}`,
+          type: `${data.wasteType} - ${data.binSize}`,
+          purchased_date: data.purchaseDate,
+          last_maintenance_date: data.lastMaintenanceDate,
+          fill_level: data.fillLevel,
+          last_collection_date: data.lastCollectionDate,
+        }
+
+        setBinData(mappedData)
+      } catch (error) {
+        console.error('Failed to load bin:', error)
+      }
+    }
+
+    loadBin()
+  }, [binId])
+
+  const handleDelete = async () => {
+    try {
+      const confirmation = confirm('Are you sure you want to delete this bin?')
+      if (!confirmation) return
+
+      await deleteCommercialBin(binId)
+      alert('Bin deleted successfully')
+      window.location.reload()
+    } catch (error) {
+      console.error('Failed to delete bin:', error)
+      alert('Failed to delete the bin. Please try again.')
+    }
+  }
+
+  const handleAdd = async () => {
+    try {
+      const requestData = {
+        bin_id: binId,
+        otherNotes: '',
+      }
+
+      await addMaintenanceRequest(requestData, binId)
+      window.location.reload()
+    } catch (error) {
+      console.error('Failed to create request:', error)
+      alert('Failed to create request. Please try again.')
+    }
+  }
+
+  if (!binData) return <p>Loading bin information...</p>
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -26,8 +90,8 @@ export function CommercialDialog() {
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader className='flex flex-col items-center justify-center'>
-          <DialogTitle>SB-9A5D4B3E</DialogTitle>
-          <DialogDescription>Mega - 50 Liters</DialogDescription>
+          <DialogTitle>{binData.bin_id}</DialogTitle>
+          <DialogDescription>{binData.type}</DialogDescription>
         </DialogHeader>
         <div className='gap-y-4'>
           <Card className='p-4'>
@@ -37,7 +101,7 @@ export function CommercialDialog() {
                   Purchase Date
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                  29-04-2024
+                  {binData.purchased_date}
                 </div>
               </div>
               {/* <div className='flex items-center justify-center'>
@@ -57,7 +121,9 @@ export function CommercialDialog() {
                 <div className='text-[12px] text-muted-foreground'>
                   Fill Level
                 </div>
-                <div className='text-sm font-medium text-destructive'>Full</div>
+                <div className='text-sm font-medium text-destructive'>
+                  {binData.fill_level}
+                </div>
               </div>
               {/* <div className="flex justify-center items-center">
                                 <Button variant="ghost" className="flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary">
@@ -74,7 +140,7 @@ export function CommercialDialog() {
                   Collection History
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                  Last collection on 24-06-2024
+                  Last collection on {binData.last_collection_date}
                 </div>
               </div>
               {/* <div className='flex items-center justify-center'>
@@ -96,7 +162,7 @@ export function CommercialDialog() {
                   Maintenance History
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                  Last maintenance on 14-05-2024
+                  Last maintenance on {binData.last_maintenance_date}
                 </div>
               </div>
               {/* <div className="flex justify-center items-center">
@@ -108,8 +174,10 @@ export function CommercialDialog() {
           </Card>
         </div>
         <DialogFooter>
-          <Button variant='destructive'>Delete Bin</Button>
-          <Button>+ Maintenance request</Button>
+          <Button variant='destructive' onClick={handleDelete}>
+            Delete Bin
+          </Button>
+          <Button onClick={handleAdd}>+ Maintenance request</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

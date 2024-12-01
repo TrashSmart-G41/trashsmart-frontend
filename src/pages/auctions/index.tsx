@@ -2,9 +2,21 @@ import { Layout } from '@/components/custom/layout'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { DataTable } from './components/data-table'
-import { columns } from './components/columns'
-import { tasks } from './data/tasks'
+// import { DataTable } from './components/data-table'
+// import { columns } from './components/columns'
+// import { tasks } from './data/tasks'
+// import { Card } from '@/components/ui/card'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/dashtabs'
+import AllAuctions from './all'
+import LiveAuctions from './live'
+import PastAuctions from './past'
+import UpcomingAuctions from './upcoming'
+import CanceledAuctions from './canceled'
 
 export default function Tasks() {
   return (
@@ -19,17 +31,40 @@ export default function Tasks() {
       </Layout.Header>
 
       <Layout.Body>
-        <div className='mb-2 flex items-center justify-between space-y-2'>
-          <div>
-            <h2 className='text-2xl font-bold tracking-tight'>Welcome back!</h2>
-            <p className='text-muted-foreground'>
-              Here&apos;s a list of your tasks for this month!
-            </p>
-          </div>
-        </div>
-        <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={tasks} columns={columns} />
-        </div>
+        <Tabs defaultValue='all' className='w-full py-4 pt-0'>
+          <TabsList className='mb-4 flex w-full'>
+            <TabsTrigger value='all' className='flex-1 text-center'>
+              ALL
+            </TabsTrigger>
+            <TabsTrigger value='live' className='flex-1 text-center'>
+              LIVE
+            </TabsTrigger>
+            <TabsTrigger value='past' className='flex-1 text-center'>
+              PAST
+            </TabsTrigger>
+            <TabsTrigger value='upcoming' className='flex-1 text-center'>
+              UPCOMING
+            </TabsTrigger>
+            <TabsTrigger value='canceled' className='flex-1 text-center'>
+              CANCELED
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value='all'>
+            <AllAuctions />
+          </TabsContent>
+          <TabsContent value='live'>
+            <LiveAuctions />
+          </TabsContent>
+          <TabsContent value='past'>
+            <PastAuctions />
+          </TabsContent>
+          <TabsContent value='upcoming'>
+            <UpcomingAuctions />
+          </TabsContent>
+          <TabsContent value='canceled'>
+            <CanceledAuctions />
+          </TabsContent>
+        </Tabs>
       </Layout.Body>
     </Layout>
   )

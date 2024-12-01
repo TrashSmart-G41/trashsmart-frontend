@@ -13,6 +13,11 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    cors: {
+      origin: '*', // Allow all origins
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+      allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
+    },
   },
   resolve: {
     alias: {

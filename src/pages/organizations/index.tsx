@@ -198,6 +198,7 @@ export default function Tasks() {
             </div>
           </div>
         </Card>
+
         {/* <LocationPicker/> */}
         {/* <GoogleMap /> */}
         <GoogleMap width='100%' height={500}>
@@ -205,6 +206,9 @@ export default function Tasks() {
           <MapMarker latitude={6.912} longitude={79.852} />
           <MapMarker latitude={6.922} longitude={79.842} />
         </GoogleMap>
+
+        //<LocationPicker />
+
       </Layout.Body>
     </Layout>
   )

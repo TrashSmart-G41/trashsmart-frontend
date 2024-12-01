@@ -5,14 +5,16 @@ import { useNavigate } from 'react-router-dom'
 // import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { DataTableRowActions } from './data-table-row-actions'
+//import { DataTableRowActions } from './data-table-row-actions'
 
-// import { statuses, regions } from '../data/data'
-import { Cleaner } from '../data/schema'
+// import { statuses } from '../data/data'
+import { Driver } from '../data/schema'
 import { Button } from '@/components/custom/button'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { DeleteDriver } from './delete-driver.tsx'
+import { EditDriver } from './edit-driver-form.tsx'
+//import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-export const columns: ColumnDef<Cleaner>[] = [
+export const columns: ColumnDef<Driver>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -38,7 +40,7 @@ export const columns: ColumnDef<Cleaner>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'employee_id',
+    accessorKey: 'id',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
@@ -46,12 +48,12 @@ export const columns: ColumnDef<Cleaner>[] = [
         title='Employee Id'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('employee_id')}</div>,
+    cell: ({ row }) => <div>{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'full_name',
+    accessorKey: 'fullName',
     header: ({ column }) => (
       <DataTableColumnHeader
         column={column}
@@ -59,31 +61,15 @@ export const columns: ColumnDef<Cleaner>[] = [
         className='text-center text-[14px]'
       />
     ),
-    cell: ({ row }: { row: { getValue: (key: string) => string } }) => {
-      const fullName = row.getValue('full_name')
-      const fallbackInitials = fullName
-        ? fullName.slice(0, 2).toUpperCase()
-        : 'CN'
-
-      return (
-        <div className='flex items-center space-x-2'>
-          {/* avatar */}
-          <Avatar className='mr-2 h-7 w-7'>
-            <AvatarImage
-              src='https://github.com/shadcn.png'
-              alt={`@${fullName}`}
-            />
-            <AvatarFallback>{fallbackInitials}</AvatarFallback>
-          </Avatar>
-          {fullName}
-        </div>
-      )
+    cell: ({ row }) => {
+      const fullName = row.getValue('fullName') as string // Cast to string
+      return <div className='flex items-center space-x-2'>{fullName}</div>
     },
     enableSorting: true,
     enableHiding: false,
   },
   {
-    accessorKey: 'contact_number',
+    accessorKey: 'contactNo',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
@@ -91,25 +77,25 @@ export const columns: ColumnDef<Cleaner>[] = [
         title='Contact Number'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('contact_number')}</div>,
+    cell: ({ row }) => <div>{row.getValue('contactNo')}</div>,
     enableSorting: false,
     // enableHiding: false,
   },
-  {
-    accessorKey: 'region',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Region'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('region')}</div>,
-    // enableSorting: true,
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
-    },
-  },
+  // {
+  //   accessorKey: 'region',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader
+  //       className='text-[14px]'
+  //       column={column}
+  //       title='Region'
+  //     />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue('region')}</div>,
+  //   // enableSorting: true,
+  //   filterFn: (row, id, value) => {
+  //     return value.includes(row.getValue(id))
+  //   },
+  // },
   {
     accessorKey: 'status',
     header: ({ column }) => (
@@ -125,7 +111,7 @@ export const columns: ColumnDef<Cleaner>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status')
       const fillColor =
-        status === 'Active'
+        status === 'active'
           ? 'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
           : 'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]'
 
@@ -183,9 +169,9 @@ export const columns: ColumnDef<Cleaner>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const navigate = useNavigate()
-
+      const contId = String(row.getValue('id') || '').slice(-3)
       const handleButtonClick = () => {
-        navigate(`/drivers/${row.getValue('employee_id')}`)
+        navigate(`/drivers/${row.getValue('id')}`)
       }
 
       return (
@@ -197,7 +183,10 @@ export const columns: ColumnDef<Cleaner>[] = [
           >
             View
           </Button>
-          <DataTableRowActions row={row} />
+          {/* Remove the DataTableRowActions to get rid of the three dots menu */}
+          {/* <DataTableRowActions row={row} /> */}
+          <EditDriver contId={contId} />
+          <DeleteDriver contId={contId} />
         </div>
       )
     },
