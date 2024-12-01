@@ -26,7 +26,9 @@ import Requests from './requests'
 import SmartBins from './smart_bins'
 import Collections from './collections'
 // import LocationPicker from '@/components/custom/location_picker'
-import GoogleMap from '../../components/custom/map'
+// import GoogleMap from '../../components/custom/map'
+import GoogleMap from '@/components/custom/googlemap'
+import MapMarker from '@/components/custom/mapmarker'
 import { useEffect, useState } from 'react'
 import { fetchOrganization } from './data/services'
 // import Map2 from '@/components/custom/map2'
@@ -79,10 +81,15 @@ export default function Organization() {
             <div>
               {/* <img className='rounded-t-xl max-h-[200px] w-full object-cover' src={mapImg} alt="Map" /> */}
               <div className='overflow-hidden rounded-t-xl'>
-                <GoogleMap
+                {/* <GoogleMap
                   className='h-full w-full rounded-t-xl'
                   height={200}
-                />
+                /> */}
+                <GoogleMap width='100%' height={200} scrollable={false}>
+                  <MapMarker latitude={6.902} longitude={79.8614} />
+                  {/* <MapMarker latitude={6.912} longitude={79.852}  />
+          <MapMarker latitude={6.922} longitude={79.842}  /> */}
+                </GoogleMap>
                 {/* <Map2/> */}
                 {/* <LocationPicker /> */}
               </div>

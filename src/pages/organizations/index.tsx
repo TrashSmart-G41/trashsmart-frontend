@@ -15,10 +15,13 @@ import {
 } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 import { fetchOrganizations } from './data/services'
-import LocationPicker from '@/components/custom/location_picker'
+// import LocationPicker from '@/components/custom/location_picker'
+import GoogleMap from '@/components/custom/googlemap'
+import MapMarker from '@/components/custom/mapmarker'
 
 export default function Tasks() {
   const [organizations, setOrganizations] = useState([])
+  // const mapRef = useRef<google.maps.Map | null>(null);
 
   useEffect(() => {
     const loadOrganizations = async () => {
@@ -195,7 +198,17 @@ export default function Tasks() {
             </div>
           </div>
         </Card>
-        <LocationPicker />
+
+        {/* <LocationPicker/> */}
+        {/* <GoogleMap /> */}
+        <GoogleMap width='100%' height={500}>
+          <MapMarker latitude={6.902} longitude={79.8614} />
+          <MapMarker latitude={6.912} longitude={79.852} />
+          <MapMarker latitude={6.922} longitude={79.842} />
+        </GoogleMap>
+
+        //<LocationPicker />
+
       </Layout.Body>
     </Layout>
   )
