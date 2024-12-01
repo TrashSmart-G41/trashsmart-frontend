@@ -18,8 +18,11 @@ export const addAuction = async (data: any) => {
   return response
 }
 
-export const registerForAuction = async (auctionId: number, recyclingPlantId: number) => {
-  const url = `${API_URL}/${auctionId}/register?recyclingPlantId=${recyclingPlantId}`;
+export const registerForAuction = async (
+  auctionId: number,
+  recyclingPlantId: number
+) => {
+  const url = `${API_URL}/${auctionId}/register?recyclingPlantId=${recyclingPlantId}`
   const response = await request('POST', url)
   return response
 }

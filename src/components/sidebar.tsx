@@ -4,7 +4,11 @@ import { Layout } from './custom/layout'
 import { Button } from './custom/button'
 import Nav from './nav'
 import { cn } from '@/lib/utils'
-import { sidelinks, sidelinks_insitutes, sidelinks_plants } from '@/data/sidelinks'
+import {
+  sidelinks,
+  sidelinks_insitutes,
+  sidelinks_plants,
+} from '@/data/sidelinks'
 import LogoLg from '@/assets/logo2-lg.png'
 import LogoSm from '@/assets/trashsmart-icon.png'
 
@@ -34,13 +38,11 @@ export default function Sidebar({
   }, [navOpened])
 
   // const links = useInstituteLinks ? sidelinks_insitutes : sidelinks // Select links based on the new prop
-  if(useInstituteLinks){
+  if (useInstituteLinks) {
     var links = sidelinks_insitutes
-  }
-  else if(usePlantLinks){
+  } else if (usePlantLinks) {
     var links = sidelinks_plants
-  }
-  else{
+  } else {
     var links = sidelinks
   }
 

@@ -5,14 +5,14 @@ import { Card } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 
 interface Auction {
-  id: string;
-  wasteType: string;
-  weight: string;
-  startDate: string;
-  endDate: string;
-  min_bid: string;
-  curr_bid: string;
-  registeredPlants: number[];
+  id: string
+  wasteType: string
+  weight: string
+  startDate: string
+  endDate: string
+  min_bid: string
+  curr_bid: string
+  registeredPlants: number[]
 }
 
 export default function UpcomingAuctions() {
@@ -23,18 +23,22 @@ export default function UpcomingAuctions() {
       try {
         const data: any = await fetchUpcomingAuctions()
         console.log(data)
-        const mappedData = data.map((auc: any): Auction => ({
-          id: `AUC-${auc.id.toString().padStart(3, '0')}`,
-          wasteType:
-            auc.auctionWasteType.charAt(0).toUpperCase() +
-            auc.auctionWasteType.slice(1).toLowerCase(),
-          weight: `${auc.weight} KG`,
-          startDate: auc.startDate.slice(0, 10),
-          endDate: auc.endDate.slice(0, 10),
-          min_bid: `Rs. ${auc.minimumBidAmount}`,
-          curr_bid: `Rs. ${auc.minimumBidAmount}`,
-          registeredPlants: auc.registeredPlants.map((plant: any) => plant.id),
-        }))
+        const mappedData = data.map(
+          (auc: any): Auction => ({
+            id: `AUC-${auc.id.toString().padStart(3, '0')}`,
+            wasteType:
+              auc.auctionWasteType.charAt(0).toUpperCase() +
+              auc.auctionWasteType.slice(1).toLowerCase(),
+            weight: `${auc.weight} KG`,
+            startDate: auc.startDate.slice(0, 10),
+            endDate: auc.endDate.slice(0, 10),
+            min_bid: `Rs. ${auc.minimumBidAmount}`,
+            curr_bid: `Rs. ${auc.minimumBidAmount}`,
+            registeredPlants: auc.registeredPlants.map(
+              (plant: any) => plant.id
+            ),
+          })
+        )
 
         setAuctions(mappedData)
       } catch (e) {

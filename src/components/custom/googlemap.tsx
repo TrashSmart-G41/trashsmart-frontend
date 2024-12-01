@@ -21,7 +21,10 @@ interface GoogleMapProps {
 }
 
 const GoogleMap = forwardRef<google.maps.Map | null, GoogleMapProps>(
-  ({ width = '100%', height = 400, className = '',scrollable, children }, ref) => {
+  (
+    { width = '100%', height = 400, className = '', scrollable, children },
+    ref
+  ) => {
     const mapRef = useRef<HTMLDivElement>(null)
     const [isScriptLoaded, setIsScriptLoaded] = useState(false)
     const [map, setMap] = useState<google.maps.Map | null>(null)
@@ -116,8 +119,7 @@ const GoogleMap = forwardRef<google.maps.Map | null, GoogleMapProps>(
             // @ts-ignore
             if (initializedMap && initializedMap.getZoom() > 18) {
               initializedMap.setZoom(18)
-              if(!scrollable) 
-              {
+              if (!scrollable) {
                 // initializedMap.setOptions({ scrollwheel: false })
                 initializedMap.setOptions({ draggable: false })
               }
