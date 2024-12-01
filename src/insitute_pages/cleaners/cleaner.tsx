@@ -63,7 +63,6 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export default function Cleaner() {
-
   const [cleaner, setCleaner] = useState({
     id: '',
     full_name: '',
@@ -79,10 +78,10 @@ export default function Cleaner() {
     no_of_holidays: 0,
     last_collection_date: '',
     communal_bins: [],
-  });  
+  })
 
-  const url = window.location.href;
-  const contId = url.split('/').pop()?.slice(-3);
+  const url = window.location.href
+  const contId = url.split('/').pop()?.slice(-3)
   // console.log(contId)
 
   useEffect(() => {
@@ -104,10 +103,10 @@ export default function Cleaner() {
           total_working_days: data.totalActiveDays,
           no_of_holidays: data.numberOfHolidays,
           last_collection_date: data.lastCollectionDate,
-          communal_bins: data.communalBins
+          communal_bins: data.communalBins,
         }
 
-        setCleaner(mappedData);
+        setCleaner(mappedData)
         console.log(cleaner)
       } catch (err) {
         console.error(err)
@@ -118,33 +117,32 @@ export default function Cleaner() {
   }, [])
 
   const getDateRange = () => {
-    const currentDate = new Date();
-    const pastDate = new Date();
-    pastDate.setMonth(currentDate.getMonth() - 12);
-  
+    const currentDate = new Date()
+    const pastDate = new Date()
+    pastDate.setMonth(currentDate.getMonth() - 12)
+
     const formatDate = (date: Date) =>
       date.toLocaleDateString('en-GB', {
         day: '2-digit',
         month: '2-digit',
         year: 'numeric',
-      });
-  
-    const startDate = formatDate(pastDate);
-    const endDate = formatDate(currentDate);
-  
-    return `${startDate} to ${endDate}`;
-  };
+      })
 
-  const [isEditOpen, setIsEditOpen] = useState(false);
+    const startDate = formatDate(pastDate)
+    const endDate = formatDate(currentDate)
+
+    return `${startDate} to ${endDate}`
+  }
+
+  const [isEditOpen, setIsEditOpen] = useState(false)
 
   const handleEditClick = () => {
-    setIsEditOpen(true);
-  };
+    setIsEditOpen(true)
+  }
 
   // const closeEditModal = () => {
   //   setIsEditOpen(false);
   // };
-
 
   return (
     <Layout>
@@ -181,7 +179,7 @@ export default function Cleaner() {
             Edit
           </Button>
 
-          {isEditOpen && <EditSingleCleaner contId={contId} /> }
+          {isEditOpen && <EditSingleCleaner contId={contId} />}
 
           <div className='px-4 pt-4'>
             <Breadcrumb>
@@ -225,9 +223,7 @@ export default function Cleaner() {
                     {cleaner?.status}
                   </Button>
                 </div>
-                <CardDescription>
-                  {cleaner?.address}
-                </CardDescription>
+                <CardDescription>{cleaner?.address}</CardDescription>
               </CardHeader>
             </div>
           </div>
@@ -305,7 +301,8 @@ export default function Cleaner() {
                 Total Collections{' '}
               </div>
               <div className='flex items-center text-[25px] font-semibold text-muted-foreground'>
-                {cleaner?.total_collections} <TrendingUp className='mx-2 h-4 w-4 text-primary' />{' '}
+                {cleaner?.total_collections}{' '}
+                <TrendingUp className='mx-2 h-4 w-4 text-primary' />{' '}
                 <span className='text-[13px] font-normal text-primary'>
                   1.7%
                 </span>

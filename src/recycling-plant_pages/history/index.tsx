@@ -62,18 +62,18 @@ export default function PastAuctions() {
 
       <Layout.Body>
         <Card className='mt-2 rounded-xl bg-card p-4'>
-        <div className='mb-2 flex items-center justify-between space-y-2'>
-          <div>
-            <h2 className='text-2xl font-bold tracking-tight text-muted-foreground'>
-              Auction History
-            </h2>
+          <div className='mb-2 flex items-center justify-between space-y-2'>
+            <div>
+              <h2 className='text-2xl font-bold tracking-tight text-muted-foreground'>
+                Auction History
+              </h2>
+            </div>
           </div>
-        </div>
 
-        <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <DataTable data={auctions} columns={columns} />
-        </div>
-      </Card>
+          <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
+            <DataTable data={auctions} columns={columns} />
+          </div>
+        </Card>
       </Layout.Body>
     </Layout>
   )

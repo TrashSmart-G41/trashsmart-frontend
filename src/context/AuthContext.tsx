@@ -35,8 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           setIsContractor(true)
         } else if (decoded.role === 'ORGANIZATION') {
           setIsOrganization(true)
-        }
-        else if (decoded.role === 'RECYCLING_PLANT') {
+        } else if (decoded.role === 'RECYCLING_PLANT') {
           setIsRecyclingPlant(true)
         }
       } catch (error) {
@@ -63,7 +62,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, isContractor, isOrganization, isRecyclingPlant, logout }}
+      value={{
+        isAuthenticated,
+        isContractor,
+        isOrganization,
+        isRecyclingPlant,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

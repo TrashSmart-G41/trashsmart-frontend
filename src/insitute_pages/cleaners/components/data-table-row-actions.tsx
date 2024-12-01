@@ -25,8 +25,9 @@ interface DataTableRowActionsProps<TData> {
   row: Row<TData>
 }
 
-export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TData>) {
-
+export function DataTableRowActions<TData>({
+  row,
+}: DataTableRowActionsProps<TData>) {
   const contId = row.getValue('id')
 
   return (
@@ -41,15 +42,14 @@ export function DataTableRowActions<TData>({ row }: DataTableRowActionsProps<TDa
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align='end' className='w-[160px]'>
-      <DropdownMenuItem onClick={(event) => event.preventDefault()}>
-        <EditCleaner contId={contId} />
-      </DropdownMenuItem>
+        <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+          <EditCleaner contId={contId} />
+        </DropdownMenuItem>
 
-      <DropdownMenuItem onClick={(event) => event.preventDefault()}>
-        <DeleteCleaner contId={contId} />
-        <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
-      </DropdownMenuItem>
-
+        <DropdownMenuItem onClick={(event) => event.preventDefault()}>
+          <DeleteCleaner contId={contId} />
+          <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

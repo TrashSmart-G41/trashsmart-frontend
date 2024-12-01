@@ -30,5 +30,4 @@ export const regions = [
     label: 'Matara',
     value: 'Matara',
   },
-
 ]

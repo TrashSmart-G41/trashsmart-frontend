@@ -39,20 +39,22 @@ import { toast } from '@/components/ui/use-toast'
 
 const FormSchema = z.object({
   firstName: z.string().min(2, {
-    message:'First name must be at least 2 characters'
+    message: 'First name must be at least 2 characters',
   }),
   lastName: z.string().min(2, {
-    message:'Last name must be at least 2 characters'
+    message: 'Last name must be at least 2 characters',
   }),
   email: z.string().email({
     message: 'Invalid email address.',
   }),
-  contactNo: z.string().regex(/^0\d{9}$/, {
-    message: 'Contact number must start with 0 and be exactly 10 digits.',
-  })
-  .length(10, {
-    message: 'Contact number must be exactly 10 digits.',
-  }),
+  contactNo: z
+    .string()
+    .regex(/^0\d{9}$/, {
+      message: 'Contact number must start with 0 and be exactly 10 digits.',
+    })
+    .length(10, {
+      message: 'Contact number must be exactly 10 digits.',
+    }),
   address: z.string().min(5, {
     message: 'Address must be at least 5 characters.',
   }),
@@ -89,10 +91,11 @@ export function AddCleanerForm() {
         }
       }
       addCln()
-      toast({description: 'Cleaner added successfully'})
+      toast({ description: 'Cleaner added successfully' })
     } catch (error) {
       console.error(error)
-      toast({description: 'Failed to add the Cleaner'})    }
+      toast({ description: 'Failed to add the Cleaner' })
+    }
   }
 
   return (

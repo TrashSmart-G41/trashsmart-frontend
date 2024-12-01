@@ -208,7 +208,6 @@ export default function Tasks() {
         </GoogleMap>
 
         {/* <LocationPicker /> */}
-
       </Layout.Body>
     </Layout>
   )

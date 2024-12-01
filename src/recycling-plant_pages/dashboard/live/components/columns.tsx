@@ -9,14 +9,14 @@ import RegistrationPopup from '../../popups/RegistrationPopup'
 import { registerForAuction } from '../data/services'
 
 interface Auction {
-  id: string;
-  weight: string;
-  startDate: string;
-  endDate: string;
-  wasteType: string;
-  min_bid: string;
-  curr_bid: string;
-  registeredPlants: number[];
+  id: string
+  weight: string
+  startDate: string
+  endDate: string
+  wasteType: string
+  min_bid: string
+  curr_bid: string
+  registeredPlants: number[]
 }
 export const columns = (
   handleBidSubmission: (auctionId: string, amount: number) => void
@@ -145,22 +145,25 @@ export const columns = (
         navigate(`/recycling-plant/${row.getValue('id')}`)
       }
 
-      const token = localStorage.getItem('token') ?? '';
-      const decodeToken = jwtDecode<JwtPayload>(token) as { userId: number};
-      const currentPlantId = decodeToken?.userId;
+      const token = localStorage.getItem('token') ?? ''
+      const decodeToken = jwtDecode<JwtPayload>(token) as { userId: number }
+      const currentPlantId = decodeToken?.userId
 
-      const isRegistered = row.original.registeredPlants.includes(currentPlantId);
-      
+      const isRegistered =
+        row.original.registeredPlants.includes(currentPlantId)
+
       const handleRegister = async (auctionId: string) => {
         try {
-          const response = await registerForAuction(parseInt(auctionId.replace('AUC-', ''), 10), currentPlantId);
+          const response = await registerForAuction(
+            parseInt(auctionId.replace('AUC-', ''), 10),
+            currentPlantId
+          )
           if (response.status === 200) {
-            console.log('Successfully registered');
-            window.location.reload();
+            console.log('Successfully registered')
+            window.location.reload()
           }
-
         } catch (error: any) {
-          console.error('Failed to register:', error);
+          console.error('Failed to register:', error)
         }
       }
 
@@ -175,14 +178,18 @@ export const columns = (
               View
             </Button>
             {isRegistered ? (
-                <BiddingPopup
+              <BiddingPopup
                 auction={row.getValue('id')}
                 wasteType={row.getValue('wasteType')}
-                minimumBidAmount={parseFloat((row.getValue('min_bid') as string).replace('Rs. ', ''))}
-                currentBid={parseFloat((row.getValue('curr_bid') as string).replace('Rs. ', ''))}
+                minimumBidAmount={parseFloat(
+                  (row.getValue('min_bid') as string).replace('Rs. ', '')
+                )}
+                currentBid={parseFloat(
+                  (row.getValue('curr_bid') as string).replace('Rs. ', '')
+                )}
                 onBid={(amount) => {
-                  console.log(`Bid placed: ${amount}`);
-                  handleBidSubmission(row.getValue('id'), amount);
+                  console.log(`Bid placed: ${amount}`)
+                  handleBidSubmission(row.getValue('id'), amount)
                 }}
               />
             ) : (
@@ -192,7 +199,7 @@ export const columns = (
                 min_bid={row.getValue('min_bid')}
                 curr_bid={row.getValue('curr_bid')}
                 onRegister={() => handleRegister(row.getValue('id') as string)}
-                />
+              />
             )}
           </div>
         </>

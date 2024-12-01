@@ -71,8 +71,7 @@ const router = (
         } else if (isOrganization) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.AppShell_Ins }
-        }
-        else if (isRecyclingPlant) {
+        } else if (isRecyclingPlant) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.AppShell_Plant }
         }
@@ -320,22 +319,25 @@ const router = (
         {
           index: true,
           lazy: async () => ({
-            Component: (await import('./recycling-plant_pages/dashboard')).default,
+            Component: (await import('./recycling-plant_pages/dashboard'))
+              .default,
           }),
         },
         {
           path: '/recycling-plant/:id',
           lazy: async () => ({
-            Component: (await import('@/recycling-plant_pages/info/info')).default,
+            Component: (await import('@/recycling-plant_pages/info/info'))
+              .default,
           }),
         },
         {
           path: '/recycling-plant/history',
           lazy: async () => ({
-            Component: (await import('@/recycling-plant_pages/history')).default,
+            Component: (await import('@/recycling-plant_pages/history'))
+              .default,
           }),
         },
-      ]
+      ],
     },
 
     {

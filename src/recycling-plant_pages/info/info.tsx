@@ -121,7 +121,7 @@ const Info = () => {
   //     // case 'UPCOMING':
   //     //   return <DeleteAuc contId={contId} />
   //     case 'LIVE':
-  //       return 
+  //       return
   //         <div>
   //           <BiddingPopup
   //             minimumBidAmount={auction?.min_bid || 0}
@@ -213,7 +213,6 @@ const Info = () => {
                     />
                   </svg>
                 </Button>
-       
               </div>
             </div>
           </Card>

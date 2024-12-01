@@ -8,14 +8,14 @@ import { registerForAuction } from '../data/services'
 import { jwtDecode, JwtPayload } from 'jwt-decode'
 
 export interface AllAuctions {
-  id: string;
-  weight: string;
-  startDate: string;
-  endDate: string;
-  wasteType: string;
-  min_bid: string;
-  curr_bid: string;
-  registeredPlants: number[]; 
+  id: string
+  weight: string
+  startDate: string
+  endDate: string
+  wasteType: string
+  min_bid: string
+  curr_bid: string
+  registeredPlants: number[]
 }
 
 export const columns: ColumnDef<AllAuctions>[] = [
@@ -129,12 +129,13 @@ export const columns: ColumnDef<AllAuctions>[] = [
         navigate(`/recycling-plant/${row.getValue('id')}`)
       }
 
-      const token = localStorage.getItem('token') ?? '';
-      const decodeToken = jwtDecode<JwtPayload>(token) as { userId: number};
-      const currentPlantId = decodeToken?.userId;
+      const token = localStorage.getItem('token') ?? ''
+      const decodeToken = jwtDecode<JwtPayload>(token) as { userId: number }
+      const currentPlantId = decodeToken?.userId
 
-      const isRegistered = row.original?.registeredPlants.includes(currentPlantId) ?? false;
-      
+      const isRegistered =
+        row.original?.registeredPlants.includes(currentPlantId) ?? false
+
       return (
         <>
           <div className='mr-4 flex items-center justify-end'>
@@ -146,9 +147,9 @@ export const columns: ColumnDef<AllAuctions>[] = [
               View
             </Button>
             {isRegistered ? (
-                <Button
-                variant="ghost"
-                className="flex h-8 px-2 text-[12px] text-muted-foreground cursor-not-allowed"
+              <Button
+                variant='ghost'
+                className='flex h-8 cursor-not-allowed px-2 text-[12px] text-muted-foreground'
                 disabled
               >
                 Registered
@@ -161,11 +162,17 @@ export const columns: ColumnDef<AllAuctions>[] = [
                 curr_bid={row.getValue('curr_bid')}
                 onRegister={async () => {
                   const payload = {
-                    auctionId: parseInt((row.getValue('id') as string).replace('AUC-', ''), 10),
+                    auctionId: parseInt(
+                      (row.getValue('id') as string).replace('AUC-', ''),
+                      10
+                    ),
                     recyclingPlantId: currentPlantId,
-                  };
-                  await registerForAuction(payload.auctionId, payload.recyclingPlantId);
-                  window.location.reload();
+                  }
+                  await registerForAuction(
+                    payload.auctionId,
+                    payload.recyclingPlantId
+                  )
+                  window.location.reload()
                 }}
               />
             )}

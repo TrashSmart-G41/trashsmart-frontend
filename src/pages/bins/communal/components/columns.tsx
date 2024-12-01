@@ -123,30 +123,28 @@ export const columns: ColumnDef<CommunalBin>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const binId = String(row.getValue('bin_id') || '').slice(-3);
-      const fillLevel = row.getValue('fill_level') as number;
-      console.log(binId);
-  
+      const binId = String(row.getValue('bin_id') || '').slice(-3)
+      const fillLevel = row.getValue('fill_level') as number
+      console.log(binId)
+
       return (
         <div className='mr-4 flex items-center justify-end'>
           <CommunalDialog binId={binId} />
           <EditBin contId={binId} />
           {fillLevel > 75 && (
-          <Dialog>
-            <DialogTrigger asChild>
-              <button
-                className="ml-4 px-2 py-1 bg-green-500 text-white text-sm rounded hover:bg-green-600"
-              >
-                Assign
-              </button>
-            </DialogTrigger>
-            <DialogContent>
-              <AssignBin contId={binId} />
-            </DialogContent>
-          </Dialog>
-        )}
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className='ml-4 rounded bg-green-500 px-2 py-1 text-sm text-white hover:bg-green-600'>
+                  Assign
+                </button>
+              </DialogTrigger>
+              <DialogContent>
+                <AssignBin contId={binId} />
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
-      );
+      )
     },
-  },   
+  },
 ]
