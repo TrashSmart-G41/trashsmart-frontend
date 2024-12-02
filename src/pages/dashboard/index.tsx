@@ -30,6 +30,9 @@ import {
 } from '@/components/ui/chart'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 import { DataTable } from './org/data-table'
+import { AxiosResponse } from 'axios';
+import { request } from '@/lib/axiosHelper'
+const API_URL = 'api/v1/statistics'
 
 // import { InputForm } from '@/components/custom/form'
 // import { PopupForm } from '@/components/custom/popupform'
@@ -68,7 +71,22 @@ const chartConfig2 = {
 } satisfies ChartConfig
 
 export default function Dashboard() {
+  const [totalUsers, setTotalUsers] = useState<number>(0);
   const [organizations, setOrganizations] = useState([])
+
+  // Fetch total users
+  useEffect(() => {
+    const fetchTotalUsers = async () => {
+      try {
+        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_users`);
+        setTotalUsers(response.data); // Update the state with the API data
+      } catch (error) {
+        console.error('Failed to load total users:', error);
+      }
+    };
+
+    fetchTotalUsers();
+  }, []);
 
   useEffect(() => {
     const loadOrganizations = async () => {
@@ -95,6 +113,7 @@ export default function Dashboard() {
 
     loadOrganizations()
   }, [])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -129,7 +148,7 @@ export default function Dashboard() {
                 <CardContent>
                   <div className='flex flex-row items-center'>
                     <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                      72,540
+                      {totalUsers}
                     </div>
                     <div className='flex flex-row text-primary'>
                       <TrendingUp className='pr-1' />
@@ -161,7 +180,7 @@ export default function Dashboard() {
                 <CardContent>
                   <div className='flex flex-row items-center'>
                     <div className='pr-2 text-4xl font-semibold text-primary'>
-                      45 MT
+                      45 CBM
                     </div>
                     <div className='flex flex-row text-primary'>
                       <TrendingUp className='pr-1' />
@@ -226,7 +245,7 @@ export default function Dashboard() {
                     <CardContent className='px-0'>
                       <div className='flex flex-row items-center'>
                         <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                          2570 Metric Tons
+                          2570 Cubic Meters
                         </div>
                         <div className='flex flex-row items-center text-primary'>
                           <TrendingUp className='pr-1' />
@@ -298,7 +317,7 @@ export default function Dashboard() {
                     <CardContent className='px-0'>
                       <div className='flex flex-row items-center'>
                         <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                          698 Metric Tons
+                          698 Cubic Meters
                         </div>
                         <div className='flex flex-row items-center text-primary'>
                           <TrendingUp className='pr-1' />
