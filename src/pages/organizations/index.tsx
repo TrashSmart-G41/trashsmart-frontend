@@ -16,12 +16,60 @@ import {
 import { useEffect, useState } from 'react'
 import { fetchOrganizations } from './data/services'
 // import LocationPicker from '@/components/custom/location_picker'
-import GoogleMap from '@/components/custom/googlemap'
-import MapMarker from '@/components/custom/mapmarker'
+import GoogleMap, { Marker } from '@/components/custom/googlemap'
+import DragableMarker from '@/components/custom/dragablemarker'
 
 export default function Tasks() {
   const [organizations, setOrganizations] = useState([])
   // const mapRef = useRef<google.maps.Map | null>(null);
+
+  const points = [
+    {
+      latitude: 6.9271,
+      longitude: 79.8612,
+      name: 'Colombo Fort',
+    },
+    {
+      latitude: 6.9308,
+      longitude: 79.8448,
+      name: 'Galle Face Green',
+      svgIcon: `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" height="24" width="24">
+          <rect x="6" y="6" width="12" height="12" />
+        </svg>
+      `,
+    },
+    {
+      latitude: 6.9344,
+      longitude: 79.8521,
+      name: 'Beira Lake',
+      svgIcon: `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="blue" viewBox="0 0 24 24" height="24" width="24">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM11 14h2v2h-2v-2zm0-8h2v6h-2V6z" />
+        </svg>
+      `,
+    },
+    {
+      latitude: 6.9157,
+      longitude: 79.8636,
+      name: 'Viharamahadevi Park',
+      svgIcon: `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="orange" viewBox="0 0 24 24" height="24" width="24">
+          <polygon points="12,2 15,22 12,17 9,22" />
+        </svg>
+      `,
+    },
+    {
+      latitude: 6.9169,
+      longitude: 79.8687,
+      name: 'National Museum of Colombo',
+      svgIcon: `
+        <svg xmlns="http://www.w3.org/2000/svg" fill="purple" viewBox="0 0 24 24" height="24" width="24">
+          <path d="M12 2L2 7v15h20V7L12 2zm0 2.18l8 4V20H4V8.18l8-4z" />
+        </svg>
+      `,
+    },
+  ]
 
   useEffect(() => {
     const loadOrganizations = async () => {
@@ -202,10 +250,18 @@ export default function Tasks() {
         {/* <LocationPicker/> */}
         {/* <GoogleMap /> */}
         <GoogleMap width='100%' height={500}>
-          <MapMarker latitude={6.902} longitude={79.8614} />
-          <MapMarker latitude={6.912} longitude={79.852} />
-          <MapMarker latitude={6.922} longitude={79.842} />
+          {points.map((point, index) => (
+            <Marker
+              key={index}
+              latitude={point.latitude}
+              longitude={point.longitude}
+              svgIcon={point.svgIcon}
+              name={point.name}
+            />
+          ))}
         </GoogleMap>
+
+        <DragableMarker />
 
         {/* <LocationPicker /> */}
       </Layout.Body>
