@@ -46,17 +46,6 @@ export default function Tasks() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value='communal'>
-            {/* <Card className='rounded-xl bg-card p-4'>
-              <div className='mb-2 flex items-center justify-between space-y-2'>
-                <div>
-                  <h2 className='text-2xl font-bold tracking-tight'>Communal Bins</h2>
-                </div>
-              </div>
-
-              <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-                <DataTable data={tasks} columns={columns} />
-              </div>
-            </Card> */}
             <CommunalBins />
           </TabsContent>
           <TabsContent value='commercial'>
