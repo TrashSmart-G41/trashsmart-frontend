@@ -1,15 +1,15 @@
 export const statuses = [
   {
     label: 'New',
-    value: 'New',
+    value: 'NEW',
   },
   {
     label: 'Collected',
-    value: 'Collected',
+    value: 'COLLECTED',
   },
   {
     label: 'Missed',
-    value: 'Missed',
+    value: 'MISSED',
   },
 ]
 
@@ -22,4 +22,8 @@ export const types = [
     label: 'Bio-Degradable',
     value: 'Bio-Degradable',
   },
+  {
+    label: 'Non-Bio-Degradable',
+    value: 'Non-Bio-Degradable',
+  }
 ]
