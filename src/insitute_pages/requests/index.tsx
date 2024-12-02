@@ -60,7 +60,7 @@ export default function Tasks() {
     }
 
     loadRequests()
-  })
+  }, [])
 
   return (
     <Layout>
