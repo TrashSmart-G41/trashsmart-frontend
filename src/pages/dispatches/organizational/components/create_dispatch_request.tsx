@@ -35,13 +35,13 @@ import {
 
 const FormSchema = z.object({
   wasteType: z.string().nonempty({ message: 'Waste Type is required' }),
-});
+})
 
 export function DispatchForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      wasteType: ''
+      wasteType: '',
     },
   })
 

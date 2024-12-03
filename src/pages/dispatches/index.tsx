@@ -12,8 +12,8 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/dashtabs'
-import Household from '/Users/mashawickramasinghe/Desktop/UCSC/3rd Year/Group Project 2/trashsmart-frontend/src/pages/dispatches/household/index'
-import Organizational from '/Users/mashawickramasinghe/Desktop/UCSC/3rd Year/Group Project 2/trashsmart-frontend/src/pages/dispatches/organizational/index.tsx'
+import Household from '@/pages/dispatches/household'
+import Organizational from '@/pages/dispatches/organizational'
 
 export default function Tasks() {
   return (
@@ -37,7 +37,7 @@ export default function Tasks() {
               Household
             </TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value='organizational'>
             <Organizational />
           </TabsContent>

@@ -17,7 +17,7 @@ export default function Organizational() {
 
         const mappedData: any = data.map((orgdispatch: any) => {
           const dateTime = new Date(orgdispatch.dateTime)
-          const date = dateTime.toISOString().split('T')[0] 
+          const date = dateTime.toISOString().split('T')[0]
           const time = dateTime.toTimeString().split(' ')[0]
 
           return {

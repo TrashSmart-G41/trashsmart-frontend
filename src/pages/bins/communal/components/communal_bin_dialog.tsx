@@ -122,10 +122,13 @@ export function CommunalDialog({ binId }: { binId: string }) {
               </div>
             </div>
             <GoogleMap width='100%' height={200} scrollable={false}>
-                  <MapMarker latitude={binData.longitude} longitude={binData.latitude} />
-                  {/* <MapMarker latitude={6.912} longitude={79.852}  />
+              <MapMarker
+                latitude={binData.longitude}
+                longitude={binData.latitude}
+              />
+              {/* <MapMarker latitude={6.912} longitude={79.852}  />
           <MapMarker latitude={6.922} longitude={79.842}  /> */}
-                </GoogleMap>
+            </GoogleMap>
           </Card>
 
           <Card className='my-2 p-4'>
