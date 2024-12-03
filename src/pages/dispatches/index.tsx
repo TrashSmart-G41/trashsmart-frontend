@@ -2,10 +2,18 @@ import { Layout } from '@/components/custom/layout'
 import { Search } from '@/components/search'
 import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
-import { DataTable } from './components/data-table'
-import { columns } from './components/columns'
-import { dispatches } from './data/dispatches'
-import { Card } from '@/components/ui/card'
+// import { DataTable } from './components/data-table'
+// import { columns } from './components/columns'
+// import { tasks } from './data/tasks'
+// import { Card } from '@/components/ui/card'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/ui/dashtabs'
+import Household from '@/pages/dispatches/household'
+import Organizational from '@/pages/dispatches/organizational'
 
 export default function Tasks() {
   return (
@@ -20,19 +28,23 @@ export default function Tasks() {
       </Layout.Header>
 
       <Layout.Body>
-        <Card className='mt-2 rounded-xl bg-card p-4'>
-          <div className='mb-2 flex items-center justify-between space-y-2'>
-            <div>
-              <h2 className='text-2xl font-bold tracking-tight text-muted-foreground'>
-                Dispatches
-              </h2>
-            </div>
-          </div>
+        <Tabs defaultValue='organizational' className='w-full py-4 pt-0'>
+          <TabsList className='mb-4 flex w-full'>
+            <TabsTrigger value='organizational' className='flex-1 text-center'>
+              Organizational
+            </TabsTrigger>
+            <TabsTrigger value='household' className='flex-1 text-center'>
+              Household
+            </TabsTrigger>
+          </TabsList>
 
-          <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-            <DataTable data={dispatches} columns={columns} />
-          </div>
-        </Card>
+          <TabsContent value='organizational'>
+            <Organizational />
+          </TabsContent>
+          <TabsContent value='household'>
+            <Household />
+          </TabsContent>
+        </Tabs>
       </Layout.Body>
     </Layout>
   )

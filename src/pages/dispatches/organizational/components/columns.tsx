@@ -10,8 +10,6 @@ import { DataTableColumnHeader } from './data-table-column-header'
 // import { statuses, regions } from '../data/data'
 import { Dispatch } from '../data/schema'
 import { DispatchesDialog } from './dispatched_dialog'
-// import { Button } from '@/components/custom/button'
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export const columns: ColumnDef<Dispatch>[] = [
   {
@@ -130,10 +128,6 @@ export const columns: ColumnDef<Dispatch>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      // const navigate = useNavigate()
-      // const handleButtonClick = () => {
-      //   navigate(`/cleaners/${row.getValue('employee_id')}`)
-      // }
       console.log(row)
 
       return (
@@ -144,28 +138,4 @@ export const columns: ColumnDef<Dispatch>[] = [
       )
     },
   },
-
-  // {
-  //   id: 'actions',
-  //   cell: ({ row }) => {
-  //     const navigate = useNavigate()
-
-  //     const handleButtonClick = () => {
-  //       navigate(`/drivers/${row.getValue('employee_id')}`)
-  //     }
-
-  //     return (
-  //       <div className='mr-4 flex items-center justify-end'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //         <DataTableRowActions row={row} />
-  //       </div>
-  //     )
-  //   },
-  // },
 ]
