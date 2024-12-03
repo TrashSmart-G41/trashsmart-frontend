@@ -31,29 +31,25 @@ import { toast } from '@/components/ui/use-toast'
 import { addRequest } from '../data/services'
 import { jwtDecode, JwtPayload } from 'jwt-decode'
 
-// const isDateInPast = (date: string) => new Date(date) < new Date()
-
 const token = localStorage.getItem('token') ?? ''
-const decodeToken = jwtDecode<JwtPayload>(token) as { userId: string }
+const decodeToken = jwtDecode<JwtPayload>(token) as { userId: number }
 const contId = decodeToken?.userId
+console.log(contId)
 
-const FormSchema = z
-  .object({
+const FormSchema = z.object({
     wasteType: z.string().min(1, { message: 'Waste Type is required.' }),
-    accumulatedVolume: z.string().min(1, { message: 'Volume is required.' }),
-    // datetime: z.string().min(1, { message: ' is required.' }),
+    accumulatedVolume: z.preprocess(
+      (value) => Number(value), 
+      z.number().min(1, { message: 'Volume is required and must be at least 1.' })
+    ),
     })
-  // .refine((data) => !isDateInPast(data.datetime), {
-  //   message: 'Date cannot be in the past.',
-  //   path: ['datetime'],
-  // })
 
 export function AddRequest() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       wasteType: '',
-      accumulatedVolume: '',
+      accumulatedVolume: 0,
     },
   })
 
@@ -66,7 +62,8 @@ export function AddRequest() {
           toast({
             description: 'Waste Collecting Request added successfully.',
           })
-          window.location.reload()
+          console.log(response)
+          // window.location.reload()
         }
       }
 
@@ -78,7 +75,7 @@ export function AddRequest() {
 
   return (
     <Form {...form}>
-      <h2 className='w-full text-center text-lg font-semibold'>Add Auction</h2>
+      <h2 className='w-full text-center text-lg font-semibold'>Add Request</h2>
       <form onSubmit={form.handleSubmit(onSubmit)} className='w-full space-y-6'>
         <FormField
           control={form.control}
@@ -93,8 +90,8 @@ export function AddRequest() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value='BIO-DEGRADABLE'>Bio-Degradable</SelectItem>
-                  <SelectItem value='NON-BIO-DEGRADABLE'>Non Bio Degradable</SelectItem>
+                  <SelectItem value='BIO_DEGRADABLE'>Bio_Degradable</SelectItem>
+                  <SelectItem value='NON_BIO_DEGRADABLE'>Non_Bio_Degradable</SelectItem>
                   <SelectItem value='RECYCLABLE'>Recyclable</SelectItem>
                 </SelectContent>
               </Select>
@@ -109,62 +106,12 @@ export function AddRequest() {
             <FormItem>
               <FormLabel>Waste Volume</FormLabel>
               <FormControl>
-                <Input placeholder='Enter waste volume' {...field} />
+                <Input type='number' placeholder='Enter waste volume' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={form.control}
-          name='startDate'
-          render={({ field }) => (
-            <FormItem className='flex flex-col'>
-              <FormLabel>Start Date</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant={'outline'}
-                      className={cn(
-                        'w-full pl-3 text-left font-normal',
-                        !field.value && 'text-muted-foreground'
-                      )}
-                    >
-                      {field.value ? format(field.value, 'PPP') : <span></span>}
-                      <CalendarIcon className='ml-auto h-4 w-4 opacity-50' />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className='w-auto p-0' align='start'>
-                  <Calendar
-                    mode='single'
-                    // selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date('1900-01-01')
-                    }
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-        {/* <FormField
-          control={form.control}
-          name='datetime'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Date and Time</FormLabel>
-              <FormControl>
-                <Input placeholder='Enter date and time' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
         <Separator />
 
         <AlertDialogFooter>

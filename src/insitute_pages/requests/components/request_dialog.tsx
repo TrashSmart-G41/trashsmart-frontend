@@ -9,9 +9,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import { Badge } from "@/components/ui/badge"
 import { useEffect, useState } from 'react'
 // import GoogleMap from '@/components/custom/googlemap'
 // import MapMarker from '@/components/custom/mapmarker'
@@ -36,7 +33,7 @@ export function RequestDialog({ contId }: { contId: string }) {
           wasteType:
             data.wasteType.charAt(0).toUpperCase() +
             data.wasteType.slice(1).toLowerCase(),
-          accumulatedVolume: `${data.accumulatedVolume} CBM`,
+          accumulatedVolume: `${data.accumulatedVolume}`,
           date: data.createdTimeStamp.slice(0, 10),
         }
 
@@ -48,21 +45,6 @@ export function RequestDialog({ contId }: { contId: string }) {
 
     loadReq()
   }, [contId])
-
-  // const handleDelete = async () => {
-  //   try {
-  //     const confirmation = confirm('Are you sure you want to delete this collection request?')
-  //     if (!confirmation) return
-
-  //     await deleteRequest(contId)
-  //     alert('Collection Request deleted successfully')
-  //     window.location.reload()
-  //   } catch (error) {
-  //     console.error('Failed to delete collection request:', error)
-  //     alert('Failed to delete the collection request. Please try again.')
-  //   }
-  // }
-
 
 
   if (!request) return <p>Loading bin information...</p>
@@ -111,11 +93,6 @@ export function RequestDialog({ contId }: { contId: string }) {
                   {request.id}
                 </div>
               </div>
-              {/* <div className="flex justify-center items-center">
-                                <Button variant="ghost" className="flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary">
-                                    Change Location
-                                </Button>
-                            </div> */}
             </div>
           </Card>
 
@@ -129,17 +106,6 @@ export function RequestDialog({ contId }: { contId: string }) {
                   {request.wasteType}
                 </div>
               </div>
-              {/* <div className='flex items-center justify-center'>
-                {binData.fill_level > 75 && (
-                  <Button
-                    variant='scale_btn'
-                    size='scale_btn'
-                    className='h-8 bg-cyan-500/25 text-cyan-500'
-                  >
-                    Request Sent
-                  </Button>
-                )}
-              </div> */}
             </div>
           </Card>
 
@@ -153,11 +119,6 @@ export function RequestDialog({ contId }: { contId: string }) {
                   {request.accumulatedVolume} CMB
                 </div>
               </div>
-              {/* <div className="flex justify-center items-center">
-                                <Button variant="ghost" className="flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary">
-                                    Change Location
-                                </Button>
-                            </div> */}
             </div>
           </Card>
         </div>

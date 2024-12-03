@@ -7,7 +7,7 @@ export const fetchAllRequestsByOrganization = async (id: number) => {
   return response.data
 }
 
-export const addRequest = async (id: string, data: any) => {
+export const addRequest = async (id: number, data: { wasteType: string; accumulatedVolume: number }) => {
   const url = `${API_URL}/${id}`
   const response = await request('POST', url, data)
   return response
