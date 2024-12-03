@@ -73,19 +73,19 @@ export const columns: ColumnDef<CommunalBin>[] = [
       return value.includes(row.getValue(id))
     },
   },
-  {
-    accessorKey: 'installed_date',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Installation Date'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('installed_date')}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   accessorKey: 'installed_date',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader
+  //       className='text-[14px]'
+  //       column={column}
+  //       title='Installation Date'
+  //     />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue('installed_date')}</div>,
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: 'fill_level',
     header: ({ column }) => (
@@ -134,7 +134,7 @@ export const columns: ColumnDef<CommunalBin>[] = [
           {fillLevel > 75 && (
             <Dialog>
               <DialogTrigger asChild>
-                <button className='ml-4 rounded bg-green-500 px-2 py-1 text-sm text-white hover:bg-green-600'>
+                <button className='ml-4 rounded bg-green-700 px-2 py-1 text-sm text-white hover:bg-green-800'>
                   Assign
                 </button>
               </DialogTrigger>

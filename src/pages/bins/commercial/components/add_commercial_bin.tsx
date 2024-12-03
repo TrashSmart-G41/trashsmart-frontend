@@ -9,9 +9,9 @@ import {
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { addCommercialBin } from '../data/services.tsx'
-import { fetchOrganizations } from '@/pages/organizations/data/services.tsx'
-import { useEffect, useState } from 'react'
-import DragableMarker from '@/components/custom/dragablemarker'
+// import { fetchOrganizations } from '@/pages/organizations/data/services.tsx'
+// import { useEffect, useState } from 'react'
+// import DragableMarker from '@/components/custom/dragablemarker'
 import {
   Form,
   FormControl,
@@ -46,45 +46,41 @@ import { Input } from '@/components/ui/input'
 //   .transform((value) => parseFloat(value))
 
 const FormSchema = z.object({
-  longitude: z.number(),
-  latitude: z.number(),
   wasteType: z.string(),
   binSize: z.string(),
-  organization_id: z.string(),
+  API_KEY: z.string(),
 })
 
-interface Organization {
-  org_id: string
-  firstName: string
-}
+// interface Organization {
+//   org_id: string
+//   firstName: string
+// }
 
 export function CommercialBinForm() {
-  const [organizations, setOrganizations] = useState<Organization[]>([])
+  // const [organizations, setOrganizations] = useState<Organization[]>([])
 
-  useEffect(() => {
-    const loadOrganizations = async () => {
-      try {
-        const data: any = await fetchOrganizations()
-        const mappedData: Organization[] = data.map((organization: any) => ({
-          org_id: organization.id,
-          firstName: organization.firstName,
-        }))
-        setOrganizations(mappedData)
-      } catch (error) {
-        console.error('Failed to load organizations:', error)
-      }
-    }
-    loadOrganizations()
-  }, [])
+  // useEffect(() => {
+  //   const loadOrganizations = async () => {
+  //     try {
+  //       const data: any = await fetchOrganizations()
+  //       const mappedData: Organization[] = data.map((organization: any) => ({
+  //         org_id: organization.id,
+  //         firstName: organization.firstName,
+  //       }))
+  //       setOrganizations(mappedData)
+  //     } catch (error) {
+  //       console.error('Failed to load organizations:', error)
+  //     }
+  //   }
+  //   loadOrganizations()
+  // }, [])
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      longitude: 0.0,
-      latitude: 0.0,
       wasteType: '',
       binSize: '',
-      organization_id: '',
+      API_KEY: '',
     },
   })
 
@@ -92,10 +88,8 @@ export function CommercialBinForm() {
     console.log(data)
     document.getElementById('continue')?.click()
     try {
-      const organizationId = data.organization_id
-      console.log(organizationId)
       const addcommercialbin = async () => {
-        const response = await addCommercialBin(data, organizationId)
+        const response = await addCommercialBin(data)
         if (response.status === 200) {
           console.log('Bin added successfully!')
           window.location.reload()
@@ -107,11 +101,6 @@ export function CommercialBinForm() {
     }
   }
 
-  const handlePositionChange = (lat: number, lng: number) => {
-    console.log(`Latitude = ${lat}, Longitude = ${lng}`)
-    form.setValue('latitude', lat)
-    form.setValue('longitude', lng)
-  }
 
   return (
     <Form {...form}>
@@ -122,71 +111,6 @@ export function CommercialBinForm() {
         onSubmit={form.handleSubmit(handleFormSubmit)}
         className='w-full space-y-6'
       >
-        <FormField
-          control={form.control}
-          name='organization_id'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Organization</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select Organization' {...field} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {organizations.map((org) => (
-                    <SelectItem key={org.org_id} value={org.org_id}>
-                      {org.firstName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name='longitude'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Location (Longitude)</FormLabel>
-              <FormControl>
-                <Input
-                  id='long_pos'
-                  placeholder='Enter location longitude'
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='latitude'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Location (Latitude)</FormLabel>
-              <FormControl>
-                <Input
-                  id='lat_pos'
-                  placeholder='Enter location latitude'
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div style={{ height: '200px' }}>
-          <DragableMarker
-            height='200px'
-            onPositionChange={handlePositionChange}
-          />
-        </div>
 
         <FormField
           control={form.control}
@@ -202,9 +126,7 @@ export function CommercialBinForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value='BIO_DEGRADABLE'>Bio-degradable</SelectItem>
-                  <SelectItem value='NON_BIO_DEGRADABLE'>
-                    Non Bio-degradable
-                  </SelectItem>
+                  <SelectItem value='NON_BIO_DEGRADABLE'>Non Bio-degradable</SelectItem>
                   <SelectItem value='RECYCLABLE'>Recyclable</SelectItem>
                 </SelectContent>
               </Select>
@@ -230,6 +152,23 @@ export function CommercialBinForm() {
                   <SelectItem value='MEGA'>Mega</SelectItem>
                 </SelectContent>
               </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='API_KEY'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>API KEY</FormLabel>
+              <FormControl>
+                <Input
+                  // id='lat_pos'
+                  placeholder='Enter API KEY'
+                  {...field}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
