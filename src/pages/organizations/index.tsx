@@ -13,15 +13,28 @@ import {
   CardTitle,
   // CardFooter,
 } from '@/components/ui/card'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { fetchOrganizations } from './data/services'
 // import LocationPicker from '@/components/custom/location_picker'
 import GoogleMap, { Marker } from '@/components/custom/googlemap'
 import DragableMarker from '@/components/custom/dragablemarker'
+import RouteMap from '@/components/custom/routemap'
 
 export default function Tasks() {
   const [organizations, setOrganizations] = useState([])
   // const mapRef = useRef<google.maps.Map | null>(null);
+
+  const mapRef = useRef<google.maps.Map | null>(null)
+
+  // Define route with start, stops, and end
+  const route = {
+    start: { lat: 6.9271, lng: 79.8612 }, // Colombo, Sri Lanka
+    stops: [
+      { lat: 6.9481, lng: 79.9577 }, // Stop 1
+      { lat: 6.9275, lng: 79.9075 }, // Stop 2
+    ],
+    end: { lat: 6.9278, lng: 79.8532 }, // End location
+  }
 
   const points = [
     {
@@ -262,6 +275,8 @@ export default function Tasks() {
         </GoogleMap>
 
         <DragableMarker />
+
+        <RouteMap ref={mapRef} route={route} />
 
         {/* <LocationPicker /> */}
       </Layout.Body>

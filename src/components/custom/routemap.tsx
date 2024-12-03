@@ -7,8 +7,8 @@ import {
 } from 'react'
 
 // Default coordinates if geolocation is unavailable
-const defaultLat = 6.9271
-const defaultLng = 79.8612
+// const defaultLat = 6.9271
+// const defaultLng = 79.8612
 
 declare global {
   interface Window {
@@ -27,7 +27,7 @@ const loadGoogleMapsScript = (apiKey: string): Promise<void> => {
     }
 
     const script = document.createElement('script')
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=directions`
     script.async = true
     script.defer = true
     script.onload = () => resolve()
@@ -36,19 +36,22 @@ const loadGoogleMapsScript = (apiKey: string): Promise<void> => {
   })
 }
 
-interface DragableMarkerProps {
+interface RouteMapProps {
   apiKey?: string
+  route: {
+    start: { lat: number; lng: number }
+    stops?: { lat: number; lng: number }[]
+    end: { lat: number; lng: number }
+  }
 }
 
-const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
-  ({ apiKey }, ref) => {
+const RouteMap = forwardRef<google.maps.Map | null, RouteMapProps>(
+  ({ apiKey, route }, ref) => {
     const mapRef = useRef<HTMLDivElement | null>(null)
     const [map, setMap] = useState<google.maps.Map | null>(null)
-    const [, setMarker] = useState<google.maps.Marker | null>(null)
     const [mapStyle, setMapStyle] =
       useState<google.maps.MapTypeStyle[]>(MapLightTheme)
 
-    // Function to detect and update map style
     const updateMapStyle = () => {
       const theme = localStorage.getItem('theme') || 'light'
       const root = window.document.documentElement
@@ -66,11 +69,11 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
 
     // Load Google Maps script and initialize map
     useEffect(() => {
-      //@ts-ignore
+      // @ts-ignore
       loadGoogleMapsScript(apiKey)
         .then(() => {
           if (mapRef.current && !map) {
-            const initialPosition = { lat: defaultLat, lng: defaultLng }
+            const initialPosition = route.start
 
             // Initialize the map
             const newMap = new google.maps.Map(mapRef.current, {
@@ -79,53 +82,70 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
               styles: mapStyle, // Apply initial theme
             })
 
-            // Create a draggable marker
-            const newMarker = new google.maps.Marker({
-              position: initialPosition,
+            // Initialize DirectionsService and DirectionsRenderer
+            const directionsService = new google.maps.DirectionsService()
+            const directionsRenderer = new google.maps.DirectionsRenderer({
               map: newMap,
-              draggable: true,
+              polylineOptions: {
+                strokeColor: 'green', // Set polyline (route) color to green
+                strokeWeight: 5, // Set thickness of the route line
+              },
             })
 
-            // Handle marker drag end
-            newMarker.addListener('dragend', () => {
-              const position = newMarker.getPosition()
-              if (position) {
-                console.log(
-                  `Marker moved to: ${position.lat()}, ${position.lng()}`
-                )
+            // Prepare the route request
+            const waypoints =
+              route.stops?.map((stop) => ({
+                location: new google.maps.LatLng(stop.lat, stop.lng),
+                stopover: true,
+              })) || []
+
+            const request = {
+              origin: new google.maps.LatLng(route.start.lat, route.start.lng),
+              destination: new google.maps.LatLng(route.end.lat, route.end.lng),
+              waypoints,
+              travelMode: google.maps.TravelMode.DRIVING, // You can change this to WALKING, BICYCLING, etc.
+            }
+
+            // Calculate and display the route
+            directionsService.route(request, (result, status) => {
+              if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(result)
+              } else {
+                console.error('Directions request failed due to ' + status)
               }
             })
 
+            // Create markers for start, stops, and end
+            const createMarker = (
+              position: { lat: number; lng: number },
+              title: string
+            ) => {
+              return new google.maps.Marker({
+                position,
+                map: newMap,
+                title,
+              })
+            }
+
+            // Start marker
+            createMarker(route.start, 'Start')
+
+            // Stop markers
+            route.stops?.forEach((stop, index) => {
+              createMarker(stop, `Stop ${index + 1}`)
+            })
+
+            // End marker
+            createMarker(route.end, 'End')
+
             // Update state
             setMap(newMap)
-            setMarker(newMarker)
-
-            // Geolocation: Update map and marker position to user's location if available
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(
-                (position) => {
-                  const userLat = position.coords.latitude
-                  const userLng = position.coords.longitude
-                  const userPosition = { lat: userLat, lng: userLng }
-
-                  newMap.setCenter(userPosition)
-                  newMarker.setPosition(userPosition)
-
-                  console.log(`User location: ${userLat}, ${userLng}`)
-                },
-                () => {
-                  console.log(
-                    'Geolocation not available, using default location'
-                  )
-                }
-              )
-            }
           }
         })
         .catch((error) => {
           console.error('Error loading Google Maps script:', error)
         })
-    }, [mapStyle, apiKey])
+    }, [mapStyle, apiKey, route])
 
     // Handle theme changes manually (toggle between light and dark modes)
     // const toggleTheme = () => {
@@ -177,4 +197,4 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
   }
 )
 
-export default DragableMarker
+export default RouteMap
