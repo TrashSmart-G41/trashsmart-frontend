@@ -1,25 +1,33 @@
 export const statuses = [
   {
     label: 'New',
-    value: 'New',
+    value: 'NEW',
+  },
+  {
+    label: 'Collecting',
+    value: 'COLLECTING',
   },
   {
     label: 'Collected',
-    value: 'Collected',
+    value: 'COLLECTED',
   },
   {
     label: 'Missed',
-    value: 'Missed',
+    value: 'MISSED',
   },
 ]
 
 export const types = [
   {
     label: 'Recyclable',
-    value: 'Recyclable',
+    value: 'RECYCLABLE',
   },
   {
-    label: 'Bio-Degradable',
-    value: 'Bio-Degradable',
+    label: 'Bio_Degradable',
+    value: 'BIO_DEGRADABLE',
   },
+  {
+    label: 'Non_Bio_Degradable',
+    value: 'NON_BIO_DEGRADABLE',
+  }
 ]

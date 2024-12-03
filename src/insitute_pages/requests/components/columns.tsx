@@ -5,12 +5,22 @@ import React from 'react'
 // import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
+import { RequestDialog } from './request_dialog'
 // import { DataTableRowActions } from './data-table-row-actions'
 
 // import { statuses, regions } from '../data/data'
-import { Request } from '../data/schema'
+// import { Request } from '../data/schema'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+
+type Request= {
+  id: string
+  wasteType: string
+  accumulatedVolume: string
+  date: string
+  time: string
+  status: string
+}
 
 export const columns: ColumnDef<Request>[] = [
   {
@@ -38,7 +48,7 @@ export const columns: ColumnDef<Request>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'request_id',
+    accessorKey: 'id',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
@@ -46,22 +56,9 @@ export const columns: ColumnDef<Request>[] = [
         title='Request ID'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('request_id')}</div>,
+    cell: ({ row }) => <div>{row.getValue('id')}</div>,
     enableSorting: false,
     enableHiding: false,
-  },
-  {
-    accessorKey: 'organization',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Organization'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('organization')}</div>,
-    enableSorting: false,
-    // enableHiding: false,
   },
   {
     accessorKey: 'date',
@@ -90,7 +87,7 @@ export const columns: ColumnDef<Request>[] = [
     // enableHiding: false,
   },
   {
-    accessorKey: 'accummulated_waste',
+    accessorKey: 'accumulatedVolume',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
@@ -98,12 +95,12 @@ export const columns: ColumnDef<Request>[] = [
         title='Acc. Volume'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('accummulated_waste')}</div>,
+    cell: ({ row }) => <div>{row.getValue('accumulatedVolume')}</div>,
     enableSorting: false,
     // enableHiding: false,
   },
   {
-    accessorKey: 'type',
+    accessorKey: 'wasteType',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
@@ -111,7 +108,7 @@ export const columns: ColumnDef<Request>[] = [
         title='Type'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('type')}</div>,
+    cell: ({ row }) => <div>{row.getValue('wasteType')}</div>,
     // enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
@@ -131,13 +128,13 @@ export const columns: ColumnDef<Request>[] = [
       let textColor
 
       switch (status) {
-        case 'New':
+        case 'NEW':
           textColor = 'text-primary'
           break
-        case 'Missed':
+        case 'MISSED':
           textColor = 'text-destructive'
           break
-        case 'Collected':
+        case 'COLLECTED':
           textColor = 'text-blue-500'
           break
         default:
@@ -152,27 +149,31 @@ export const columns: ColumnDef<Request>[] = [
     },
   },
 
-  // {
-  //   id: 'actions',
-  //   cell: ({ row }) => {
-  //     const navigate = useNavigate()
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      // const navigate = useNavigate()
 
-  //     const handleButtonClick = () => {
-  //       navigate(`/drivers/${row.getValue('employee_id')}`)
-  //     }
+      // const handleButtonClick = () => {
+      //   navigate(`/drivers/${row.getValue('employee_id')}`)
+      // }
 
-  //     return (
-  //       <div className='mr-4 flex items-center justify-end'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //         <DataTableRowActions row={row} />
-  //       </div>
-  //     )
-  //   },
-  // },
+      const contId = String(row.getValue('id') || '').slice(-3)
+
+      return (
+        <div className='mr-4 flex items-center justify-end'>
+          {/* <Button
+            variant='ghost'
+            className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
+            onClick={handleButtonClick}
+          >
+            View
+          </Button>
+          <DataTableRowActions row={row} /> */}
+          <RequestDialog contId={contId} />
+
+        </div>
+      )
+    },
+  },
 ]

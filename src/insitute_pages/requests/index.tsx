@@ -4,10 +4,64 @@ import ThemeSwitch from '@/components/theme-switch'
 import { UserNav } from '@/components/user-nav'
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { requests } from './data/requests'
 import { Card } from '@/components/ui/card'
+import { useEffect, useState } from 'react'
+import { fetchAllRequestsByOrganization } from './data/services'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
+
+// type RequestData = {
+//   id: number;
+//   accumulatedVolume: number;
+//   wasteType: string;
+//   latitude: number;
+//   longitude: number;
+//   wasteCollectionRequestStatus: string;
+//   createdTimeStamp: string;
+// };
+
+type Request= {
+  id: string
+  wasteType: string
+  accumulatedVolume: string
+  date: string
+  time: string
+  status: string
+}
+
+const token = localStorage.getItem('token') ?? ''
+const decodeToken = jwtDecode<JwtPayload>(token) as { userId: number }
+const contId = decodeToken?.userId
+console.log(contId)
 
 export default function Tasks() {
+
+  const [ requests, setRequests ] = useState<Request[]>([])
+
+  useEffect (() => {
+    const loadRequests = async () => {
+      try {
+        const data: any = await fetchAllRequestsByOrganization(contId)
+        console.log(data)
+        const mappedData = data.map((req: any) => ({
+          id: `WCR-${req.createdTimeStamp.replace(/-/g, '').slice(2, 8)}-${req.id.toString().padStart(3, '0')}`,
+          wasteType:
+            req.wasteType.charAt(0).toUpperCase() +
+            req.wasteType.slice(1).toLowerCase(),
+          accumulatedVolume: `${req.accumulatedVolume} CBM`,
+          date: req.createdTimeStamp.slice(0, 10),
+          time: req.createdTimeStamp.slice(11, 16),
+          status: req.wasteCollectionRequestStatus,
+        }))
+
+        setRequests(mappedData)
+      } catch (e) {
+        console.error('Failed to load Requests', e)
+      }
+    }
+
+    loadRequests()
+  }, [])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}

@@ -296,7 +296,7 @@ const router = (
         {
           path: '/organization/requests',
           lazy: async () => ({
-            Component: (await import('@/pages/requests')).default,
+            Component: (await import('@/insitute_pages/requests')).default,
           }),
         },
         {
