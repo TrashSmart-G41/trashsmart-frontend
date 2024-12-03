@@ -38,10 +38,11 @@ const loadGoogleMapsScript = (apiKey: string): Promise<void> => {
 
 interface DragableMarkerProps {
   apiKey?: string
+  height?: string
 }
 
 const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
-  ({ apiKey }, ref) => {
+  ({ apiKey,height }, ref) => {
     const mapRef = useRef<HTMLDivElement | null>(null)
     const [map, setMap] = useState<google.maps.Map | null>(null)
     const [, setMarker] = useState<google.maps.Marker | null>(null)
@@ -60,6 +61,10 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
       apiKey = import.meta.env.VITE_GOOGLEMAP_ACCESS_TOKEN || ''
     }
 
+    if (!height) {
+      height = '400px'
+    }
+
     // Expose map instance to parent via ref
     //@ts-ignore
     useImperativeHandle(ref, () => map, [map])
@@ -71,6 +76,10 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
         .then(() => {
           if (mapRef.current && !map) {
             const initialPosition = { lat: defaultLat, lng: defaultLng }
+            console.log('initialPosition:', initialPosition)
+            // set local storage lat_pos and long_pos
+            localStorage.setItem('lat_pos', initialPosition.lat.toString())
+            localStorage.setItem('long_pos', initialPosition.lng.toString())
 
             // Initialize the map
             const newMap = new google.maps.Map(mapRef.current, {
@@ -94,6 +103,11 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
                   `Marker moved to: ${position.lat()}, ${position.lng()}`
                 )
               }
+              // update local storage lat_pos and long_pos
+              //@ts-ignore
+              localStorage.setItem('lat_pos', position.lat().toString())
+              //@ts-ignore
+              localStorage.setItem('long_pos', position.lng().toString())
             })
 
             // Update state
@@ -168,7 +182,7 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
 
     return (
       <div>
-        <div ref={mapRef} style={{ height: '500px', width: '100%' }} />
+        <div ref={mapRef} style={{ height: height, width: '100%' }} />
         {/* <button onClick={toggleTheme} style={{ marginTop: '10px' }}>
           Toggle Theme
         </button> */}

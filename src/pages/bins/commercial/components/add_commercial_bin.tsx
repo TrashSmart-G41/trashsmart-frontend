@@ -1,42 +1,25 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { number, z } from 'zod'
 import {
-  // AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
-  // AlertDialogContent,
-  // AlertDialogDescription,
   AlertDialogFooter,
-  // AlertDialogHeader,
-  // AlertDialogTitle,
-  // AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-
 import { Button } from '@/components/ui/button'
-// import { CalendarIcon } from 'lucide-react'
-// import { format } from 'date-fns'
-// import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
-// import { Calendar } from '@/components/ui/calendar'
 import { addCommercialBin } from '../data/services.tsx'
 import { fetchOrganizations } from '@/pages/organizations/data/services.tsx'
 import { useEffect, useState } from 'react'
-
+import DragableMarker from '@/components/custom/dragablemarker'
 import {
   Form,
   FormControl,
-  // FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -46,30 +29,28 @@ import {
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 
-const longitude = z
-  .string()
-  .refine((value) => {
-    const num = parseFloat(value)
-    return !isNaN(num)
-  })
-  .transform((value) => parseFloat(value)) // Transform to number
+// const longitude = z
+//   .string()
+//   .refine((value) => {
+//     const num = parseFloat(value)
+//     return !isNaN(num)
+//   })
+//   .transform((value) => parseFloat(value))
 
-const latitude = z
-  .string()
-  .refine((value) => {
-    const num = parseFloat(value)
-    return !isNaN(num)
-  })
-  .transform((value) => parseFloat(value))
+// const latitude = z
+//   .string()
+//   .refine((value) => {
+//     const num = parseFloat(value)
+//     return !isNaN(num)
+//   })
+//   .transform((value) => parseFloat(value))
 
 const FormSchema = z.object({
-  //bin_id: z.string(),
-  longitude: longitude,
-  latitude: latitude,
+  longitude: z.number(),
+  latitude: z.number(),
   wasteType: z.string(),
   binSize: z.string(),
   organization_id: z.string(),
-  //purchase_date: z.string(),
 })
 
 interface Organization {
@@ -99,15 +80,35 @@ export function CommercialBinForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      //bin_id: '',
-      longitude: 0.0,
-      latitude: 0.0,
+      longitude: localStorage.getItem('long_pos') ? parseFloat(localStorage.getItem('long_pos')!) : 0.0,
+      latitude: localStorage.getItem('lat_pos') ? parseFloat(localStorage.getItem('lat_pos')!) : 0.0,
       wasteType: '',
       binSize: '',
       organization_id: '',
-      //purchase_date: '',
     },
   })
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const newLongitude = localStorage.getItem('long_pos') ? parseFloat(localStorage.getItem('long_pos')!) : 0.0
+      const newLatitude = localStorage.getItem('lat_pos') ? parseFloat(localStorage.getItem('lat_pos')!) : 0.0
+      form.setValue('longitude', newLongitude)
+      form.setValue('latitude', newLatitude)
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+    }
+  }, [form])
+
+  useEffect(() => {
+    const newLongitude = localStorage.getItem('long_pos') ? parseFloat(localStorage.getItem('long_pos')!) : 0.0
+    const newLatitude = localStorage.getItem('lat_pos') ? parseFloat(localStorage.getItem('lat_pos')!) : 0.0
+    form.setValue('longitude', newLongitude)
+    form.setValue('latitude', newLatitude)
+  }, [])
 
   async function handleFormSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data)
@@ -137,19 +138,6 @@ export function CommercialBinForm() {
         onSubmit={form.handleSubmit(handleFormSubmit)}
         className='w-full space-y-6'
       >
-        {/* <FormField
-          control={form.control}
-          name='bin_id'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bin ID</FormLabel>
-              <FormControl>
-                <Input placeholder='Default' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
         <FormField
           control={form.control}
           name='organization_id'
@@ -165,8 +153,6 @@ export function CommercialBinForm() {
                 <SelectContent>
                   {organizations.map((org) => (
                     <SelectItem key={org.org_id} value={org.org_id}>
-                      {' '}
-                      {/* Use org_id as the value */}
                       {org.firstName}
                     </SelectItem>
                   ))}
@@ -184,7 +170,7 @@ export function CommercialBinForm() {
             <FormItem>
               <FormLabel>Location (Longitude)</FormLabel>
               <FormControl>
-                <Input placeholder='Enter location longitude' {...field} />
+                <Input id='long_pos' placeholder='Enter location longitude' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -197,12 +183,16 @@ export function CommercialBinForm() {
             <FormItem>
               <FormLabel>Location (Latitude)</FormLabel>
               <FormControl>
-                <Input placeholder='Enter location latitude' {...field} />
+                <Input id='lat_pos' placeholder='Enter location latitude' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        <div style={{ height: '200px' }}>
+          <DragableMarker height='200px' />
+        </div>
+
         <FormField
           control={form.control}
           name='wasteType'
