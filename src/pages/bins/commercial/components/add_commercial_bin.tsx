@@ -58,8 +58,6 @@ interface Organization {
   firstName: string
 }
 
-
-
 export function CommercialBinForm() {
   const [organizations, setOrganizations] = useState<Organization[]>([])
 
@@ -89,7 +87,6 @@ export function CommercialBinForm() {
       organization_id: '',
     },
   })
-
 
   async function handleFormSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data)
@@ -157,7 +154,11 @@ export function CommercialBinForm() {
             <FormItem>
               <FormLabel>Location (Longitude)</FormLabel>
               <FormControl>
-                <Input id='long_pos' placeholder='Enter location longitude' {...field} />
+                <Input
+                  id='long_pos'
+                  placeholder='Enter location longitude'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -170,14 +171,21 @@ export function CommercialBinForm() {
             <FormItem>
               <FormLabel>Location (Latitude)</FormLabel>
               <FormControl>
-                <Input id='lat_pos' placeholder='Enter location latitude' {...field} />
+                <Input
+                  id='lat_pos'
+                  placeholder='Enter location latitude'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
         <div style={{ height: '200px' }}>
-          <DragableMarker height='200px' onPositionChange={handlePositionChange} />
+          <DragableMarker
+            height='200px'
+            onPositionChange={handlePositionChange}
+          />
         </div>
 
         <FormField
