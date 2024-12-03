@@ -122,7 +122,7 @@ export function TopTen() {
                 </div>
               </TableCell>
               <TableCell>{invoice.no_of_bins}</TableCell>
-              <TableCell className='text-right'>HEHE</TableCell>
+              <TableCell className='text-right'>1.2MT</TableCell>
             </TableRow>
           ))}
         </TableBody>
