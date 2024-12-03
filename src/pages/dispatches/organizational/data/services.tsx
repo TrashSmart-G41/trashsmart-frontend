@@ -13,8 +13,8 @@ export const fetchDispatch = async (id: string) => {
   return response.data
 }
 
-export const addDispatch = async () => {
-  const response = await request('POST', API_URL)
+export const addDispatch = async (data: any) => {
+  const response = await request('POST', API_URL, data)
   return response
 }
 

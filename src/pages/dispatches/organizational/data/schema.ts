@@ -7,6 +7,7 @@ export const dispatchSchema = z.object({
   time: z.string(),
   total_collections: z.number(),
   status: z.string(),
+  wasteType: z.string()
 })
 
 export type Dispatch = z.infer<typeof dispatchSchema>

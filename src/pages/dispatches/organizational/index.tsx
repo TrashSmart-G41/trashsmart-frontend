@@ -17,8 +17,8 @@ export default function Organizational() {
 
         const mappedData: any = data.map((orgdispatch: any) => {
           const dateTime = new Date(orgdispatch.dateTime)
-          const date = dateTime.toISOString().split('T')[0] // Extract the date (YYYY-MM-DD)
-          const time = dateTime.toTimeString().split(' ')[0] // Extract the time (HH:mm:ss)
+          const date = dateTime.toISOString().split('T')[0] 
+          const time = dateTime.toTimeString().split(' ')[0]
 
           return {
             dispatch_id: `DR-${orgdispatch.id.toString().padStart(3, '0')}`,

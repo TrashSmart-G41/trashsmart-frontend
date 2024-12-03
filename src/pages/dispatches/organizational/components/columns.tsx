@@ -10,8 +10,6 @@ import { DataTableColumnHeader } from './data-table-column-header'
 // import { statuses, regions } from '../data/data'
 import { Dispatch } from '../data/schema'
 import { DispatchesDialog } from './dispatched_dialog'
-// import { Button } from '@/components/custom/button'
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 export const columns: ColumnDef<Dispatch>[] = [
   {

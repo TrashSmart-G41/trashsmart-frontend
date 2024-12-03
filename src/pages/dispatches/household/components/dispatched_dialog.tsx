@@ -44,19 +44,19 @@ export function DispatchesDialog({ contId }: { contId: string }) {
     loadDispatch()
   }, [contId])
 
-  // const handleDelete = async () => {
-  //   try {
-  //     const confirmation = confirm('Are you sure you want to delete this bin?')
-  //     if (!confirmation) return
+  const handleDelete = async () => {
+    try {
+      const confirmation = confirm('Are you sure you want to delete this request?')
+      if (!confirmation) return
 
-  //     await deleteDispatch(conId)
-  //     alert('Bin deleted successfully')
-  //     window.location.reload()
-  //   } catch (error) {
-  //     console.error('Failed to delete bin:', error)
-  //     alert('Failed to delete the bin. Please try again.')
-  //   }
-  // }
+      await deleteDispatch(contId)
+      alert('Reqeust deleted successfully')
+      window.location.reload()
+    } catch (error) {
+      console.error('Failed to delete request:', error)
+      alert('Failed to delete the request. Please try again.')
+    }
+  }
 
   return (
     <Dialog>
@@ -147,7 +147,9 @@ export function DispatchesDialog({ contId }: { contId: string }) {
               </Card>
             </div>
             <DialogFooter>
-              <Button variant='destructive'>Delete Dispatch</Button>
+              <Button variant='destructive' onClick={handleDelete}>
+              Delete Dispatch
+          </Button>
             </DialogFooter>
           </>
         ) : (
