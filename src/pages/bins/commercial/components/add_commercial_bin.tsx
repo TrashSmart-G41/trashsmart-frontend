@@ -2,41 +2,24 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import {
-  // AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
-  // AlertDialogContent,
-  // AlertDialogDescription,
   AlertDialogFooter,
-  // AlertDialogHeader,
-  // AlertDialogTitle,
-  // AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
-
 import { Button } from '@/components/ui/button'
-// import { CalendarIcon } from 'lucide-react'
-// import { format } from 'date-fns'
-// import { cn } from '@/lib/utils'
 import { Separator } from '@/components/ui/separator'
-// import { Calendar } from '@/components/ui/calendar'
 import { addCommercialBin } from '../data/services.tsx'
-import { fetchOrganizations } from '@/pages/organizations/data/services.tsx'
-import { useEffect, useState } from 'react'
-
+// import { fetchOrganizations } from '@/pages/organizations/data/services.tsx'
+// import { useEffect, useState } from 'react'
+// import DragableMarker from '@/components/custom/dragablemarker'
 import {
   Form,
   FormControl,
-  // FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from '@/components/ui/popover'
 import {
   Select,
   SelectContent,
@@ -46,66 +29,58 @@ import {
 } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 
-const longitude = z
-  .string()
-  .refine((value) => {
-    const num = parseFloat(value)
-    return !isNaN(num)
-  })
-  .transform((value) => parseFloat(value)) // Transform to number
+// const longitude = z
+//   .string()
+//   .refine((value) => {
+//     const num = parseFloat(value)
+//     return !isNaN(num)
+//   })
+//   .transform((value) => parseFloat(value))
 
-const latitude = z
-  .string()
-  .refine((value) => {
-    const num = parseFloat(value)
-    return !isNaN(num)
-  })
-  .transform((value) => parseFloat(value))
+// const latitude = z
+//   .string()
+//   .refine((value) => {
+//     const num = parseFloat(value)
+//     return !isNaN(num)
+//   })
+//   .transform((value) => parseFloat(value))
 
 const FormSchema = z.object({
-  //bin_id: z.string(),
-  longitude: longitude,
-  latitude: latitude,
   wasteType: z.string(),
   binSize: z.string(),
-  organization_id: z.string(),
-  //purchase_date: z.string(),
+  API_KEY: z.string(),
 })
 
-interface Organization {
-  org_id: string
-  firstName: string
-}
+// interface Organization {
+//   org_id: string
+//   firstName: string
+// }
 
 export function CommercialBinForm() {
-  const [organizations, setOrganizations] = useState<Organization[]>([])
+  // const [organizations, setOrganizations] = useState<Organization[]>([])
 
-  useEffect(() => {
-    const loadOrganizations = async () => {
-      try {
-        const data: any = await fetchOrganizations()
-        const mappedData: Organization[] = data.map((organization: any) => ({
-          org_id: organization.id,
-          firstName: organization.firstName,
-        }))
-        setOrganizations(mappedData)
-      } catch (error) {
-        console.error('Failed to load organizations:', error)
-      }
-    }
-    loadOrganizations()
-  }, [])
+  // useEffect(() => {
+  //   const loadOrganizations = async () => {
+  //     try {
+  //       const data: any = await fetchOrganizations()
+  //       const mappedData: Organization[] = data.map((organization: any) => ({
+  //         org_id: organization.id,
+  //         firstName: organization.firstName,
+  //       }))
+  //       setOrganizations(mappedData)
+  //     } catch (error) {
+  //       console.error('Failed to load organizations:', error)
+  //     }
+  //   }
+  //   loadOrganizations()
+  // }, [])
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      //bin_id: '',
-      longitude: 0.0,
-      latitude: 0.0,
       wasteType: '',
       binSize: '',
-      organization_id: '',
-      //purchase_date: '',
+      API_KEY: '',
     },
   })
 
@@ -113,10 +88,8 @@ export function CommercialBinForm() {
     console.log(data)
     document.getElementById('continue')?.click()
     try {
-      const organizationId = data.organization_id
-      console.log(organizationId)
       const addcommercialbin = async () => {
-        const response = await addCommercialBin(data, organizationId)
+        const response = await addCommercialBin(data)
         if (response.status === 200) {
           console.log('Bin added successfully!')
           window.location.reload()
@@ -128,6 +101,7 @@ export function CommercialBinForm() {
     }
   }
 
+
   return (
     <Form {...form}>
       <h2 className='w-full text-center text-lg font-semibold'>
@@ -137,72 +111,7 @@ export function CommercialBinForm() {
         onSubmit={form.handleSubmit(handleFormSubmit)}
         className='w-full space-y-6'
       >
-        {/* <FormField
-          control={form.control}
-          name='bin_id'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bin ID</FormLabel>
-              <FormControl>
-                <Input placeholder='Default' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        /> */}
-        <FormField
-          control={form.control}
-          name='organization_id'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Organization</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Select Organization' {...field} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {organizations.map((org) => (
-                    <SelectItem key={org.org_id} value={org.org_id}>
-                      {' '}
-                      {/* Use org_id as the value */}
-                      {org.firstName}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        <FormField
-          control={form.control}
-          name='longitude'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Location (Longitude)</FormLabel>
-              <FormControl>
-                <Input placeholder='Enter location longitude' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name='latitude'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Location (Latitude)</FormLabel>
-              <FormControl>
-                <Input placeholder='Enter location latitude' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name='wasteType'
@@ -217,9 +126,7 @@ export function CommercialBinForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value='BIO_DEGRADABLE'>Bio-degradable</SelectItem>
-                  <SelectItem value='NON_BIO_DEGRADABLE'>
-                    Non Bio-degradable
-                  </SelectItem>
+                  <SelectItem value='NON_BIO_DEGRADABLE'>Non Bio-degradable</SelectItem>
                   <SelectItem value='RECYCLABLE'>Recyclable</SelectItem>
                 </SelectContent>
               </Select>
@@ -245,6 +152,23 @@ export function CommercialBinForm() {
                   <SelectItem value='MEGA'>Mega</SelectItem>
                 </SelectContent>
               </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='API_KEY'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>API KEY</FormLabel>
+              <FormControl>
+                <Input
+                  // id='lat_pos'
+                  placeholder='Enter API KEY'
+                  {...field}
+                />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}

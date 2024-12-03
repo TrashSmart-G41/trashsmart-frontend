@@ -28,39 +28,29 @@ import {
 import { Separator } from '@/components/ui/separator'
 
 import { TrendingUp } from 'lucide-react'
-import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from '@/components/ui/chart'
 import { useEffect, useState } from 'react'
 import { fetchCleaner } from './data/services'
 // import { date } from 'zod'
 // import { clear } from 'console'
 // import { EditCleaner } from './components/edit-cleaner-form'
 import { EditSingleCleaner } from './components/edit-single-cleaner'
-const chartData = [
-  { month: 'January', collections: 2 },
-  { month: 'February', collections: 5 },
-  { month: 'March', collections: 7 },
-  { month: 'April', collections: 5 },
-  { month: 'May', collections: 8 },
-  { month: 'June', collections: 1 },
-  { month: 'July', collections: 3 },
-  { month: 'August', collections: 4 },
-  { month: 'September', collections: 6 },
-  { month: 'October', collections: 2 },
-  { month: 'November', collections: 9 },
-  { month: 'December', collections: 5 },
-]
-const chartConfig = {
-  collections: {
-    label: 'Collections',
-    color: 'hsl(var(--chart-1))',
-  },
-} satisfies ChartConfig
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
+interface CommunalBin {
+  id: number
+  binSize: string
+  binStatus: string
+  fillLevel: number
+  lastCollectionDate: string
+  wasteType: string
+}
 
 export default function Cleaner() {
   const [cleaner, setCleaner] = useState({
@@ -115,24 +105,6 @@ export default function Cleaner() {
 
     loadCleaner()
   }, [])
-
-  const getDateRange = () => {
-    const currentDate = new Date()
-    const pastDate = new Date()
-    pastDate.setMonth(currentDate.getMonth() - 12)
-
-    const formatDate = (date: Date) =>
-      date.toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      })
-
-    const startDate = formatDate(pastDate)
-    const endDate = formatDate(currentDate)
-
-    return `${startDate} to ${endDate}`
-  }
 
   const [isEditOpen, setIsEditOpen] = useState(false)
 
@@ -343,42 +315,75 @@ export default function Cleaner() {
           </Card>
 
           <Card className='col-span-1 p-4 lg:col-span-4'>
-            <div className='text-xl font-semibold text-muted-foreground'>
-              Collection Analysis
+            <CardHeader className='my-0'>
+              <CardTitle className='text-lg font-semibold'>
+                Assigned Bins
+              </CardTitle>
+            </CardHeader>
+            <div className='rounded-lg border'>
+              {cleaner.communal_bins.length > 0 ? (
+                <>
+                  <Table>
+                    <TableHeader className='bg-background'>
+                      <TableRow>
+                        <TableHead className='w-[60px] text-center'></TableHead>
+                        <TableHead className='text-center'>Bin Size</TableHead>
+                        <TableHead className='text-center'>
+                          Bin Status
+                        </TableHead>
+                        <TableHead className='text-left'>Fill Level</TableHead>
+                        <TableHead className='text-center'>
+                          Waste Type
+                        </TableHead>
+                      </TableRow>
+                    </TableHeader>
+                  </Table>
+                  <div className='max-h-[300px] overflow-y-auto'>
+                    <Table>
+                      <TableBody>
+                        {cleaner.communal_bins.map(
+                          (bin: CommunalBin, index: number) => (
+                            <TableRow key={bin.id}>
+                              <TableCell className='text-center font-medium'>
+                                <div
+                                  className={`rounded-xl px-2 py-1 ${
+                                    index === 0
+                                      ? 'bg-primary text-white'
+                                      : index === 1
+                                        ? 'bg-primary/70 text-white'
+                                        : index === 2
+                                          ? 'bg-primary/60 text-white'
+                                          : 'bg-background text-muted-foreground'
+                                  }`}
+                                >
+                                  #{index + 1}
+                                </div>
+                              </TableCell>
+                              <TableCell className='text-center'>
+                                {bin.binSize || 'N/A'}
+                              </TableCell>
+                              <TableCell className='text-right'>
+                                {bin.binStatus || 'N/A'}
+                              </TableCell>
+                              <TableCell className='text-right'>
+                                {bin.fillLevel ? `${bin.fillLevel}%` : 'N/A'}
+                              </TableCell>
+                              <TableCell className='text-right'>
+                                {bin.wasteType.replace('_', ' ') || 'N/A'}
+                              </TableCell>
+                            </TableRow>
+                          )
+                        )}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </>
+              ) : (
+                <div className='p-4 text-center text-gray-500'>
+                  No bins assigned to this cleaner.
+                </div>
+              )}
             </div>
-            <CardDescription className='text-[11px]'>
-              {getDateRange()}
-            </CardDescription>
-            <ChartContainer config={chartConfig} className='h-[340px] w-full'>
-              <LineChart
-                accessibilityLayer
-                data={chartData}
-                margin={{
-                  left: 12,
-                  right: 12,
-                }}
-              >
-                <CartesianGrid vertical={false} />
-                <XAxis
-                  dataKey='month'
-                  tickLine={false}
-                  axisLine={false}
-                  tickMargin={8}
-                  tickFormatter={(value) => value.slice(0, 3)}
-                />
-                <ChartTooltip
-                  cursor={false}
-                  content={<ChartTooltipContent hideLabel />}
-                />
-                <Line
-                  dataKey='collections'
-                  type='natural'
-                  stroke='var(--color-collections)'
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ChartContainer>
           </Card>
         </div>
       </Layout.Body>

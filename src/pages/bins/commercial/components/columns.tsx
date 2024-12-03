@@ -44,7 +44,7 @@ export const columns: ColumnDef<CommercialBin>[] = [
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='Bin Id'
+        title='Bin ID'
       />
     ),
     cell: ({ row }) => <div>{row.getValue('bin_id')}</div>,
@@ -61,19 +61,6 @@ export const columns: ColumnDef<CommercialBin>[] = [
       />
     ),
     cell: ({ row }) => <div>{row.getValue('organization')}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'location',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Location'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('location')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -111,7 +98,7 @@ export const columns: ColumnDef<CommercialBin>[] = [
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='Purchased Date'
+        title='Status'
       />
     ),
     cell: ({ row }) => <div>{row.getValue('status')}</div>,
