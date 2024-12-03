@@ -101,7 +101,6 @@ export function CommercialBinForm() {
     }
   }
 
-
   return (
     <Form {...form}>
       <h2 className='w-full text-center text-lg font-semibold'>
@@ -111,7 +110,6 @@ export function CommercialBinForm() {
         onSubmit={form.handleSubmit(handleFormSubmit)}
         className='w-full space-y-6'
       >
-
         <FormField
           control={form.control}
           name='wasteType'
@@ -126,7 +124,9 @@ export function CommercialBinForm() {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value='BIO_DEGRADABLE'>Bio-degradable</SelectItem>
-                  <SelectItem value='NON_BIO_DEGRADABLE'>Non Bio-degradable</SelectItem>
+                  <SelectItem value='NON_BIO_DEGRADABLE'>
+                    Non Bio-degradable
+                  </SelectItem>
                   <SelectItem value='RECYCLABLE'>Recyclable</SelectItem>
                 </SelectContent>
               </Select>

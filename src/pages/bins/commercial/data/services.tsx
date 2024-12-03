@@ -35,4 +35,3 @@ export const deleteCommercialBin = async (id: string) => {
   const response = await request('DELETE', url)
   return response
 }
-
