@@ -69,10 +69,7 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
 
   const route = {
     start: { lat: 6.915788733342365, lng: 79.86372182720865 },
-    stops:
-      dispData?.route?.url &&
-      (extractStopsFromRoute(dispData?.route?.url) || []),
-    // extractStopsFromRoute(routeUrl),
+    stops: extractStopsFromRoute(dispData?.route || ''),
     end: { lat: 6.915788733342365, lng: 79.86372182720865 }, // End location
   }
 

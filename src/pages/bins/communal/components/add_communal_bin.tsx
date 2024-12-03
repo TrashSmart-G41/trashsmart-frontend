@@ -12,6 +12,7 @@ import {
   // AlertDialogTitle,
   // AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
+import DragableMarker from '@/components/custom/dragablemarker'
 
 import { Button } from '@/components/ui/button'
 
@@ -46,25 +47,9 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-const longitude = z
-  .string()
-  .refine((value) => {
-    const num = parseFloat(value)
-    return !isNaN(num)
-  })
-  .transform((value) => parseFloat(value))
-
-const latitude = z
-  .string()
-  .refine((value) => {
-    const num = parseFloat(value)
-    return !isNaN(num)
-  })
-  .transform((value) => parseFloat(value))
-
 const FormSchema = z.object({
-  longitude: longitude,
-  latitude: latitude,
+  longitude: z.number(),
+  latitude: z.number(),
   wasteType: z.string(),
   binSize: z.string(),
   //installation_date: z.string(),
@@ -98,6 +83,12 @@ export function AddCommunalBinForm() {
     }
   }
 
+  const handlePositionChange = (lat: number, lng: number) => {
+    console.log(`Latitude = ${lat}, Longitude = ${lng}`)
+    form.setValue('latitude', lat)
+    form.setValue('longitude', lng)
+  }
+
   return (
     <Form {...form}>
       <h2 className='w-full text-center text-lg font-semibold'>
@@ -124,7 +115,11 @@ export function AddCommunalBinForm() {
             <FormItem>
               <FormLabel>Location (Longitude)</FormLabel>
               <FormControl>
-                <Input placeholder='Enter location longitude' {...field} />
+                <Input
+                  id='long_pos'
+                  placeholder='Enter location longitude'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -137,12 +132,23 @@ export function AddCommunalBinForm() {
             <FormItem>
               <FormLabel>Location (Latitude)</FormLabel>
               <FormControl>
-                <Input placeholder='Enter location latitude' {...field} />
+                <Input
+                  id='lat_pos'
+                  placeholder='Enter location latitude'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
+        <div style={{ height: '200px' }}>
+          {/* <DragableMarker height='200px' /> */}
+          <DragableMarker
+            height='200px'
+            onPositionChange={handlePositionChange}
+          />
+        </div>
         <FormField
           control={form.control}
           name='wasteType'
