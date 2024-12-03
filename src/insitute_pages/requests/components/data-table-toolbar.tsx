@@ -9,8 +9,8 @@ import { Input } from '@/components/ui/input'
 
 import { statuses, types } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
-import { PopupForm } from '@/components/custom/popupform'
-import { AddRequest } from './add-new-request'
+// import { PopupForm } from '@/components/custom/popupform'
+// import { AddRequest } from './add-new-request'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -62,7 +62,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {/* <DataTableViewOptions table={table} /> */}
-      <PopupForm formContent={AddRequest} buttonContent={'+ Add New Request'} />
+      {/* <PopupForm formContent={AddRequest} buttonContent={'+ Add New Request'} /> */}
     </div>
   )
 }
