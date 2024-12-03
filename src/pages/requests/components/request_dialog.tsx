@@ -19,7 +19,7 @@ import { fetchRequest } from '../data/services'
 import { DeleteRequest } from './delete-popup'
 
 export function RequestDialog({ contId }: { contId: string }) {
-  const [ request, setRequest ] = useState<any | null>(null)
+  const [request, setRequest] = useState<any | null>(null)
 
   useEffect(() => {
     const loadReq = async () => {
@@ -62,8 +62,6 @@ export function RequestDialog({ contId }: { contId: string }) {
   //     alert('Failed to delete the collection request. Please try again.')
   //   }
   // }
-
-
 
   if (!request) return <p>Loading bin information...</p>
 

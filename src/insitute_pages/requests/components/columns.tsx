@@ -13,7 +13,7 @@ import { RequestDialog } from './request_dialog'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
-type Request= {
+type Request = {
   id: string
   wasteType: string
   accumulatedVolume: string
@@ -171,7 +171,6 @@ export const columns: ColumnDef<Request>[] = [
           </Button>
           <DataTableRowActions row={row} /> */}
           <RequestDialog contId={contId} />
-
         </div>
       )
     },

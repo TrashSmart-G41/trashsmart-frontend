@@ -34,15 +34,22 @@ import { fetchCleaner } from './data/services'
 // import { clear } from 'console'
 // import { EditCleaner } from './components/edit-cleaner-form'
 import { EditSingleCleaner } from './components/edit-single-cleaner'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 
 interface CommunalBin {
-  id: number;
-  binSize: string;
-  binStatus: string;
-  fillLevel: number;
-  lastCollectionDate: string;
-  wasteType: string;
+  id: number
+  binSize: string
+  binStatus: string
+  fillLevel: number
+  lastCollectionDate: string
+  wasteType: string
 }
 
 export default function Cleaner() {
@@ -98,7 +105,6 @@ export default function Cleaner() {
 
     loadCleaner()
   }, [])
-
 
   const [isEditOpen, setIsEditOpen] = useState(false)
 
@@ -308,66 +314,77 @@ export default function Cleaner() {
             </div>
           </Card>
 
-          <Card className="col-span-1 lg:col-span-4 p-4">
+          <Card className='col-span-1 p-4 lg:col-span-4'>
             <CardHeader className='my-0'>
-              <CardTitle className="text-lg font-semibold">Assigned Bins</CardTitle>
+              <CardTitle className='text-lg font-semibold'>
+                Assigned Bins
+              </CardTitle>
             </CardHeader>
-            <div className="rounded-lg border">
+            <div className='rounded-lg border'>
               {cleaner.communal_bins.length > 0 ? (
                 <>
                   <Table>
-                    <TableHeader className="bg-background">
+                    <TableHeader className='bg-background'>
                       <TableRow>
-                        <TableHead className="w-[60px] text-center"></TableHead>
+                        <TableHead className='w-[60px] text-center'></TableHead>
                         <TableHead className='text-center'>Bin Size</TableHead>
-                        <TableHead className='text-center'>Bin Status</TableHead>
+                        <TableHead className='text-center'>
+                          Bin Status
+                        </TableHead>
                         <TableHead className='text-left'>Fill Level</TableHead>
-                        <TableHead className='text-center'>Waste Type</TableHead>
+                        <TableHead className='text-center'>
+                          Waste Type
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                   </Table>
-                  <div className="max-h-[300px] overflow-y-auto">
+                  <div className='max-h-[300px] overflow-y-auto'>
                     <Table>
                       <TableBody>
-                        {cleaner.communal_bins.map((bin: CommunalBin, index: number) => (
-                          <TableRow key={bin.id}>
-                            <TableCell className="text-center font-medium">
-                              <div
-                                className={`rounded-xl px-2 py-1 ${
-                                  index === 0
-                                    ? 'bg-primary text-white'
-                                    : index === 1
-                                    ? 'bg-primary/70 text-white'
-                                    : index === 2
-                                    ? 'bg-primary/60 text-white'
-                                    : 'bg-background text-muted-foreground'
-                                }`}
-                              >
-                                #{index + 1}
-                              </div>
-                            </TableCell>
-                            <TableCell className='text-center'>{bin.binSize || 'N/A'}</TableCell>
-                            <TableCell className='text-right'>{bin.binStatus || 'N/A'}</TableCell>
-                            <TableCell className="text-right">
-                              {bin.fillLevel ? `${bin.fillLevel}%` : 'N/A'}
-                            </TableCell>
-                            <TableCell className="text-right">
-                              {bin.wasteType.replace('_', ' ') || 'N/A'}
-                            </TableCell>
-                          </TableRow>
-                        ))}
+                        {cleaner.communal_bins.map(
+                          (bin: CommunalBin, index: number) => (
+                            <TableRow key={bin.id}>
+                              <TableCell className='text-center font-medium'>
+                                <div
+                                  className={`rounded-xl px-2 py-1 ${
+                                    index === 0
+                                      ? 'bg-primary text-white'
+                                      : index === 1
+                                        ? 'bg-primary/70 text-white'
+                                        : index === 2
+                                          ? 'bg-primary/60 text-white'
+                                          : 'bg-background text-muted-foreground'
+                                  }`}
+                                >
+                                  #{index + 1}
+                                </div>
+                              </TableCell>
+                              <TableCell className='text-center'>
+                                {bin.binSize || 'N/A'}
+                              </TableCell>
+                              <TableCell className='text-right'>
+                                {bin.binStatus || 'N/A'}
+                              </TableCell>
+                              <TableCell className='text-right'>
+                                {bin.fillLevel ? `${bin.fillLevel}%` : 'N/A'}
+                              </TableCell>
+                              <TableCell className='text-right'>
+                                {bin.wasteType.replace('_', ' ') || 'N/A'}
+                              </TableCell>
+                            </TableRow>
+                          )
+                        )}
                       </TableBody>
                     </Table>
                   </div>
                 </>
               ) : (
-                <div className="p-4 text-center text-gray-500">
+                <div className='p-4 text-center text-gray-500'>
                   No bins assigned to this cleaner.
                 </div>
               )}
             </div>
           </Card>
-
         </div>
       </Layout.Body>
     </Layout>
