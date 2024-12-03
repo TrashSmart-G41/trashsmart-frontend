@@ -9,6 +9,8 @@ import { DataTableColumnHeader } from './data-table-column-header'
 
 // import { statuses, regions } from '../data/data'
 import { Record } from '../data/schema'
+import { EditReq } from './edit-req-form'
+import { DeleteReq } from './delete-req.tsx'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -102,7 +104,7 @@ export const columns: ColumnDef<Record>[] = [
     ),
     cell: ({ row }) => {
       const status = row.getValue('status') as string
-      const colorClass = status === 'To do' ? 'text-primary' : ''
+      const colorClass = status === 'TO_DO' ? 'text-primary' : ''
       return <div className={colorClass}>{status}</div>
     },
     // enableSorting: true,
@@ -123,52 +125,18 @@ export const columns: ColumnDef<Record>[] = [
     enableSorting: false,
     // enableHiding: false,
   },
-  // {
-  //   id: 'actions',
-  //   header: () => null,
-  //   cell: ({ row }: { row: { getValue: (key: string) => string; employee_id?: string } }) => {
-  //     const navigate = useNavigate()
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      const reqId = String(row.getValue('maintenance_id') || '').slice(-3)
+      console.log(reqId)
 
-  //     const handleButtonClick = () => {
-  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
-  //     }
-
-  //     return (
-  //       <div className='mr-4 text-right'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8  px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //       </div>
-  //     )
-  //   },
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
-  // {
-  //   id: 'actions',
-  //   cell: ({ row }) => {
-  //     const navigate = useNavigate()
-
-  //     const handleButtonClick = () => {
-  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
-  //     }
-
-  //     return (
-  //       <div className='mr-4 flex items-center justify-end'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //         <DataTableRowActions row={row} />
-  //       </div>
-  //     )
-  //   },
-  // },
+      return (
+        <div className='mr-4 flex items-center justify-end'>
+          <EditReq contId={reqId} />
+          <DeleteReq contId={reqId} />
+        </div>
+      )
+    },
+  },
 ]

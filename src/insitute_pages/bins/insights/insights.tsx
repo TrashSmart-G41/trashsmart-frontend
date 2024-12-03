@@ -12,7 +12,11 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 // import { Overview } from './components/overview'
 // import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
-import { TrendingDown, TrendingUp } from 'lucide-react'
+import { TrendingUp } from 'lucide-react'
+import { binCount } from './data/services'
+import { FULLbinCount } from './data/services'
+import { requestCount } from '@/pages/bins/maintenance/data/services.tsx'
+import { useEffect, useState } from 'react'
 
 import {
   ChartConfig,
@@ -20,23 +24,19 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
-import { TopTen } from './components/insights/top10'
+import { TopTen } from '../components/insights/top10'
 const chartData = [
-  { month: 'January', desktop: 186, mobile: 80 },
-  { month: 'February', desktop: 305, mobile: 200 },
-  { month: 'March', desktop: 237, mobile: 120 },
-  { month: 'April', desktop: 73, mobile: 190 },
-  { month: 'May', desktop: 209, mobile: 130 },
-  { month: 'June', desktop: 214, mobile: 140 },
+  { month: 'January', desktop: 186 },
+  { month: 'February', desktop: 305 },
+  { month: 'March', desktop: 237 },
+  { month: 'April', desktop: 73 },
+  { month: 'May', desktop: 209 },
+  { month: 'June', desktop: 214 },
 ]
 const chartConfig = {
   desktop: {
-    label: 'Desktop',
+    label: 'Purchases',
     color: 'hsl(var(--chart-1))',
-  },
-  mobile: {
-    label: 'Mobile',
-    color: 'hsl(var(--chart-2))',
   },
 } satisfies ChartConfig
 
@@ -50,12 +50,32 @@ const chartData2 = [
 ]
 const chartConfig2 = {
   desktop: {
-    label: 'Desktop',
+    label: 'Establishments',
     color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig
 
 export default function Insights() {
+  const [binCounts, setBinCount] = useState(0)
+  const [fullBinCount, setFullBinCount] = useState(0)
+  const [reqCount, setReqCount] = useState(0)
+
+  useEffect(() => {
+    const loadCount = async () => {
+      try {
+        const data: any = await binCount()
+        const data2: any = await FULLbinCount()
+        const data3: any = await requestCount()
+        setBinCount(data)
+        setFullBinCount(data2)
+        setReqCount(data3)
+      } catch (error) {
+        console.error('Failed to load count:', error)
+      }
+    }
+    loadCount()
+  }, [])
+
   return (
     <>
       <Tabs
@@ -68,17 +88,27 @@ export default function Insights() {
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                  TOTAL USERS
+                  TOTAL BINS
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className='flex flex-row items-center'>
                   <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                    72,540
+                    {binCounts}
                   </div>
-                  <div className='flex flex-row text-primary'>
-                    <TrendingUp className='pr-1' />
-                    1.7%
+                </div>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
+                <CardTitle className='text-md font-medium text-primary'>
+                  CURRENTLY FULL
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className='flex flex-row items-center'>
+                  <div className='pr-2 text-4xl font-semibold text-primary'>
+                    {fullBinCount}
                   </div>
                 </div>
               </CardContent>
@@ -99,37 +129,14 @@ export default function Insights() {
 
             <Card>
               <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
-                <CardTitle className='text-md font-medium text-primary'>
-                  WEEKLY WASTE
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className='flex flex-row items-center'>
-                  <div className='pr-2 text-4xl font-semibold text-primary'>
-                    45 MT
-                  </div>
-                  <div className='flex flex-row text-primary'>
-                    <TrendingUp className='pr-1' />
-                    1.7%
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader className='flex flex-row items-center justify-between space-y-0 pb-1'>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                  WEEKLY REQUESTS
+                  TOTAL MAINTENANCES
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className='flex flex-row items-center'>
                   <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                    104
-                  </div>
-                  <div className='flex flex-row text-destructive'>
-                    <TrendingDown className='pr-1' />
-                    0.8%
+                    {reqCount}
                   </div>
                 </div>
               </CardContent>
@@ -165,17 +172,13 @@ export default function Insights() {
             <Card className='col-span-1 lg:col-span-3'>
               <CardHeader>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                  ACCUMULATED WASTE
+                  NEW COMMERCIAL BIN PURCHASES
                 </CardTitle>
                 <CardDescription>
                   <CardContent className='px-0'>
                     <div className='flex flex-row items-center'>
                       <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                        2570 Metric Tons
-                      </div>
-                      <div className='flex flex-row items-center text-primary'>
-                        <TrendingUp className='pr-1' />
-                        0.8%
+                        124 Bins
                       </div>
                     </div>
                   </CardContent>
@@ -237,17 +240,17 @@ export default function Insights() {
             <Card className='col-span-1 lg:col-span-3'>
               <CardHeader>
                 <CardTitle className='text-md font-medium text-muted-foreground/70'>
-                  TOTAL RECYCLED VOLUME
+                  NEW COMMUNAL BIN ESTABLISHMENTS
                 </CardTitle>
                 <CardDescription>
                   <CardContent className='px-0'>
                     <div className='flex flex-row items-center'>
                       <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                        698 Metric Tons
+                        35 bins
                       </div>
                       <div className='flex flex-row items-center text-primary'>
                         <TrendingUp className='pr-1' />
-                        0.8%
+                        2.4%
                       </div>
                     </div>
                   </CardContent>
@@ -298,12 +301,11 @@ export default function Insights() {
         </TabsContent>
       </Tabs>
 
-      <Card className='mt-2'>
+      <Card className='mt-4'>
         <CardHeader>
           <CardTitle>TOP 10 ORGANIZATIONS</CardTitle>
           <CardDescription>Based on no.of bins occupied</CardDescription>
         </CardHeader>
-
         <CardContent>
           <TopTen />
         </CardContent>

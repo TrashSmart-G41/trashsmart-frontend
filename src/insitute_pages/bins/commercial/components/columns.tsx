@@ -9,6 +9,7 @@ import { DataTableColumnHeader } from './data-table-column-header'
 
 // import { statuses, regions } from '../data/data'
 import { CommercialBin } from '../data/schema'
+import { CommercialDialog } from './commercial_bin_dialog'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -43,36 +44,10 @@ export const columns: ColumnDef<CommercialBin>[] = [
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='Bin Id'
+        title='Bin ID'
       />
     ),
     cell: ({ row }) => <div>{row.getValue('bin_id')}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'organization',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Organization'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('organization')}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: 'location',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Location'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('location')}</div>,
     enableSorting: false,
     enableHiding: false,
   },
@@ -92,6 +67,19 @@ export const columns: ColumnDef<CommercialBin>[] = [
     },
   },
   {
+    accessorKey: 'fill_level',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Fill Level'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('fill_level')}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
     accessorKey: 'purchased_date',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -104,53 +92,31 @@ export const columns: ColumnDef<CommercialBin>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+  {
+    accessorKey: 'status',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Status'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('status')}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
 
-  // {
-  //   id: 'actions',
-  //   header: () => null,
-  //   cell: ({ row }: { row: { getValue: (key: string) => string; employee_id?: string } }) => {
-  //     const navigate = useNavigate()
+  {
+    id: 'actions',
+    cell: ({ row }) => {
+      const binId = String(row.getValue('bin_id') || '').slice(-3)
+      console.log(binId)
 
-  //     const handleButtonClick = () => {
-  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
-  //     }
-
-  //     return (
-  //       <div className='mr-4 text-right'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8  px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //       </div>
-  //     )
-  //   },
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
-  // {
-  //   id: 'actions',
-  //   cell: ({ row }) => {
-  //     const navigate = useNavigate()
-
-  //     const handleButtonClick = () => {
-  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
-  //     }
-
-  //     return (
-  //       <div className='mr-4 flex items-center justify-end'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8 px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //         <DataTableRowActions row={row} />
-  //       </div>
-  //     )
-  //   },
-  // },
+      return (
+        <div className='mr-4 flex items-center justify-end'>
+          <CommercialDialog binId={binId} />
+        </div>
+      )
+    },
+  },
 ]
