@@ -72,6 +72,11 @@ const chartConfig2 = {
 
 export default function Dashboard() {
   const [totalUsers, setTotalUsers] = useState<number>(0);
+  const [totalCollections, setTotalCollections] = useState<number>(0);
+  const [totalLastWeek, setTotalLastWeek] = useState<number>(0);
+  const [totalLastWeekRequests, setTotalLastWeekRequests] = useState<number>(0);
+  const [totalAccumulatedWaste, setTotalAccumulatedWaste] = useState<number>(0);
+  const [totalRecyclableWaste, setTotalRecyclableWaste] = useState<number>(0);
   const [organizations, setOrganizations] = useState([])
 
   // Fetch total users
@@ -86,6 +91,76 @@ export default function Dashboard() {
     };
 
     fetchTotalUsers();
+  }, []);
+
+  // Fetch total collections
+  useEffect(() => {
+    const fetchTotalCollections = async () => {
+      try {
+        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_collections`);
+        setTotalCollections(response.data); // Update the state with the API data
+      } catch (error) {
+        console.error('Failed to load total collections:', error);
+      }
+    };
+
+    fetchTotalCollections();
+  }, []);
+
+  // Fetch total last week waste
+  useEffect(() => {
+    const fetchTotalLastWeek = async () => {
+      try {
+        const response: AxiosResponse<number> = await request('GET', `${API_URL}/last_week_total_waste`);
+        setTotalLastWeek(response.data); // Update the state with the API data
+      } catch (error) {
+        console.error('Failed to load total last week waste:', error);
+      }
+    };
+
+    fetchTotalLastWeek();
+  }, []);
+
+  // Fetch total last week requests
+  useEffect(() => {
+    const fetchTotalLastWeekRequests = async () => {
+      try {
+        const response: AxiosResponse<number> = await request('GET', `${API_URL}/last_week_request_count`);
+        setTotalLastWeekRequests(response.data); // Update the state with the API data
+      } catch (error) {
+        console.error('Failed to load total last week requests:', error);
+      }
+    };
+
+    fetchTotalLastWeekRequests();
+  }, []);
+
+  // Fetch total waste
+  useEffect(() => {
+    const fetchTotalAccumulatedWaste = async () => {
+      try {
+        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_accumulated_waste`);
+        setTotalAccumulatedWaste(response.data); // Update the state with the API data
+      } catch (error) {
+        console.error('Failed to load total accumulated waste:', error);
+      }
+    };
+
+    fetchTotalAccumulatedWaste();
+  }, []);
+
+   // Fetch total recyclable waste
+   useEffect(() => {
+    const fetchTotalRecyclableWaste = async () => {
+      try {
+        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_accumulated_recyclable_waste`);
+        setTotalRecyclableWaste(response.data); // Update the state with the API data
+      } catch (error) {
+        console.error('Failed to load total recyclable waste:', error);
+      }
+    };
+
+    fetchTotalRecyclableWaste();
   }, []);
 
   useEffect(() => {
@@ -166,7 +241,7 @@ export default function Dashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className='text-4xl font-semibold text-muted-foreground'>
-                    72,540
+                    {totalCollections}
                   </div>
                 </CardContent>
               </Card>
@@ -180,11 +255,7 @@ export default function Dashboard() {
                 <CardContent>
                   <div className='flex flex-row items-center'>
                     <div className='pr-2 text-4xl font-semibold text-primary'>
-                      45 CBM
-                    </div>
-                    <div className='flex flex-row text-primary'>
-                      <TrendingUp className='pr-1' />
-                      1.7%
+                      {totalLastWeek} CBM
                     </div>
                   </div>
                 </CardContent>
@@ -199,7 +270,7 @@ export default function Dashboard() {
                 <CardContent>
                   <div className='flex flex-row items-center'>
                     <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                      104
+                      {totalLastWeekRequests}
                     </div>
                     <div className='flex flex-row text-destructive'>
                       <TrendingDown className='pr-1' />
@@ -245,7 +316,7 @@ export default function Dashboard() {
                     <CardContent className='px-0'>
                       <div className='flex flex-row items-center'>
                         <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                          2570 Cubic Meters
+                          {totalAccumulatedWaste} Cubic Meters
                         </div>
                         <div className='flex flex-row items-center text-primary'>
                           <TrendingUp className='pr-1' />
@@ -317,7 +388,7 @@ export default function Dashboard() {
                     <CardContent className='px-0'>
                       <div className='flex flex-row items-center'>
                         <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                          698 Cubic Meters
+                          {totalRecyclableWaste} Cubic Meters
                         </div>
                         <div className='flex flex-row items-center text-primary'>
                           <TrendingUp className='pr-1' />
