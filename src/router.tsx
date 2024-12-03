@@ -54,17 +54,6 @@ const router = (
     {
       path: '/',
       lazy: async () => {
-        // if (!isAuthenticated) {
-        //   const Login = await import('./pages/auth/sign-in');
-        //   return { Component: Login.default };
-        // }
-        // if (isContractor) {
-        //   const AppShell = await import('./components/app-shell')
-        //   return { Component: AppShell.default }
-        // } else {
-        //   const Home = await import('@/pages/home')
-        //   return { Component: Home.default }
-        // }
         if (isContractor) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.default }
@@ -82,9 +71,20 @@ const router = (
       children: [
         {
           index: true,
-          lazy: async () => ({
-            Component: (await import('./pages/dashboard')).default,
-          }),
+          lazy: async () => {
+            let dashboardPath = './pages/dashboard'
+
+            if (isOrganization) {
+              dashboardPath = './insitute_pages/dashboard'
+            } else if (isRecyclingPlant) {
+              dashboardPath = './recycling-plant_pages/dashboard'
+            }
+
+            return {
+              Component: (await import(/* @vite-ignore */ dashboardPath))
+                .default,
+            }
+          },
         },
         {
           path: 'organizations',
@@ -297,7 +297,7 @@ const router = (
         {
           path: '/organization/requests',
           lazy: async () => ({
-            Component: (await import('@/pages/requests')).default,
+            Component: (await import('@/insitute_pages/requests')).default,
           }),
         },
         {

@@ -34,6 +34,7 @@ import {
 
 import { Input } from '@/components/ui/input'
 import { addOrganization } from '../data/services'
+import DragableMarker from '@/components/custom/dragablemarker'
 // import { useNavigate } from 'react-router-dom'
 // import { toast } from '@/components/ui/use-toast'
 
@@ -64,6 +65,8 @@ const FormSchema = z.object({
   orgType: z.string().min(1, {
     message: 'Organization type is required.',
   }),
+  longitude: z.number(),
+  latitude: z.number(),
 })
 
 export function AddOrganization() {
@@ -79,6 +82,8 @@ export function AddOrganization() {
       contactNo: '',
       scale: '',
       orgType: '',
+      latitude: 0,
+      longitude: 0,
     },
   })
 
@@ -115,6 +120,12 @@ export function AddOrganization() {
       // console.error(error)
       // desc = 'Error adding organization!'
     }
+  }
+
+  const handlePositionChange = (lat: number, lng: number) => {
+    console.log(`Latitude = ${lat}, Longitude = ${lng}`)
+    form.setValue('latitude', lat)
+    form.setValue('longitude', lng)
   }
 
   return (
@@ -178,6 +189,46 @@ export function AddOrganization() {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name='longitude'
+          render={({ field }) => (
+            <FormItem className='hidden'>
+              <FormLabel>Location (Longitude)</FormLabel>
+              <FormControl>
+                <Input
+                  id='long_pos'
+                  placeholder='Enter location longitude'
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='latitude'
+          render={({ field }) => (
+            <FormItem className='hidden'>
+              <FormLabel>Location (Latitude)</FormLabel>
+              <FormControl>
+                <Input
+                  id='lat_pos'
+                  placeholder='Enter location latitude'
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div style={{ height: '200px' }}>
+          <DragableMarker
+            height='200px'
+            onPositionChange={handlePositionChange}
+          />
+        </div>
         <FormField
           control={form.control}
           name='contactNo'
