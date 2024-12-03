@@ -7,6 +7,8 @@ import { Input } from '@/components/ui/input'
 
 import { types } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+import { PopupForm } from '@/components/custom/popupform'
+import { CommercialBinForm } from './add_commercial_bin'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -49,7 +51,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {/* <DataTableViewOptions table={table} /> */}
-      {/* <CleanerForm /> */}
+      <PopupForm formContent={CommercialBinForm} buttonContent={'+ Add Bin'} />
     </div>
   )
 }
