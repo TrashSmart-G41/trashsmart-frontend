@@ -23,7 +23,7 @@ interface MarkerProps {
   latitude: number
   longitude: number
   svgIcon?: string
-  name: string
+  name?: string
 }
 
 const Markers: React.FC<{

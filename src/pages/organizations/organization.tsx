@@ -36,6 +36,8 @@ import { fetchOrganization } from './data/services'
 type OrganizationData = {
   firstName: string
   address: string
+  longitude: number
+  latitude: number
 }
 
 export default function Organization() {
@@ -54,6 +56,8 @@ export default function Organization() {
         const mappedData: OrganizationData = {
           firstName: data.firstName,
           address: data.address,
+          longitude: data.longitude,
+          latitude: data.latitude,
         }
         // console.log('Organization:', data)
         setOrganization(mappedData)
@@ -67,8 +71,8 @@ export default function Organization() {
 
   const points = [
     {
-      latitude: 6.9271,
-      longitude: 79.8612,
+      latitude: organization?.latitude ?? 0,
+      longitude: organization?.longitude ?? 0,
       svgIcon: `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" height="24" width="24">
   <path
     fill-rule="evenodd"
@@ -76,7 +80,7 @@ export default function Organization() {
   />
 </svg>
 `,
-      name: 'Colombo Fort',
+      name: organization?.firstName,
     },
     // {
     //   latitude: 6.9308,

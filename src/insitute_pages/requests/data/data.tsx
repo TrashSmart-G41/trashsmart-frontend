@@ -29,5 +29,5 @@ export const types = [
   {
     label: 'Non_Bio_Degradable',
     value: 'NON_BIO_DEGRADABLE',
-  }
+  },
 ]

@@ -19,7 +19,7 @@ import { jwtDecode, JwtPayload } from 'jwt-decode'
 //   createdTimeStamp: string;
 // };
 
-type Request= {
+type Request = {
   id: string
   wasteType: string
   accumulatedVolume: string
@@ -34,10 +34,9 @@ const contId = decodeToken?.userId
 console.log(contId)
 
 export default function Tasks() {
+  const [requests, setRequests] = useState<Request[]>([])
 
-  const [ requests, setRequests ] = useState<Request[]>([])
-
-  useEffect (() => {
+  useEffect(() => {
     const loadRequests = async () => {
       try {
         const data: any = await fetchAllRequestsByOrganization(contId)

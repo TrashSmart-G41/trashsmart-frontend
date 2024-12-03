@@ -13,8 +13,7 @@ export const fetchRequest = async (id: string) => {
 }
 
 export const deleteRequest = async (id: string) => {
-  const url = `${API_URL}/${id}` 
+  const url = `${API_URL}/${id}`
   const response = await request('DELETE', url)
   return response
 }
-    

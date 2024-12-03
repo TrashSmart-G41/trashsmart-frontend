@@ -37,12 +37,12 @@ const contId = decodeToken?.userId
 console.log(contId)
 
 const FormSchema = z.object({
-    wasteType: z.string().min(1, { message: 'Waste Type is required.' }),
-    accumulatedVolume: z.preprocess(
-      (value) => Number(value), 
-      z.number().min(1, { message: 'Volume is required and must be at least 1.' })
-    ),
-    })
+  wasteType: z.string().min(1, { message: 'Waste Type is required.' }),
+  accumulatedVolume: z.preprocess(
+    (value) => Number(value),
+    z.number().min(1, { message: 'Volume is required and must be at least 1.' })
+  ),
+})
 
 export function AddRequest() {
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -91,7 +91,9 @@ export function AddRequest() {
                 </FormControl>
                 <SelectContent>
                   <SelectItem value='BIO_DEGRADABLE'>Bio_Degradable</SelectItem>
-                  <SelectItem value='NON_BIO_DEGRADABLE'>Non_Bio_Degradable</SelectItem>
+                  <SelectItem value='NON_BIO_DEGRADABLE'>
+                    Non_Bio_Degradable
+                  </SelectItem>
                   <SelectItem value='RECYCLABLE'>Recyclable</SelectItem>
                 </SelectContent>
               </Select>
@@ -106,7 +108,11 @@ export function AddRequest() {
             <FormItem>
               <FormLabel>Waste Volume</FormLabel>
               <FormControl>
-                <Input type='number' placeholder='Enter waste volume' {...field} />
+                <Input
+                  type='number'
+                  placeholder='Enter waste volume'
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -81,7 +81,8 @@ const router = (
             }
 
             return {
-              Component: (await import(/* @vite-ignore */dashboardPath)).default,
+              Component: (await import(/* @vite-ignore */ dashboardPath))
+                .default,
             }
           },
         },

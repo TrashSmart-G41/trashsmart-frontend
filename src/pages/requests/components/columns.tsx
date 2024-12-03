@@ -10,7 +10,7 @@ import { DataTableColumnHeader } from './data-table-column-header'
 // import { DataTableRowActions } from './data-table-row-actions'
 import { RequestDialog } from './request_dialog'
 
-type Request= {
+type Request = {
   id: string
   wasteType: string
   accumulatedVolume: string
