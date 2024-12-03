@@ -52,8 +52,8 @@ export function DispatchForm() {
       const createdispatch = async () => {
         const response = await addDispatch(data)
         if (response.status === 200) {
-          console.log('Bin added successfully!')
-          // window.location.reload()
+          alert('Dispatch request created successfully')
+          window.location.reload()
         } else {
           console.error('Failed to add dispatch:')
         }
