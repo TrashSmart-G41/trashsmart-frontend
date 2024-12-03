@@ -39,17 +39,17 @@ const loadGoogleMapsScript = (apiKey: string): Promise<void> => {
 interface DragableMarkerProps {
   apiKey?: string
   height?: string
+  onPositionChange?: (lat: number, lng: number) => void
 }
 
 const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
-  ({ apiKey,height }, ref) => {
+  ({ apiKey, height, onPositionChange }, ref) => {
     const mapRef = useRef<HTMLDivElement | null>(null)
     const [map, setMap] = useState<google.maps.Map | null>(null)
     const [, setMarker] = useState<google.maps.Marker | null>(null)
     const [mapStyle, setMapStyle] =
       useState<google.maps.MapTypeStyle[]>(MapLightTheme)
 
-    // Function to detect and update map style
     const updateMapStyle = () => {
       const theme = localStorage.getItem('theme') || 'light'
       const root = window.document.documentElement
@@ -65,56 +65,49 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
       height = '400px'
     }
 
-    // Expose map instance to parent via ref
     //@ts-ignore
     useImperativeHandle(ref, () => map, [map])
 
-    // Load Google Maps script and initialize map
     useEffect(() => {
       //@ts-ignore
       loadGoogleMapsScript(apiKey)
         .then(() => {
           if (mapRef.current && !map) {
             const initialPosition = { lat: defaultLat, lng: defaultLng }
-            console.log('initialPosition:', initialPosition)
-            // set local storage lat_pos and long_pos
             localStorage.setItem('lat_pos', initialPosition.lat.toString())
             localStorage.setItem('long_pos', initialPosition.lng.toString())
 
-            // Initialize the map
             const newMap = new google.maps.Map(mapRef.current, {
               center: initialPosition,
               zoom: 12,
-              styles: mapStyle, // Apply initial theme
+              styles: mapStyle,
             })
 
-            // Create a draggable marker
             const newMarker = new google.maps.Marker({
               position: initialPosition,
               map: newMap,
               draggable: true,
             })
 
-            // Handle marker drag end
             newMarker.addListener('dragend', () => {
               const position = newMarker.getPosition()
               if (position) {
-                console.log(
-                  `Marker moved to: ${position.lat()}, ${position.lng()}`
-                )
+                const lat = position.lat()
+                const lng = position.lng()
+                localStorage.setItem('lat_pos', lat.toString())
+                localStorage.setItem('long_pos', lng.toString())
+
+                if (onPositionChange) {
+                  onPositionChange(lat, lng) // Notify parent of position change
+                }
+
+                console.log(`Marker moved to: ${lat}, ${lng}`)
               }
-              // update local storage lat_pos and long_pos
-              //@ts-ignore
-              localStorage.setItem('lat_pos', position.lat().toString())
-              //@ts-ignore
-              localStorage.setItem('long_pos', position.lng().toString())
             })
 
-            // Update state
             setMap(newMap)
             setMarker(newMarker)
 
-            // Geolocation: Update map and marker position to user's location if available
             if (navigator.geolocation) {
               navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -124,6 +117,10 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
 
                   newMap.setCenter(userPosition)
                   newMarker.setPosition(userPosition)
+
+                  if (onPositionChange) {
+                    onPositionChange(userLat, userLng) // Notify parent of initial position
+                  }
 
                   console.log(`User location: ${userLat}, ${userLng}`)
                 },
@@ -141,16 +138,7 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
         })
     }, [mapStyle, apiKey])
 
-    // Handle theme changes manually (toggle between light and dark modes)
-    // const toggleTheme = () => {
-    //   const currentTheme = localStorage.getItem('theme') || 'light'
-    //   const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
-    //   localStorage.setItem('theme', newTheme)
-    //   updateMapStyle() // Apply new theme immediately
-    // }
-
     useEffect(() => {
-      // Listen for changes in localStorage or DOM to detect theme changes
       updateMapStyle()
 
       const handleStorageChange = () => {
@@ -176,18 +164,11 @@ const DragableMarker = forwardRef<google.maps.Map | null, DragableMarkerProps>(
 
     useEffect(() => {
       if (map) {
-        map.setOptions({ styles: mapStyle }) // Update map style when theme changes
+        map.setOptions({ styles: mapStyle })
       }
     }, [mapStyle, map])
 
-    return (
-      <div>
-        <div ref={mapRef} style={{ height: height, width: '100%' }} />
-        {/* <button onClick={toggleTheme} style={{ marginTop: '10px' }}>
-          Toggle Theme
-        </button> */}
-      </div>
-    )
+    return <div ref={mapRef} style={{ height: height, width: '100%' }} />
   }
 )
 

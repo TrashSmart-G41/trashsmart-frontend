@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { number, z } from 'zod'
+import { z } from 'zod'
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -58,6 +58,8 @@ interface Organization {
   firstName: string
 }
 
+
+
 export function CommercialBinForm() {
   const [organizations, setOrganizations] = useState<Organization[]>([])
 
@@ -80,35 +82,14 @@ export function CommercialBinForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      longitude: localStorage.getItem('long_pos') ? parseFloat(localStorage.getItem('long_pos')!) : 0.0,
-      latitude: localStorage.getItem('lat_pos') ? parseFloat(localStorage.getItem('lat_pos')!) : 0.0,
+      longitude: 0.0,
+      latitude: 0.0,
       wasteType: '',
       binSize: '',
       organization_id: '',
     },
   })
 
-  useEffect(() => {
-    const handleStorageChange = () => {
-      const newLongitude = localStorage.getItem('long_pos') ? parseFloat(localStorage.getItem('long_pos')!) : 0.0
-      const newLatitude = localStorage.getItem('lat_pos') ? parseFloat(localStorage.getItem('lat_pos')!) : 0.0
-      form.setValue('longitude', newLongitude)
-      form.setValue('latitude', newLatitude)
-    }
-
-    window.addEventListener('storage', handleStorageChange)
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange)
-    }
-  }, [form])
-
-  useEffect(() => {
-    const newLongitude = localStorage.getItem('long_pos') ? parseFloat(localStorage.getItem('long_pos')!) : 0.0
-    const newLatitude = localStorage.getItem('lat_pos') ? parseFloat(localStorage.getItem('lat_pos')!) : 0.0
-    form.setValue('longitude', newLongitude)
-    form.setValue('latitude', newLatitude)
-  }, [])
 
   async function handleFormSubmit(data: z.infer<typeof FormSchema>) {
     console.log(data)
@@ -127,6 +108,12 @@ export function CommercialBinForm() {
     } catch (error) {
       console.error('Error:', error)
     }
+  }
+
+  const handlePositionChange = (lat: number, lng: number) => {
+    console.log(`Latitude = ${lat}, Longitude = ${lng}`)
+    form.setValue('latitude', lat)
+    form.setValue('longitude', lng)
   }
 
   return (
@@ -190,7 +177,7 @@ export function CommercialBinForm() {
           )}
         />
         <div style={{ height: '200px' }}>
-          <DragableMarker height='200px' />
+          <DragableMarker height='200px' onPositionChange={handlePositionChange} />
         </div>
 
         <FormField
