@@ -4,8 +4,13 @@ import { Card } from '@/components/ui/card'
 //import { UserNav } from '@/components/user-nav'
 
 import { useEffect, useState } from 'react'
-import { fetchCommercialBins } from './data/services'
+import { fetchCommercialBinByOrg } from './data/services'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
 
+const token = localStorage.getItem('token') ?? ''
+const decodeToken = jwtDecode<JwtPayload>(token) as { userId: string }
+const contId = decodeToken?.userId
+console.log(contId)
 
 export default function CommercialBins() {
   const [commercialBins, setCommercialBins] = useState([])
@@ -13,7 +18,7 @@ export default function CommercialBins() {
   useEffect(() => {
     const loadCommercialBins = async () => {
       try {
-        const data: any = await fetchCommercialBins()
+        const data: any = await fetchCommercialBinByOrg(contId)
         console.log(data)
         const mappedData: any = data.map((commercialbin: any) => ({
           bin_id: `SB-${commercialbin.id.toString().padStart(3, '0')}`,

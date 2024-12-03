@@ -36,3 +36,9 @@ export const deleteCommercialBin = async (id: string) => {
   return response
 }
 
+export const fetchCommercialBinByOrg = async (id: string) => {
+  const url = `${API_URL}/organization/${id}`
+  const response = await request('GET', url)
+  return response.data
+}
+

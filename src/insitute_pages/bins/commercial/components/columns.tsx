@@ -52,19 +52,6 @@ export const columns: ColumnDef<CommercialBin>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'organization',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Organization'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('organization')}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
     accessorKey: 'type',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -78,6 +65,19 @@ export const columns: ColumnDef<CommercialBin>[] = [
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
+  },
+  {
+    accessorKey: 'fill_level',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Fill Level'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('fill_level')}</div>,
+    enableSorting: false,
+    enableHiding: false,
   },
   {
     accessorKey: 'purchased_date',
