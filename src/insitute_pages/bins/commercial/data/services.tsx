@@ -13,14 +13,10 @@ export const fetchCommercialBin = async (id: string) => {
   return response.data
 }
 
-// export const addCommercialBin = async (data: any) => {
-//   const response = await request('POST', API_URL, data)
-//   return response
-// }
 
-export const addCommercialBin = async (data: any) => {
-  const url = `${API_URL}/create`
-  const response = await request('POST', url, data)
+export const addCommercialBin = async (id: string, apiKey: string) => {
+  const url = `${API_URL}/organization/${id}/api_key/${apiKey}`
+  const response = await request('POST', url)
   return response
 }
 

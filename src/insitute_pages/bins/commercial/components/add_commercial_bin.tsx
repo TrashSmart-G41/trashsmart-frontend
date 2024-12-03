@@ -21,12 +21,16 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { jwtDecode, JwtPayload } from 'jwt-decode'
 
 
 const FormSchema = z.object({
   apiKey: z.string(),
 })
 
+const token = localStorage.getItem('token') ?? ''
+const decodeToken = jwtDecode<JwtPayload>(token) as { userId: string }
+const contId = decodeToken?.userId
 
 export function CommercialBinForm() {
 
@@ -42,7 +46,7 @@ export function CommercialBinForm() {
     document.getElementById('continue')?.click()
     try {
       const addcommercialbin = async () => {
-        const response = await addCommercialBin(data)
+        const response = await addCommercialBin(contId, data.apiKey)
         if (response.status === 200) {
           console.log('Bin added successfully!')
           window.location.reload()
