@@ -68,21 +68,21 @@ export const columns: ColumnDef<Dispatch>[] = [
     enableSorting: false,
     // enableHiding: false,
   },
-  {
-    accessorKey: 'total_collections',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Total Collections'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('total_collections')}</div>,
-    // enableSorting: true,
-    // filterFn: (row, id, value) => {
-    //   return value.includes(row.getValue(id))
-    // },
-  },
+  // {
+  //   accessorKey: 'total_collections',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader
+  //       className='text-[14px]'
+  //       column={column}
+  //       title='Total Collections'
+  //     />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue('total_collections')}</div>,
+  //   // enableSorting: true,
+  //   // filterFn: (row, id, value) => {
+  //   //   return value.includes(row.getValue(id))
+  //   // },
+  // },
   {
     accessorKey: 'status',
     header: ({ column }) => (
@@ -121,10 +121,10 @@ export const columns: ColumnDef<Dispatch>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
-      const contId = String(row.getValue('dispatch_id') || '').slice(-3)
+      const disp_id = String(row.getValue('dispatch_id') || '').slice(-3)
       return (
         <div className='mr-4 flex items-center justify-end'>
-          <DispatchesDialog contId={contId} />
+          <DispatchesDialog dispId={disp_id} />
         </div>
       )
     },
