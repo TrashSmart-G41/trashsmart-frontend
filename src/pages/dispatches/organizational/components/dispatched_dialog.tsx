@@ -1,19 +1,84 @@
+import { useEffect, useState, useRef } from 'react'
 import { Button } from '@/components/custom/button'
 import { Card } from '@/components/ui/card'
 import {
   Dialog,
   DialogContent,
   // DialogDescription,
-  DialogFooter,
+  // DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { fetchDispatch } from '../data/services'
+import RouteMap from '@/components/custom/routemap'
+
 // import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
 // import { Badge } from "@/components/ui/badge"
 
-export function DispatchesDialog() {
+export function DispatchesDialog({ dispId }: { dispId: string }) {
+  // console.log(dispId)
+  // console.log('DispatchesDialog')
+
+  const [dispData, setdispData] = useState<any | null>(null)
+
+  const mapRef = useRef<google.maps.Map | null>(null)
+
+  useEffect(() => {
+    const loadDisp = async () => {
+      try {
+        const data: any = await fetchDispatch(dispId)
+        // console.log(data)
+
+        if (!data || !data.id) {
+          throw new Error('Dispatch data is missing or invalid')
+        }
+
+        const mappedData = {
+          disp_id: `SB-${data.id.toString().padStart(3, '0')}`,
+          dateTime: data.dateTime, //2024-12-03T22:18:28.194426
+          date: data.dateTime.split('T')[0],
+          time: data.dateTime.split('T')[1].split('.')[0],
+          dispatchStatus: data.dispatchStatus,
+          dispatchType: data.dispatchType,
+          wasteType: data.wasteType,
+          createdDateTime: data.createdDateTime,
+          wasteCollectionRequests: data.wasteCollectionRequestList.map(
+            (request: any) => ({
+              id: request.id,
+              accumulatedVolume: request.accumulatedVolume,
+              wasteType: request.wasteType,
+              latitude: request.latitude,
+              longitude: request.longitude,
+              status: request.wasteCollectionRequestStatus,
+              createdTimeStamp: request.createdTimeStamp,
+            })
+          ),
+        }
+
+        console.log(mappedData)
+
+        setdispData(mappedData)
+      } catch (error) {
+        console.error('Failed to load dispatch:', error)
+      }
+    }
+
+    loadDisp()
+  }, [dispId])
+
+  const route = {
+    start: { lat: 6.915788733342365, lng: 79.86372182720865 },
+    stops:
+      dispData?.wasteCollectionRequests.map((request: any) => ({
+        lat: request.latitude,
+        lng: request.longitude,
+      })) || [],
+    end: { lat: 6.915788733342365, lng: 79.86372182720865 }, // End location
+  }
+
+  console.log(dispData)
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -26,12 +91,12 @@ export function DispatchesDialog() {
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader className='flex flex-col items-center justify-center'>
-          <DialogTitle>DR-20240624</DialogTitle>
+          <DialogTitle>{dispData?.disp_id}</DialogTitle>
           {/* <DialogDescription>Mega - 50 Liters</DialogDescription> */}
         </DialogHeader>
         <div className='gap-y-4'>
           <Card className='p-4'>
-            <div className='grid grid-cols-3'>
+            {/* <div className='grid grid-cols-3'>
               <div className='col-span-2 grid'>
                 <div className='text-[12px] text-muted-foreground'>
                   Location
@@ -48,7 +113,8 @@ export function DispatchesDialog() {
                   Change Location
                 </Button>
               </div>
-            </div>
+            </div> */}
+            <RouteMap ref={mapRef} route={route} height='300px' />
           </Card>
 
           <Card className='my-2 p-4'>
@@ -56,7 +122,7 @@ export function DispatchesDialog() {
               <div className='col-span-2 grid'>
                 <div className='text-[12px] text-muted-foreground'>Date</div>
                 <div className='text-sm font-medium text-muted-foreground'>
-                  29-04-2024
+                  {dispData?.date}
                 </div>
               </div>
             </div>
@@ -67,13 +133,13 @@ export function DispatchesDialog() {
               <div className='col-span-2 grid'>
                 <div className='text-[12px] text-muted-foreground'>Time</div>
                 <div className='text-sm font-medium text-destructive'>
-                  06:00 A.M
+                  {dispData?.time}
                 </div>
               </div>
             </div>
           </Card>
 
-          <Card className='my-2 p-4'>
+          {/* <Card className='my-2 p-4'>
             <div className='grid grid-cols-3'>
               <div className='col-span-2 grid'>
                 <div className='text-[12px] text-muted-foreground'>
@@ -83,19 +149,10 @@ export function DispatchesDialog() {
                   TRK003
                 </div>
               </div>
-              {/* <div className='flex items-center justify-center'>
-                <Button
-                  variant='scale_btn'
-                  size='scale_btn'
-                  className='h-8 bg-cyan-500/25 text-cyan-500'
-                >
-                  Request Sent
-                </Button>
-              </div> */}
             </div>
-          </Card>
+          </Card> */}
 
-          <Card className='p-4'>
+          {/* <Card className='p-4'>
             <div className='grid grid-cols-3'>
               <div className='col-span-2 grid'>
                 <div className='text-[12px] text-muted-foreground'>
@@ -114,12 +171,12 @@ export function DispatchesDialog() {
                 </Button>
               </div>
             </div>
-          </Card>
+          </Card> */}
         </div>
-        <DialogFooter>
-          <Button variant='destructive'>Delete Dispatch</Button>
-          {/* <Button>+ Maintenance request</Button> */}
-        </DialogFooter>
+        {/* <DialogFooter> */}
+        {/* <Button variant='destructive'>Delete Dispatch</Button> */}
+        {/* <Button>+ Maintenance request</Button> */}
+        {/* </DialogFooter> */}
       </DialogContent>
     </Dialog>
   )

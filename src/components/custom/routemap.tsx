@@ -43,10 +43,11 @@ interface RouteMapProps {
     stops?: { lat: number; lng: number }[]
     end: { lat: number; lng: number }
   }
+  height?: string
 }
 
 const RouteMap = forwardRef<google.maps.Map | null, RouteMapProps>(
-  ({ apiKey, route }, ref) => {
+  ({ apiKey, route, height }, ref) => {
     const mapRef = useRef<HTMLDivElement | null>(null)
     const [map, setMap] = useState<google.maps.Map | null>(null)
     const [mapStyle, setMapStyle] =
@@ -188,7 +189,10 @@ const RouteMap = forwardRef<google.maps.Map | null, RouteMapProps>(
 
     return (
       <div>
-        <div ref={mapRef} style={{ height: '500px', width: '100%' }} />
+        <div
+          ref={mapRef}
+          style={{ height: height ? height : '500px', width: '100%' }}
+        />
         {/* <button onClick={toggleTheme} style={{ marginTop: '10px' }}>
           Toggle Theme
         </button> */}
