@@ -38,3 +38,8 @@ export const fetchCommercialBinByOrg = async (id: string) => {
   return response.data
 }
 
+export const sendWCR = async (id: string) => {
+  const url = `api/v1/wcr/bin/${id}`
+  const response = await request('POST', url)
+  return response
+}
