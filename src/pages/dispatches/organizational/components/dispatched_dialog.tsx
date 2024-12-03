@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Button } from '@/components/custom/button'
 import { Card } from '@/components/ui/card'
 import {
@@ -11,6 +11,8 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { fetchDispatch } from '../data/services'
+import RouteMap from '@/components/custom/routemap'
+
 // import { Input } from "@/components/ui/input"
 // import { Label } from "@/components/ui/label"
 // import { Badge } from "@/components/ui/badge"
@@ -20,6 +22,8 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
   // console.log('DispatchesDialog')
 
   const [dispData, setdispData] = useState<any | null>(null)
+
+  const mapRef = useRef<google.maps.Map | null>(null)
 
   useEffect(() => {
     const loadDisp = async () => {
@@ -64,6 +68,16 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
     loadDisp()
   }, [dispId])
 
+  const route = {
+    start: { lat: 6.915788733342365, lng: 79.86372182720865 },
+    stops:
+      dispData?.wasteCollectionRequests.map((request: any) => ({
+        lat: request.latitude,
+        lng: request.longitude,
+      })) || [],
+    end: { lat: 6.915788733342365, lng: 79.86372182720865 }, // End location
+  }
+
   console.log(dispData)
   return (
     <Dialog>
@@ -82,7 +96,7 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
         </DialogHeader>
         <div className='gap-y-4'>
           <Card className='p-4'>
-            <div className='grid grid-cols-3'>
+            {/* <div className='grid grid-cols-3'>
               <div className='col-span-2 grid'>
                 <div className='text-[12px] text-muted-foreground'>
                   Location
@@ -99,7 +113,8 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
                   Change Location
                 </Button>
               </div>
-            </div>
+            </div> */}
+            <RouteMap ref={mapRef} route={route} height='300px' />
           </Card>
 
           <Card className='my-2 p-4'>
