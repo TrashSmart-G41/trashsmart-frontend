@@ -16,12 +16,14 @@ export default function Household() {
           const dateTime = new Date(householddispatch.dateTime)
           const date = dateTime.toISOString().split('T')[0]
           const time = dateTime.toTimeString().split(' ')[0]
+          const dispatchType = householddispatch.wasteType
 
           return {
             dispatch_id: `DR-${householddispatch.id.toString().padStart(3, '0')}`,
             date: date,
             time: time,
             status: householddispatch.dispatchStatus,
+            dispatchType: dispatchType,
           }
         })
 

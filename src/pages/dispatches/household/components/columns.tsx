@@ -84,6 +84,24 @@ export const columns: ColumnDef<Dispatch>[] = [
   //   // },
   // },
   {
+    accessorKey: 'dispatchType',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Waste Type'
+      />
+    ),
+    cell: ({ row }) => {
+      const dispatchType = row.getValue('dispatchType')
+      // @ts-ignore
+      const formattedDispatchType = dispatchType.charAt(0).toUpperCase() + dispatchType.slice(1).toLowerCase()
+      return <div>{formattedDispatchType}</div>
+    },
+    enableSorting: false,
+    // enableHiding: false,
+  },
+  {
     accessorKey: 'status',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -94,9 +112,11 @@ export const columns: ColumnDef<Dispatch>[] = [
     ),
     cell: ({ row }) => {
       const status = row.getValue('status')
+      // @ts-ignore
+      const formattedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
       let textColor
 
-      switch (status) {
+      switch (formattedStatus) {
         case 'New':
           textColor = 'text-primary'
           break
@@ -110,14 +130,13 @@ export const columns: ColumnDef<Dispatch>[] = [
           textColor = ''
       }
 
-      return <div className={textColor}>{status as React.ReactNode}</div>
+      return <div className={textColor}>{formattedStatus}</div>
     },
     enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
   },
-
   {
     id: 'actions',
     cell: ({ row }) => {
