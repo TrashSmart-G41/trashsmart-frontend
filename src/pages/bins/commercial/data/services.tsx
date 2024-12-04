@@ -18,11 +18,8 @@ export const fetchCommercialBin = async (id: string) => {
 //   return response
 // }
 
-export const addCommercialBin = async (data: any, organizationId: string) => {
-  // Construct the dynamic URL with the organization_id
-  const url = `${API_URL}/${organizationId}`
-
-  // Send the POST request to the constructed URL
+export const addCommercialBin = async (data: any) => {
+  const url = `${API_URL}/create`
   const response = await request('POST', url, data)
   return response
 }

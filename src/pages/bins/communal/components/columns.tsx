@@ -1,20 +1,11 @@
 import { ColumnDef } from '@tanstack/react-table'
-// import React from 'react'
-// import { useNavigate } from 'react-router-dom'
-
-// import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
-// import { DataTableRowActions } from './data-table-row-actions'
-
-// import { statuses, regions } from '../data/data'
 import { CommunalBin } from '../data/schema'
-// import { Button } from '@/components/custom/button'
-// import { DataTableRowActions } from './data-table-row-actions'
 import { CommunalDialog } from './communal_bin_dialog'
 import { EditBin } from './edit-bin-form'
-// import { Button } from '@/components/custom/button'
-// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { AssignBin } from './assign-bin-form'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog'
 
 export const columns: ColumnDef<CommunalBin>[] = [
   {
@@ -82,19 +73,19 @@ export const columns: ColumnDef<CommunalBin>[] = [
       return value.includes(row.getValue(id))
     },
   },
-  {
-    accessorKey: 'installed_date',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Installation Date'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('installed_date')}</div>,
-    enableSorting: false,
-    enableHiding: false,
-  },
+  // {
+  //   accessorKey: 'installed_date',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader
+  //       className='text-[14px]'
+  //       column={column}
+  //       title='Installation Date'
+  //     />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue('installed_date')}</div>,
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
     accessorKey: 'fill_level',
     header: ({ column }) => (
@@ -129,42 +120,29 @@ export const columns: ColumnDef<CommunalBin>[] = [
       return value.includes(row.getValue(id))
     },
   },
-
-  // {
-  //   id: 'actions',
-  //   header: () => null,
-  //   cell: ({ row }: { row: { getValue: (key: string) => string; employee_id?: string } }) => {
-  //     const navigate = useNavigate()
-
-  //     const handleButtonClick = () => {
-  //       navigate(`/cleaners/${row.getValue('employee_id')}`)
-  //     }
-
-  //     return (
-  //       <div className='mr-4 text-right'>
-  //         <Button
-  //           variant='ghost'
-  //           className='flex h-8  px-2 text-[12px] text-primary/80 hover:text-primary'
-  //           onClick={handleButtonClick}
-  //         >
-  //           View
-  //         </Button>
-  //       </div>
-  //     )
-  //   },
-  //   enableSorting: false,
-  //   enableHiding: false,
-  // },
   {
     id: 'actions',
     cell: ({ row }) => {
       const binId = String(row.getValue('bin_id') || '').slice(-3)
+      const fillLevel = row.getValue('fill_level') as number
       console.log(binId)
 
       return (
         <div className='mr-4 flex items-center justify-end'>
           <CommunalDialog binId={binId} />
           <EditBin contId={binId} />
+          {fillLevel > 75 && (
+            <Dialog>
+              <DialogTrigger asChild>
+                <button className='ml-4 rounded bg-green-700 px-2 py-1 text-sm text-white hover:bg-green-800'>
+                  Assign
+                </button>
+              </DialogTrigger>
+              <DialogContent>
+                <AssignBin contId={binId} />
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       )
     },

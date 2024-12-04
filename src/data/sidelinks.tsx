@@ -464,3 +464,42 @@ export const sidelinks_insitutes: SideLink[] = [
     ),
   },
 ]
+
+export const sidelinks_plants: SideLink[] = [
+  {
+    title: 'Dashboard',
+    label: '',
+    href: '/recycling-plant',
+    icon: (
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        width='18px'
+        height='18px'
+        viewBox='0 0 24 24'
+      >
+        <path
+          fill='currentColor'
+          d='M11.03 2.59a1.5 1.5 0 0 1 1.94 0l7.5 6.363a1.5 1.5 0 0 1 .53 1.144V19.5a1.5 1.5 0 0 1-1.5 1.5h-5.75a.75.75 0 0 1-.75-.75V14h-2v6.25a.75.75 0 0 1-.75.75H4.5A1.5 1.5 0 0 1 3 19.5v-9.403c0-.44.194-.859.53-1.144ZM12 3.734l-7.5 6.363V19.5h5v-6.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v6.25h5v-9.403Z'
+        />
+      </svg>
+    ),
+  },
+  {
+    title: 'History',
+    // label: '3',
+    href: '/recycling-plant/history',
+    icon: (
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        width='18px'
+        height='18px'
+        viewBox='0 0 24 24'
+      >
+        <path
+          fill='currentColor'
+          d='M14.005 20.003v2h-12v-2zM14.59.689l7.778 7.778l-1.414 1.414l-1.061-.353l-2.475 2.475l5.657 5.657l-1.414 1.414l-5.657-5.657l-2.404 2.404l.283 1.132l-1.415 1.414l-7.778-7.778l1.414-1.415l1.132.283l6.293-6.293l-.353-1.06zm.707 3.536l-7.071 7.07l3.535 3.536l7.071-7.07z'
+        />
+      </svg>
+    ),
+  },
+]

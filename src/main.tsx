@@ -8,12 +8,18 @@ import router from '@/router'
 import '@/index.css'
 
 function App() {
-  const { isAuthenticated, isContractor, isOrganization } = useAuth()
+  const { isAuthenticated, isContractor, isOrganization, isRecyclingPlant } =
+    useAuth()
 
   return (
     <ThemeProvider defaultTheme='system' storageKey='vite-ui-theme'>
       <RouterProvider
-        router={router(isAuthenticated, isContractor, isOrganization)}
+        router={router(
+          isAuthenticated,
+          isContractor,
+          isOrganization,
+          isRecyclingPlant
+        )}
       />
       <Toaster />
     </ThemeProvider>

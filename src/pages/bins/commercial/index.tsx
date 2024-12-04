@@ -32,13 +32,10 @@ export default function CommercialBins() {
         const data: any = await fetchCommercialBins()
         console.log(data)
         const mappedData: any = data.map((commercialbin: any) => ({
-          //   const locationName = await getLocationName(
-          //   commercialbin.latitude,
-          //   commercialbin.longitude
-          // ),
-
           bin_id: `SB-${commercialbin.id.toString().padStart(3, '0')}`,
-          organization: commercialbin.organization?.firstName,
+          organization: commercialbin.organization
+            ? commercialbin.organization.firstName
+            : 'Not Assigned',
           location: `${commercialbin.longitude} , ${commercialbin.latitude}`,
           type: `${commercialbin.wasteType} - ${commercialbin.binSize}`,
           purchased_date: commercialbin.purchaseDate,

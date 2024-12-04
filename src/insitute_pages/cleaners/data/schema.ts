@@ -1,10 +1,13 @@
 import { z } from 'zod'
 
 export const cleanerSchema = z.object({
-  employee_id: z.string(),
-  full_name: z.string(),
-  contact_number: z.string(),
-  region: z.string(),
+  id: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  contactNo: z.string(),
+  address: z.string(),
+  date_of_birth: z.string(),
+  nic: z.string(),
   status: z.string(),
 })
 

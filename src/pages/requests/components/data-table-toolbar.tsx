@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 
 import { statuses, types } from '../data/data'
 import { DataTableFacetedFilter } from './data-table-faceted-filter'
+// import { PopupForm } from '@/components/custom/popupform'
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>
@@ -24,11 +25,9 @@ export function DataTableToolbar<TData>({
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
           placeholder='Search by request ID...'
-          value={
-            (table.getColumn('request_id')?.getFilterValue() as string) ?? ''
-          }
+          value={(table.getColumn('id')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('request_id')?.setFilterValue(event.target.value)
+            table.getColumn('id')?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
@@ -40,9 +39,9 @@ export function DataTableToolbar<TData>({
               options={statuses}
             />
           )}
-          {table.getColumn('type') && (
+          {table.getColumn('wasteType') && (
             <DataTableFacetedFilter
-              column={table.getColumn('type')}
+              column={table.getColumn('wasteType')}
               title='Type'
               options={types}
             />
@@ -60,7 +59,7 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       {/* <DataTableViewOptions table={table} /> */}
-      {/* <CleanerForm /> */}
+      {/* <PopupForm formContent={AddRequest} buttonContent={'+ Add New Request'} /> */}
     </div>
   )
 }

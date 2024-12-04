@@ -10,6 +10,7 @@ export default function AppShell() {
         useInstituteLinks={false}
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
+        usePlantLinks={false}
       />
       <main
         id='content'
@@ -29,6 +30,27 @@ export function AppShell_Ins() {
         useInstituteLinks={true}
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
+        usePlantLinks={false}
+      />
+      <main
+        id='content'
+        className={`overflow-x-hidden pt-16 transition-[margin] md:overflow-y-hidden md:pt-0 ${isCollapsed ? 'md:ml-14' : 'md:ml-64'} h-full`}
+      >
+        <Outlet />
+      </main>
+    </div>
+  )
+}
+
+export function AppShell_Plant() {
+  const [isCollapsed, setIsCollapsed] = useIsCollapsed()
+  return (
+    <div className='relative h-full overflow-hidden bg-background'>
+      <Sidebar
+        useInstituteLinks={false}
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+        usePlantLinks={true}
       />
       <main
         id='content'

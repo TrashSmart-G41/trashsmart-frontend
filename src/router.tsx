@@ -6,7 +6,8 @@ import MaintenanceError from './pages/errors/maintenance-error'
 const router = (
   isAuthenticated: boolean,
   isContractor: boolean,
-  isOrganization: boolean
+  isOrganization: boolean,
+  isRecyclingPlant: boolean
 ) =>
   createBrowserRouter([
     // Auth routes
@@ -53,23 +54,15 @@ const router = (
     {
       path: '/',
       lazy: async () => {
-        // if (!isAuthenticated) {
-        //   const Login = await import('./pages/auth/sign-in');
-        //   return { Component: Login.default };
-        // }
-        // if (isContractor) {
-        //   const AppShell = await import('./components/app-shell')
-        //   return { Component: AppShell.default }
-        // } else {
-        //   const Home = await import('@/pages/home')
-        //   return { Component: Home.default }
-        // }
         if (isContractor) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.default }
         } else if (isOrganization) {
           const AppShell = await import('./components/app-shell')
           return { Component: AppShell.AppShell_Ins }
+        } else if (isRecyclingPlant) {
+          const AppShell = await import('./components/app-shell')
+          return { Component: AppShell.AppShell_Plant }
         }
         const Home = await import('@/pages/home')
         return { Component: Home.default }
@@ -78,9 +71,20 @@ const router = (
       children: [
         {
           index: true,
-          lazy: async () => ({
-            Component: (await import('./pages/dashboard')).default,
-          }),
+          lazy: async () => {
+            let dashboardPath = './pages/dashboard'
+
+            if (isOrganization) {
+              dashboardPath = './insitute_pages/dashboard'
+            } else if (isRecyclingPlant) {
+              dashboardPath = './recycling-plant_pages/dashboard'
+            }
+
+            return {
+              Component: (await import(/* @vite-ignore */ dashboardPath))
+                .default,
+            }
+          },
         },
         {
           path: 'organizations',
@@ -293,7 +297,7 @@ const router = (
         {
           path: '/organization/requests',
           lazy: async () => ({
-            Component: (await import('@/pages/requests')).default,
+            Component: (await import('@/insitute_pages/requests')).default,
           }),
         },
         {
@@ -307,11 +311,33 @@ const router = (
     {
       path: '/recycling-plant',
       lazy: async () => {
-        const AppShell = (await import('./components/app-shell')).AppShell_Ins
+        const AppShell = (await import('./components/app-shell')).AppShell_Plant
         return { Component: AppShell }
       },
       errorElement: <GeneralError />,
-      children: [],
+      children: [
+        {
+          index: true,
+          lazy: async () => ({
+            Component: (await import('./recycling-plant_pages/dashboard'))
+              .default,
+          }),
+        },
+        {
+          path: '/recycling-plant/:id',
+          lazy: async () => ({
+            Component: (await import('@/recycling-plant_pages/info/info'))
+              .default,
+          }),
+        },
+        {
+          path: '/recycling-plant/history',
+          lazy: async () => ({
+            Component: (await import('@/recycling-plant_pages/history'))
+              .default,
+          }),
+        },
+      ],
     },
 
     {

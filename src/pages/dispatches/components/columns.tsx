@@ -52,19 +52,6 @@ export const columns: ColumnDef<Dispatch>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'region',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Region'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('region')}</div>,
-    enableSorting: false,
-    // enableHiding: false,
-  },
-  {
     accessorKey: 'date',
     header: ({ column }) => (
       <DataTableColumnHeader

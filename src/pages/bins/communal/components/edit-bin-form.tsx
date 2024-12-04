@@ -30,6 +30,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useEffect } from 'react'
 import { fetchCommunalBin, updateCommunalBin } from '../data/services'
+import DragableMarker from '@/components/custom/dragablemarker'
 
 const FormSchema = z.object({
   longitude: z.number(),
@@ -90,6 +91,12 @@ export function EditBin({ contId }: { contId: string }) {
     }
   }
 
+  const handlePositionChange = (lat: number, lng: number) => {
+    console.log(`Latitude = ${lat}, Longitude = ${lng}`)
+    form.setValue('latitude', lat)
+    form.setValue('longitude', lng)
+  }
+
   return (
     <>
       <AlertDialog>
@@ -118,6 +125,7 @@ export function EditBin({ contId }: { contId: string }) {
                     <FormLabel>Location's Longitude</FormLabel>
                     <FormControl>
                       <Input
+                        id='long_pos'
                         placeholder=''
                         {...field}
                         value={field.value ?? ''}
@@ -136,6 +144,7 @@ export function EditBin({ contId }: { contId: string }) {
                     <FormLabel>Location's Latitude</FormLabel>
                     <FormControl>
                       <Input
+                        id='lat_pos'
                         placeholder=''
                         {...field}
                         value={field.value ?? ''}
@@ -146,6 +155,13 @@ export function EditBin({ contId }: { contId: string }) {
                   </FormItem>
                 )}
               />
+              <div style={{ height: '200px' }}>
+                {/* <DragableMarker height='200px' /> */}
+                <DragableMarker
+                  height='200px'
+                  onPositionChange={handlePositionChange}
+                />
+              </div>
               <FormField
                 control={form.control}
                 name='wasteType'

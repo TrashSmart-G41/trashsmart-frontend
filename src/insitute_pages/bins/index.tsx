@@ -12,8 +12,7 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/dashtabs'
-import Insights from './insights'
-import CommunalBins from './communal'
+import Insights from './insights/insights'
 import CommercialBins from './commercial'
 import Maintenance from './maintenance'
 
@@ -30,13 +29,10 @@ export default function Tasks() {
       </Layout.Header>
 
       <Layout.Body>
-        <Tabs defaultValue='communal' className='w-full py-4 pt-0'>
+        <Tabs defaultValue='commercial' className='w-full py-4 pt-0'>
           <TabsList className='mb-4 flex w-full'>
-            <TabsTrigger value='communal' className='flex-1 text-center'>
-              Communal Bins
-            </TabsTrigger>
             <TabsTrigger value='commercial' className='flex-1 text-center'>
-              Commercial Bins
+              Owned Bins
             </TabsTrigger>
             <TabsTrigger value='maintenance' className='flex-1 text-center'>
               Maintenance
@@ -45,20 +41,6 @@ export default function Tasks() {
               Insights
             </TabsTrigger>
           </TabsList>
-          <TabsContent value='communal'>
-            {/* <Card className='rounded-xl bg-card p-4'>
-              <div className='mb-2 flex items-center justify-between space-y-2'>
-                <div>
-                  <h2 className='text-2xl font-bold tracking-tight'>Communal Bins</h2>
-                </div>
-              </div>
-
-              <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-                <DataTable data={tasks} columns={columns} />
-              </div>
-            </Card> */}
-            <CommunalBins />
-          </TabsContent>
           <TabsContent value='commercial'>
             <CommercialBins />
           </TabsContent>
