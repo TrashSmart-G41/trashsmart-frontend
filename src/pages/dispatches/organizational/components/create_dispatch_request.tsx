@@ -52,7 +52,7 @@ export function DispatchForm() {
       const createdispatch = async () => {
         const response = await addDispatch(data)
         if (response.status === 200) {
-          alert('Dispatch request created successfully')
+          // alert('Dispatch request created successfully')
           window.location.reload()
         } else {
           console.error('Failed to add dispatch:')
