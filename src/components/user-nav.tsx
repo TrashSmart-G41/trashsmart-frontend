@@ -5,7 +5,7 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
+  // DropdownMenuLabel,
   DropdownMenuSeparator,
   // DropdownMenuShortcut,
   DropdownMenuTrigger,
@@ -26,20 +26,23 @@ export function UserNav() {
       <DropdownMenuTrigger asChild>
         <Button variant='ghost' className='relative h-8 w-8 rounded-xl'>
           <Avatar className='h-8 w-8 rounded-xl'>
-            <AvatarImage src='https://github.com/shadcn.png' alt='@shadcn' />
-            <AvatarFallback>SN</AvatarFallback>
+            <AvatarImage
+              src='https://avatar.iran.liara.run/public/boy?username=Ash'
+              alt='@shadcn'
+            />
+            <AvatarFallback>A</AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className='w-56 bg-card' align='end' forceMount>
-        <DropdownMenuLabel className='font-normal'>
+        {/* <DropdownMenuLabel className='font-normal'>
           <div className='flex flex-col space-y-1'>
             <p className='text-sm font-medium leading-none'>Sumane</p>
             <p className='text-xs leading-none text-muted-foreground'>
               sumane@gmail.com
             </p>
           </div>
-        </DropdownMenuLabel>
+        </DropdownMenuLabel> */}
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>

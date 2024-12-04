@@ -38,6 +38,8 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
         const mappedData = {
           id: data.id,
           dateTime: data.dateTime,
+          date: data.dateTime.split('T')[0],
+          time: data.dateTime.split('T')[1].split('.')[0],
           dispatchStatus: data.dispatchStatus,
           dispatchType: data.dispatchType,
           wasteType: data.wasteType,
@@ -129,6 +131,20 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
                 <div className='text-[12px] text-muted-foreground'>Time</div>
                 <div className='text-sm font-medium text-destructive'>
                   {dispData?.time}
+                </div>
+              </div>
+            </div>
+          </Card>
+
+          <Card className='my-2 p-4'>
+            <div className='grid grid-cols-3'>
+              <div className='col-span-2 grid'>
+                <div className='text-[12px] text-muted-foreground'>
+                  Waste type
+                </div>
+                <div className='muted-foreground text-sm font-medium'>
+                  {dispData?.wasteType.charAt(0).toUpperCase() +
+                    dispData?.wasteType.slice(1).toLowerCase()}
                 </div>
               </div>
             </div>

@@ -30,7 +30,7 @@ import {
 } from '@/components/ui/chart'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 import { DataTable } from './org/data-table'
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios'
 import { request } from '@/lib/axiosHelper'
 const API_URL = 'api/v1/statistics'
 
@@ -71,97 +71,115 @@ const chartConfig2 = {
 } satisfies ChartConfig
 
 export default function Dashboard() {
-  const [totalUsers, setTotalUsers] = useState<number>(0);
-  const [totalCollections, setTotalCollections] = useState<number>(0);
-  const [totalLastWeek, setTotalLastWeek] = useState<number>(0);
-  const [totalLastWeekRequests, setTotalLastWeekRequests] = useState<number>(0);
-  const [totalAccumulatedWaste, setTotalAccumulatedWaste] = useState<number>(0);
-  const [totalRecyclableWaste, setTotalRecyclableWaste] = useState<number>(0);
+  const [totalUsers, setTotalUsers] = useState<number>(0)
+  const [totalCollections, setTotalCollections] = useState<number>(0)
+  const [totalLastWeek, setTotalLastWeek] = useState<number>(0)
+  const [totalLastWeekRequests, setTotalLastWeekRequests] = useState<number>(0)
+  const [totalAccumulatedWaste, setTotalAccumulatedWaste] = useState<number>(0)
+  const [totalRecyclableWaste, setTotalRecyclableWaste] = useState<number>(0)
   const [organizations, setOrganizations] = useState([])
 
   // Fetch total users
   useEffect(() => {
     const fetchTotalUsers = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_users`);
-        setTotalUsers(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_users`
+        )
+        setTotalUsers(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total users:', error);
+        console.error('Failed to load total users:', error)
       }
-    };
+    }
 
-    fetchTotalUsers();
-  }, []);
+    fetchTotalUsers()
+  }, [])
 
   // Fetch total collections
   useEffect(() => {
     const fetchTotalCollections = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_collections`);
-        setTotalCollections(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_collections`
+        )
+        setTotalCollections(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total collections:', error);
+        console.error('Failed to load total collections:', error)
       }
-    };
+    }
 
-    fetchTotalCollections();
-  }, []);
+    fetchTotalCollections()
+  }, [])
 
   // Fetch total last week waste
   useEffect(() => {
     const fetchTotalLastWeek = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/last_week_total_waste`);
-        setTotalLastWeek(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/last_week_total_waste`
+        )
+        setTotalLastWeek(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total last week waste:', error);
+        console.error('Failed to load total last week waste:', error)
       }
-    };
+    }
 
-    fetchTotalLastWeek();
-  }, []);
+    fetchTotalLastWeek()
+  }, [])
 
   // Fetch total last week requests
   useEffect(() => {
     const fetchTotalLastWeekRequests = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/last_week_request_count`);
-        setTotalLastWeekRequests(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/last_week_request_count`
+        )
+        setTotalLastWeekRequests(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total last week requests:', error);
+        console.error('Failed to load total last week requests:', error)
       }
-    };
+    }
 
-    fetchTotalLastWeekRequests();
-  }, []);
+    fetchTotalLastWeekRequests()
+  }, [])
 
   // Fetch total waste
   useEffect(() => {
     const fetchTotalAccumulatedWaste = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_accumulated_waste`);
-        setTotalAccumulatedWaste(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_accumulated_waste`
+        )
+        setTotalAccumulatedWaste(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total accumulated waste:', error);
+        console.error('Failed to load total accumulated waste:', error)
       }
-    };
+    }
 
-    fetchTotalAccumulatedWaste();
-  }, []);
+    fetchTotalAccumulatedWaste()
+  }, [])
 
-   // Fetch total recyclable waste
-   useEffect(() => {
+  // Fetch total recyclable waste
+  useEffect(() => {
     const fetchTotalRecyclableWaste = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_accumulated_recyclable_waste`);
-        setTotalRecyclableWaste(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_accumulated_recyclable_waste`
+        )
+        setTotalRecyclableWaste(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total recyclable waste:', error);
+        console.error('Failed to load total recyclable waste:', error)
       }
-    };
+    }
 
-    fetchTotalRecyclableWaste();
-  }, []);
+    fetchTotalRecyclableWaste()
+  }, [])
 
   useEffect(() => {
     const loadOrganizations = async () => {
