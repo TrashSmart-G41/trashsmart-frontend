@@ -119,46 +119,50 @@ export const columns: ColumnDef<CommercialBin>[] = [
 
       useEffect(() => {
         // Check local storage on component mount
-        const sentRequests = JSON.parse(localStorage.getItem('sentRequests') || '{}');
+        const sentRequests = JSON.parse(
+          localStorage.getItem('sentRequests') || '{}'
+        )
         if (sentRequests[binId]) {
-          setIsRequestSent(true);
+          setIsRequestSent(true)
         }
-      }, [binId]);
-  
+      }, [binId])
+
       const handleSendRequest = async () => {
         try {
-          const response = await sendWCR(binId);
+          const response = await sendWCR(binId)
           console.log(response)
           if (response.status !== 200) {
-            throw new Error('Failed to send waste collection request');
+            throw new Error('Failed to send waste collection request')
           }
-          console.log(`Waste collection request sent for Bin ID: ${binId}`);
-          setIsRequestSent(true);
-  
+          console.log(`Waste collection request sent for Bin ID: ${binId}`)
+          setIsRequestSent(true)
+
           // Save state in local storage
-          const sentRequests = JSON.parse(localStorage.getItem('sentRequests') || '{}');
-          sentRequests[binId] = true;
-          localStorage.setItem('sentRequests', JSON.stringify(sentRequests));
+          const sentRequests = JSON.parse(
+            localStorage.getItem('sentRequests') || '{}'
+          )
+          sentRequests[binId] = true
+          localStorage.setItem('sentRequests', JSON.stringify(sentRequests))
         } catch (error) {
-          console.error('Error sending waste collection request:', error);
+          console.error('Error sending waste collection request:', error)
         }
-      };
+      }
 
       return (
-        <div className="mr-4 flex items-center justify-end space-x-2">
+        <div className='mr-4 flex items-center justify-end space-x-2'>
           <CommercialDialog binId={binId} />
           <Button
-          variant="ghost"
-          className={`flex h-8 px-2 text-[12px] ${
-            isRequestSent
-              ? 'text-gray-500 cursor-not-allowed'
-              : 'text-primary/80 hover:text-primary'
-          }`}
-          onClick={handleSendRequest}
-          disabled={isRequestSent}
-        >
-          {isRequestSent ? 'Requested' : 'Request'}
-        </Button>
+            variant='ghost'
+            className={`flex h-8 px-2 text-[12px] ${
+              isRequestSent
+                ? 'cursor-not-allowed text-gray-500'
+                : 'text-primary/80 hover:text-primary'
+            }`}
+            onClick={handleSendRequest}
+            disabled={isRequestSent}
+          >
+            {isRequestSent ? 'Requested' : 'Request'}
+          </Button>
         </div>
       )
     },

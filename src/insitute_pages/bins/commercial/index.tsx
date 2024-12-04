@@ -22,7 +22,9 @@ export default function CommercialBins() {
         console.log(data)
         const mappedData: any = data.map((commercialbin: any) => ({
           bin_id: `SB-${commercialbin.id.toString().padStart(3, '0')}`,
-          organization: commercialbin.organization ? commercialbin.organization.firstName : 'Not Assigned',
+          organization: commercialbin.organization
+            ? commercialbin.organization.firstName
+            : 'Not Assigned',
           location: `${commercialbin.longitude} , ${commercialbin.latitude}`,
           type: `${commercialbin.wasteType} - ${commercialbin.binSize}`,
           purchased_date: commercialbin.purchaseDate,

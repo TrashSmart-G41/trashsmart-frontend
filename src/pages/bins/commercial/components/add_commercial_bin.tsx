@@ -35,9 +35,7 @@ const FormSchema = z.object({
   apiKey: z.string(),
 })
 
-
 export function CommercialBinForm() {
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {

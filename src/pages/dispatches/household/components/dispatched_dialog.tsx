@@ -38,6 +38,8 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
         const mappedData = {
           id: data.id,
           dateTime: data.dateTime,
+          date: data.dateTime.split('T')[0],
+          time: data.dateTime.split('T')[1].split('.')[0],
           dispatchStatus: data.dispatchStatus,
           dispatchType: data.dispatchType,
           wasteType: data.wasteType,
