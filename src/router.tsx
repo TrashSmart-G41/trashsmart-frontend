@@ -3,6 +3,21 @@ import GeneralError from './pages/errors/general-error'
 import NotFoundError from './pages/errors/not-found-error'
 import MaintenanceError from './pages/errors/maintenance-error'
 
+const dashboardImports = {
+  contractor: () => import('./pages/dashboard'),
+  organization: () => import('./insitute_pages/dashboard'),
+  recyclingPlant: () => import('./recycling-plant_pages/dashboard'),
+}
+
+const getDashboardComponent = (
+  isOrganization: boolean,
+  isRecyclingPlant: boolean
+) => {
+  if (isOrganization) return dashboardImports.organization()
+  if (isRecyclingPlant) return dashboardImports.recyclingPlant()
+  return dashboardImports.contractor()
+}
+
 const router = (
   isAuthenticated: boolean,
   isContractor: boolean,
@@ -72,18 +87,8 @@ const router = (
         {
           index: true,
           lazy: async () => {
-            let dashboardPath = './pages/dashboard'
-
-            if (isOrganization) {
-              dashboardPath = './insitute_pages/dashboard'
-            } else if (isRecyclingPlant) {
-              dashboardPath = './recycling-plant_pages/dashboard'
-            }
-
-            return {
-              Component: (await import(/* @vite-ignore */ dashboardPath))
-                .default,
-            }
+            const module = await getDashboardComponent(isOrganization, isRecyclingPlant)
+            return { Component: module.default }
           },
         },
         {
