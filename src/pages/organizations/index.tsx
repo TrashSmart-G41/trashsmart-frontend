@@ -15,6 +15,9 @@ import {
 } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 import { fetchOrganizations } from './data/services'
+import { AxiosResponse } from 'axios'
+import { request } from '@/lib/axiosHelper'
+const API_URL = 'api/v1/statistics'
 // import LocationPicker from '@/components/custom/location_picker'
 // import GoogleMap, { Marker } from '@/components/custom/googlemap'
 // import DragableMarker from '@/components/custom/dragablemarker'
@@ -22,6 +25,10 @@ import { fetchOrganizations } from './data/services'
 
 export default function Tasks() {
   const [organizations, setOrganizations] = useState([])
+  const [totalOrganizations, setTotalOrganizations] = useState<number>(0)
+  const [totalNewOrganizations, setTotalNewOrganizations] = useState<number>(0)
+  const [totalActiveOrganizations, setTotalActiveOrganizations] = useState<number>(0)
+  const [totalLastWeekRequests, setTotalLastWeekRequests] = useState<number>(0)
   // const mapRef = useRef<google.maps.Map | null>(null);
 
   // const mapRef = useRef<google.maps.Map | null>(null)
@@ -110,6 +117,74 @@ export default function Tasks() {
     loadOrganizations()
   }, [])
 
+  // Fetch total organizations
+  useEffect(() => {
+    const fetchTotalOrganizations = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_organizations`
+        )
+        setTotalOrganizations(response.data)
+      } catch (error) {
+        console.error('Failed to load total users:', error)
+      }
+    }
+
+    fetchTotalOrganizations()
+  }, [])
+
+  // Fetch new total organizations
+  useEffect(() => {
+    const fetchTotalNewOrganizations = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_new_organizations`
+        )
+        setTotalNewOrganizations(response.data)
+      } catch (error) {
+        console.error('Failed to load total users:', error)
+      }
+    }
+
+    fetchTotalNewOrganizations()
+  }, [])
+
+  // Fetch total active organizations
+  useEffect(() => {
+    const fetchTotalActiveOrganizations = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_active_organizations`
+        )
+        setTotalActiveOrganizations(response.data)
+      } catch (error) {
+        console.error('Failed to load total users:', error)
+      }
+    }
+
+    fetchTotalActiveOrganizations()
+  }, [])
+
+  // Fetch total last week requests
+  useEffect(() => {
+    const fetchTotalLastWeekRequests = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/org_weekly_wcr_count`
+        )
+        setTotalLastWeekRequests(response.data)
+      } catch (error) {
+        console.error('Failed to load total last week requests:', error)
+      }
+    }
+
+    fetchTotalLastWeekRequests()
+  }, [])
+
   return (
     <Layout>
       {/* ===== Top Heading ===== */}
@@ -150,7 +225,7 @@ export default function Tasks() {
             <CardContent>
               <div className='flex flex-row items-center'>
                 <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                  16
+                  {totalOrganizations}
                 </div>
                 {/* <div className='flex flex-row text-primary'>
                   <TrendingUp className='pr-1' />
@@ -169,7 +244,7 @@ export default function Tasks() {
             <CardContent>
               <div className='flex flex-row items-center'>
                 <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                  06
+                  {totalNewOrganizations}
                 </div>
                 <div className='flex flex-row text-primary'>
                   <TrendingUp className='pr-1' />
@@ -188,7 +263,7 @@ export default function Tasks() {
             <CardContent>
               <div className='flex flex-row items-center'>
                 <div className='pr-2 text-4xl font-semibold text-primary'>
-                  14
+                  {totalActiveOrganizations}
                 </div>
                 {/* <div className='flex flex-row text-primary'>
                   <TrendingUp className='pr-1' />
@@ -207,7 +282,7 @@ export default function Tasks() {
             <CardContent>
               <div className='flex flex-row items-center'>
                 <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                  104
+                  {totalLastWeekRequests}
                 </div>
                 <div className='flex flex-row text-destructive'>
                   <TrendingDown className='pr-1' />

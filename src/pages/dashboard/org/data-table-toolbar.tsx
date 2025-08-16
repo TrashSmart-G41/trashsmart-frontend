@@ -12,12 +12,14 @@ import { Button } from '@/components/custom/button'
 import { useNavigate } from 'react-router-dom'
 
 interface DataTableToolbarProps<TData> {
-  table: Table<TData>
+  table: Table<TData>;
+  totalCount: number;
 }
 
 export function DataTableToolbar<TData>(
   {
     // table,
+    totalCount,
   }: DataTableToolbarProps<TData>
 ) {
   // const isFiltered = table.getState().columnFilters.length > 0
@@ -37,7 +39,7 @@ export function DataTableToolbar<TData>(
             </h2>
           </div>
           <div>
-            <p className='text-sm text-muted-foreground'>16 in total</p>
+            <p className='text-sm text-muted-foreground'>{totalCount} in total</p>
           </div>
         </div>
       </div>
