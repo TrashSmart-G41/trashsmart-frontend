@@ -134,12 +134,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
                 </FormItem>
               )}
             />
-            <Link
-              to='/signup'
-              className='mt-2 text-right text-sm font-medium text-muted-foreground hover:opacity-75'
-            >
-              Don't have an account? Sign up
-            </Link>
+            {/*<Link*/}
+            {/*  to='/signup'*/}
+            {/*  className='mt-2 text-right text-sm font-medium text-muted-foreground hover:opacity-75'*/}
+            {/*>*/}
+            {/*  Don't have an account? Sign up*/}
+            {/*</Link>*/}
             <Button loading={isLoading} type='submit'>
               Login
             </Button>
