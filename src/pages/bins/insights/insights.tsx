@@ -29,32 +29,17 @@ import {
 import { TopTen } from '../components/insights/top10'
 import { AxiosResponse } from 'axios'
 import { request } from '@/lib/axiosHelper'
-const chartData = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-]
-const chartConfig = {
-  desktop: {
+
+const chartConfig1 = {
+  Count: {
     label: 'Purchases',
     color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig
 
-const chartData2 = [
-  { month: 'January', desktop: 186 },
-  { month: 'February', desktop: 305 },
-  { month: 'March', desktop: 237 },
-  { month: 'April', desktop: 73 },
-  { month: 'May', desktop: 209 },
-  { month: 'June', desktop: 214 },
-]
 const chartConfig2 = {
-  desktop: {
-    label: 'Establishments',
+  Count: {
+    label: 'Purchases',
     color: 'hsl(var(--chart-1))',
   },
 } satisfies ChartConfig
@@ -70,6 +55,8 @@ export default function Insights() {
   const [topOrganizations, setTopOrganizations] = useState<any[]>([])
   const [newCommercialBins, setNewCommercialBins] = useState<number>(0)
   const [newCommunalBin, setNewCommunalBins] = useState<number>(0)
+  const [chartData1, setChartData1] = useState<{ month: string; Count: number }[]>([])
+  const [chartData2, setChartData2] = useState<{ month: string; Count: number }[]>([])
 
   useEffect(() => {
     const loadCount = async () => {
@@ -185,6 +172,56 @@ export default function Insights() {
     fetchTopOrganizations()
   }, [])
 
+  // Fetch monthly commercial bin purchase count
+  useEffect(() => {
+    const fetchMonthlyCommercialPurchases = async () => {
+      try {
+        const response: AxiosResponse<{ month: string; count: number }[]> = await request(
+          'GET',
+          `${API_URL}/monthly_commercial_bins`
+        )
+
+        console.log("Monthly commercial bin purchases response:", response.data)
+
+        const formatted = response.data.map((item) => ({
+          month: item.month,
+          Count: item.count,
+        }))
+
+        setChartData1(formatted)
+      } catch (error) {
+        console.error('Failed to load monthly total waste:', error)
+      }
+    }
+
+    fetchMonthlyCommercialPurchases()
+  }, [])
+
+  // Fetch monthly commmunal bin purchase count
+  useEffect(() => {
+    const fetchMonthlyCommunalPurchases = async () => {
+      try {
+        const response: AxiosResponse<{ month: string; count: number }[]> = await request(
+          'GET',
+          `${API_URL}/monthly_communal_bins`
+        )
+
+        console.log("Monthly commercial bin purchases response:", response.data)
+
+        const formatted = response.data.map((item) => ({
+          month: item.month,
+          Count: item.count,
+        }))
+
+        setChartData2(formatted)
+      } catch (error) {
+        console.error('Failed to load monthly total waste:', error)
+      }
+    }
+
+    fetchMonthlyCommunalPurchases()
+  }, [])
+
   return (
     <>
       <Tabs
@@ -294,10 +331,10 @@ export default function Insights() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <ChartContainer config={chartConfig}>
+                <ChartContainer config={chartConfig1}>
                   <LineChart
                     accessibilityLayer
-                    data={chartData}
+                    data={chartData1}
                     margin={{
                       left: 12,
                       right: 12,
@@ -305,27 +342,17 @@ export default function Insights() {
                   >
                     <CartesianGrid vertical={false} />
                     <XAxis
-                      dataKey='month'
+                      dataKey="month"
                       tickLine={false}
                       axisLine={false}
                       tickMargin={8}
                       tickFormatter={(value) => value.slice(0, 3)}
                     />
-                    <ChartTooltip
-                      cursor={false}
-                      content={<ChartTooltipContent />}
-                    />
+                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
                     <Line
-                      dataKey='desktop'
-                      type='monotone'
-                      stroke='var(--color-desktop)'
-                      strokeWidth={2}
-                      dot={false}
-                    />
-                    <Line
-                      dataKey='mobile'
-                      type='monotone'
-                      stroke='var(--color-mobile)'
+                      dataKey="Count"
+                      type="monotone"
+                      stroke="hsl(var(--chart-1))"
                       strokeWidth={2}
                       dot={false}
                     />
@@ -377,20 +404,17 @@ export default function Insights() {
                   >
                     <CartesianGrid vertical={false} />
                     <XAxis
-                      dataKey='month'
+                      dataKey="month"
                       tickLine={false}
                       axisLine={false}
                       tickMargin={8}
                       tickFormatter={(value) => value.slice(0, 3)}
                     />
-                    <ChartTooltip
-                      cursor={false}
-                      content={<ChartTooltipContent hideLabel />}
-                    />
+                    <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
                     <Line
-                      dataKey='desktop'
-                      type='linear'
-                      stroke='var(--color-desktop)'
+                      dataKey="Count"
+                      type="monotone"
+                      stroke="hsl(var(--chart-1))"
                       strokeWidth={2}
                       dot={false}
                     />
