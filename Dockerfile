@@ -1,3 +1,4 @@
+# syntax=docker/dockerfile:1
 # Stage 1: Build the React application using pnpm
 FROM node:20-alpine AS build
 
@@ -12,18 +13,22 @@ COPY package.json pnpm-lock.yaml* ./
 # Install dependencies using pnpm
 RUN pnpm install --frozen-lockfile
 
-# Set build-time arguments with placeholder defaults
-ARG VITE_API_URL=VITE_API_URL_PLACEHOLDER
-ARG VITE_MAPBOX_ACCESS_TOKEN=VITE_MAPBOX_ACCESS_TOKEN_PLACEHOLDER
-ARG VITE_CLERK_PUBLISHABLE_KEY=VITE_CLERK_PUBLISHABLE_KEY_PLACEHOLDER
-ARG VITE_CLERK_SECRET_KEY=VITE_CLERK_SECRET_KEY_PLACEHOLDER
-ARG VITE_GOOGLEMAP_ACCESS_TOKEN=VITE_GOOGLEMAP_ACCESS_TOKEN_PLACEHOLDER
-
 # Copy the rest of the application source code
 COPY . .
 
 # Build the application for production using pnpm
-RUN pnpm run build
+# Mount secrets and export them as environment variables for the build command
+RUN --mount=type=secret,id=VITE_API_URL \
+    --mount=type=secret,id=VITE_MAPBOX_ACCESS_TOKEN \
+    --mount=type=secret,id=VITE_CLERK_PUBLISHABLE_KEY \
+    --mount=type=secret,id=VITE_CLERK_SECRET_KEY \
+    --mount=type=secret,id=VITE_GOOGLEMAP_ACCESS_TOKEN \
+    export VITE_API_URL=$(cat /run/secrets/VITE_API_URL) && \
+    export VITE_MAPBOX_ACCESS_TOKEN=$(cat /run/secrets/VITE_MAPBOX_ACCESS_TOKEN) && \
+    export VITE_CLERK_PUBLISHABLE_KEY=$(cat /run/secrets/VITE_CLERK_PUBLISHABLE_KEY) && \
+    export VITE_CLERK_SECRET_KEY=$(cat /run/secrets/VITE_CLERK_SECRET_KEY) && \
+    export VITE_GOOGLEMAP_ACCESS_TOKEN=$(cat /run/secrets/VITE_GOOGLEMAP_ACCESS_TOKEN) && \
+    pnpm run build
 
 # Stage 2: Serve the application using Nginx
 FROM nginx:stable-alpine
