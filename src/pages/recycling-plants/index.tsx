@@ -15,12 +15,17 @@ import {
 } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
 import { fetchAllRecyclingPlants, fetchRecyclingPlants } from './data/services'
+import { AxiosResponse } from 'axios'
+import { request } from '@/lib/axiosHelper'
+const API_URL = 'api/v1/statistics'
 // import LocationPicker from '@/components/custom/location_picker'
 
 export default function Tasks() {
   const [recyclingPlants, setRecyclingPlants] = useState([])
   const [allCount, setAllCount] = useState(0)
   const [activeCount, setActiveCount] = useState(0)
+  const [totalNewCount, setTotalNewCount] = useState<number>(0)
+  // const [totalActiveCount, setTotalActiveCount] = useState<number>(0)
 
   useEffect(() => {
     const loadRecyclingPlants = async () => {
@@ -49,6 +54,23 @@ export default function Tasks() {
     }
 
     loadRecyclingPlants()
+  }, [])
+
+  // Fetch new total count
+  useEffect(() => {
+    const fetchTotalNewRecyclingPlants = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_new_recycling_plants`
+        )
+        setTotalNewCount(response.data)
+      } catch (error) {
+        console.error('Failed to load total users:', error)
+      }
+    }
+
+    fetchTotalNewRecyclingPlants()
   }, [])
 
   return (
@@ -110,7 +132,7 @@ export default function Tasks() {
             <CardContent>
               <div className='flex flex-row items-center'>
                 <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                  06
+                  {totalNewCount}
                 </div>
                 <div className='flex flex-row text-primary'>
                   <TrendingUp className='pr-1' />
