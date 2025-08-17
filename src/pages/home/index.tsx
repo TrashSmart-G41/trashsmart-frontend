@@ -5,8 +5,13 @@ import { MarqueeDemo } from './marquee'
 import About from './about'
 import Footer from './footer'
 import Frame from './assets/Frame.png'
+import { useNavigate } from 'react-router-dom'
 
 export default function Index() {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate('/login')
+  }
   return (
     <>
       <Nav />
@@ -28,7 +33,7 @@ export default function Index() {
             </p>
 
             <div className='mt-7 grid w-full gap-3 sm:inline-flex'>
-              <Button size={'lg'}>Get started</Button>
+              <Button size={'lg'} onClick={handleClick}>Get started</Button>
               <Button variant={'outline'} size={'lg'}>
                 Contact sales team
               </Button>
