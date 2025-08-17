@@ -23,7 +23,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { jwtDecode, JwtPayload } from 'jwt-decode'
 
-
 const FormSchema = z.object({
   apiKey: z.string(),
 })
@@ -33,7 +32,6 @@ const decodeToken = jwtDecode<JwtPayload>(token) as { userId: string }
 const contId = decodeToken?.userId
 
 export function CommercialBinForm() {
-
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -57,7 +55,6 @@ export function CommercialBinForm() {
       console.error('Error:', error)
     }
   }
-
 
   return (
     <Form {...form}>

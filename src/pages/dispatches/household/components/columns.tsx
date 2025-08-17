@@ -68,20 +68,38 @@ export const columns: ColumnDef<Dispatch>[] = [
     enableSorting: false,
     // enableHiding: false,
   },
+  // {
+  //   accessorKey: 'total_collections',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader
+  //       className='text-[14px]'
+  //       column={column}
+  //       title='Total Collections'
+  //     />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue('total_collections')}</div>,
+  //   // enableSorting: true,
+  //   // filterFn: (row, id, value) => {
+  //   //   return value.includes(row.getValue(id))
+  //   // },
+  // },
   {
-    accessorKey: 'total_collections',
+    accessorKey: 'dispatchType',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
         column={column}
-        title='Total Collections'
+        title='Waste Type'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('total_collections')}</div>,
-    // enableSorting: true,
-    // filterFn: (row, id, value) => {
-    //   return value.includes(row.getValue(id))
-    // },
+    cell: ({ row }) => {
+      const dispatchType = row.getValue('dispatchType')
+      // @ts-ignore
+      const formattedDispatchType = dispatchType.charAt(0).toUpperCase() + dispatchType.slice(1).toLowerCase()
+      return <div>{formattedDispatchType}</div>
+    },
+    enableSorting: false,
+    // enableHiding: false,
   },
   {
     accessorKey: 'status',
@@ -94,9 +112,11 @@ export const columns: ColumnDef<Dispatch>[] = [
     ),
     cell: ({ row }) => {
       const status = row.getValue('status')
+      // @ts-ignore
+      const formattedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
       let textColor
 
-      switch (status) {
+      switch (formattedStatus) {
         case 'New':
           textColor = 'text-primary'
           break
@@ -110,21 +130,20 @@ export const columns: ColumnDef<Dispatch>[] = [
           textColor = ''
       }
 
-      return <div className={textColor}>{status as React.ReactNode}</div>
+      return <div className={textColor}>{formattedStatus}</div>
     },
     enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
   },
-
   {
     id: 'actions',
     cell: ({ row }) => {
-      const contId = String(row.getValue('dispatch_id') || '').slice(-3)
+      const disp_id = String(row.getValue('dispatch_id') || '').slice(-3)
       return (
         <div className='mr-4 flex items-center justify-end'>
-          <DispatchesDialog contId={contId} />
+          <DispatchesDialog dispId={disp_id} />
         </div>
       )
     },

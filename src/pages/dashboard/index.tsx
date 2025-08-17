@@ -30,39 +30,20 @@ import {
 } from '@/components/ui/chart'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 import { DataTable } from './org/data-table'
-import { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios'
 import { request } from '@/lib/axiosHelper'
 const API_URL = 'api/v1/statistics'
 
 // import { InputForm } from '@/components/custom/form'
 // import { PopupForm } from '@/components/custom/popupform'
-const chartData = [
-  { month: 'January', Organizations: 186, CommunalBins: 80 },
-  { month: 'February', Organizations: 305, CommunalBins: 200 },
-  { month: 'March', Organizations: 237, CommunalBins: 120 },
-  { month: 'April', Organizations: 73, CommunalBins: 190 },
-  { month: 'May', Organizations: 209, CommunalBins: 130 },
-  { month: 'June', Organizations: 214, CommunalBins: 140 },
-]
-const chartConfig = {
-  Organizations: {
-    label: 'Organizations',
+
+const chartConfig1 = {
+  Volume: {
+    label: 'Volume (MT)',
     color: 'hsl(var(--chart-1))',
-  },
-  CommunalBins: {
-    label: 'Communal Bins',
-    color: 'hsl(var(--chart-2))',
   },
 } satisfies ChartConfig
 
-const chartData2 = [
-  { month: 'January', Volume: 186 },
-  { month: 'February', Volume: 305 },
-  { month: 'March', Volume: 237 },
-  { month: 'April', Volume: 73 },
-  { month: 'May', Volume: 209 },
-  { month: 'June', Volume: 214 },
-]
 const chartConfig2 = {
   Volume: {
     label: 'Volume (MT)',
@@ -71,97 +52,117 @@ const chartConfig2 = {
 } satisfies ChartConfig
 
 export default function Dashboard() {
-  const [totalUsers, setTotalUsers] = useState<number>(0);
-  const [totalCollections, setTotalCollections] = useState<number>(0);
-  const [totalLastWeek, setTotalLastWeek] = useState<number>(0);
-  const [totalLastWeekRequests, setTotalLastWeekRequests] = useState<number>(0);
-  const [totalAccumulatedWaste, setTotalAccumulatedWaste] = useState<number>(0);
-  const [totalRecyclableWaste, setTotalRecyclableWaste] = useState<number>(0);
+  const [totalUsers, setTotalUsers] = useState<number>(0)
+  const [totalCollections, setTotalCollections] = useState<number>(0)
+  const [totalLastWeek, setTotalLastWeek] = useState<number>(0)
+  const [totalLastWeekRequests, setTotalLastWeekRequests] = useState<number>(0)
+  const [totalAccumulatedWaste, setTotalAccumulatedWaste] = useState<number>(0)
+  const [totalRecyclableWaste, setTotalRecyclableWaste] = useState<number>(0)
   const [organizations, setOrganizations] = useState([])
+  const [chartData1, setChartData1] = useState<{ month: string; Volume: number }[]>([])
+  const [chartData2, setChartData2] = useState<{ month: string; Volume: number }[]>([])
 
   // Fetch total users
   useEffect(() => {
     const fetchTotalUsers = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_users`);
-        setTotalUsers(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_users`
+        )
+        setTotalUsers(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total users:', error);
+        console.error('Failed to load total users:', error)
       }
-    };
+    }
 
-    fetchTotalUsers();
-  }, []);
+    fetchTotalUsers()
+  }, [])
 
   // Fetch total collections
   useEffect(() => {
     const fetchTotalCollections = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_collections`);
-        setTotalCollections(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_collections`
+        )
+        setTotalCollections(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total collections:', error);
+        console.error('Failed to load total collections:', error)
       }
-    };
+    }
 
-    fetchTotalCollections();
-  }, []);
+    fetchTotalCollections()
+  }, [])
 
   // Fetch total last week waste
   useEffect(() => {
     const fetchTotalLastWeek = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/last_week_total_waste`);
-        setTotalLastWeek(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/last_week_total_waste`
+        )
+        setTotalLastWeek(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total last week waste:', error);
+        console.error('Failed to load total last week waste:', error)
       }
-    };
+    }
 
-    fetchTotalLastWeek();
-  }, []);
+    fetchTotalLastWeek()
+  }, [])
 
   // Fetch total last week requests
   useEffect(() => {
     const fetchTotalLastWeekRequests = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/last_week_request_count`);
-        setTotalLastWeekRequests(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/last_week_request_count`
+        )
+        setTotalLastWeekRequests(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total last week requests:', error);
+        console.error('Failed to load total last week requests:', error)
       }
-    };
+    }
 
-    fetchTotalLastWeekRequests();
-  }, []);
+    fetchTotalLastWeekRequests()
+  }, [])
 
   // Fetch total waste
   useEffect(() => {
     const fetchTotalAccumulatedWaste = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_accumulated_waste`);
-        setTotalAccumulatedWaste(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_accumulated_waste`
+        )
+        setTotalAccumulatedWaste(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total accumulated waste:', error);
+        console.error('Failed to load total accumulated waste:', error)
       }
-    };
+    }
 
-    fetchTotalAccumulatedWaste();
-  }, []);
+    fetchTotalAccumulatedWaste()
+  }, [])
 
-   // Fetch total recyclable waste
-   useEffect(() => {
+  // Fetch total recyclable waste
+  useEffect(() => {
     const fetchTotalRecyclableWaste = async () => {
       try {
-        const response: AxiosResponse<number> = await request('GET', `${API_URL}/total_accumulated_recyclable_waste`);
-        setTotalRecyclableWaste(response.data); // Update the state with the API data
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_accumulated_recyclable_waste`
+        )
+        setTotalRecyclableWaste(response.data) // Update the state with the API data
       } catch (error) {
-        console.error('Failed to load total recyclable waste:', error);
+        console.error('Failed to load total recyclable waste:', error)
       }
-    };
+    }
 
-    fetchTotalRecyclableWaste();
-  }, []);
+    fetchTotalRecyclableWaste()
+  }, [])
 
   useEffect(() => {
     const loadOrganizations = async () => {
@@ -187,6 +188,53 @@ export default function Dashboard() {
     }
 
     loadOrganizations()
+  }, [])
+
+  // Fetch monthly recyclable waste
+  useEffect(() => {
+    const fetchMonthlyWaste = async () => {
+      try {
+        const response: AxiosResponse<{ month: string; volume: number }[]> = await request(
+          'GET',
+          `${API_URL}/monthly_recyclable_waste`
+        )
+
+        // Convert backend field `volume` → frontend expected `Volume`
+        const formatted = response.data.map((item) => ({
+          month: item.month,
+          Volume: item.volume,
+        }))
+
+        setChartData2(formatted)
+      } catch (error) {
+        console.error('Failed to load monthly recyclable waste:', error)
+      }
+    }
+
+    fetchMonthlyWaste()
+  }, [])
+
+  // Fetch monthly waste
+  useEffect(() => {
+    const fetchMonthlyTotalWaste = async () => {
+      try {
+        const response: AxiosResponse<{ month: string; volume: number }[]> = await request(
+          'GET',
+          `${API_URL}/monthly_waste`
+        )
+
+        const formatted = response.data.map((item) => ({
+          month: item.month,
+          Volume: item.volume,
+        }))
+
+        setChartData1(formatted)
+      } catch (error) {
+        console.error('Failed to load monthly total waste:', error)
+      }
+    }
+
+    fetchMonthlyTotalWaste()
   }, [])
 
   return (
@@ -327,10 +375,10 @@ export default function Dashboard() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ChartContainer config={chartConfig}>
+                  <ChartContainer config={chartConfig1}>
                     <LineChart
                       accessibilityLayer
-                      data={chartData}
+                      data={chartData1}
                       margin={{
                         left: 12,
                         right: 12,
@@ -346,19 +394,12 @@ export default function Dashboard() {
                       />
                       <ChartTooltip
                         cursor={false}
-                        content={<ChartTooltipContent />}
+                        content={<ChartTooltipContent hideLabel />}
                       />
                       <Line
-                        dataKey='Organizations'
-                        type='monotone'
-                        stroke='var(--color-Organizations)'
-                        strokeWidth={2}
-                        dot={false}
-                      />
-                      <Line
-                        dataKey='CommunalBins'
-                        type='monotone'
-                        stroke='var(--color-CommunalBins)'
+                        dataKey='Volume'
+                        type='linear'
+                        stroke='var(--color-Volume)'
                         strokeWidth={2}
                         dot={false}
                       />

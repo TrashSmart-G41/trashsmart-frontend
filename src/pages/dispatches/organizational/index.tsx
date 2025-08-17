@@ -19,12 +19,14 @@ export default function Organizational() {
           const dateTime = new Date(orgdispatch.dateTime)
           const date = dateTime.toISOString().split('T')[0]
           const time = dateTime.toTimeString().split(' ')[0]
+          const dispatchType = orgdispatch.wasteType
 
           return {
             dispatch_id: `DR-${orgdispatch.id.toString().padStart(3, '0')}`,
             date: date,
             time: time,
             status: orgdispatch.dispatchStatus,
+            dispatchType: dispatchType,
           }
         })
 

@@ -13,7 +13,6 @@ export const fetchCommercialBin = async (id: string) => {
   return response.data
 }
 
-
 export const addCommercialBin = async (id: string, apiKey: string) => {
   const url = `${API_URL}/organization/${id}/api_key/${apiKey}`
   const response = await request('POST', url)
@@ -38,3 +37,8 @@ export const fetchCommercialBinByOrg = async (id: string) => {
   return response.data
 }
 
+export const sendWCR = async (id: string) => {
+  const url = `api/v1/wcr/bin/${id}`
+  const response = await request('POST', url)
+  return response
+}
