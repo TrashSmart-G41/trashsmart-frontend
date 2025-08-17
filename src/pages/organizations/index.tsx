@@ -260,24 +260,6 @@ export default function Tasks() {
           </div>
         </Card>
 
-        {/* <LocationPicker/> */}
-        {/* <GoogleMap /> */}
-        <GoogleMap width='100%' height={500}>
-          {points.map((point, index) => (
-            <Marker
-              key={index}
-              latitude={point.latitude}
-              longitude={point.longitude}
-              svgIcon={point.svgIcon}
-              name={point.name}
-            />
-          ))}
-        </GoogleMap>
-
-        <DragableMarker />
-
-        <RouteMap ref={mapRef} route={route} />
-
         {/* <LocationPicker /> */}
       </Layout.Body>
     </Layout>
