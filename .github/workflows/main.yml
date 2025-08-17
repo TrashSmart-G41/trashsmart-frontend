@@ -25,9 +25,3 @@ jobs:
         context: .
         push: true
         tags: ghcr.io/lasithranahewa/trashsmart-frontend:latest
-        build-args: |
-          VITE_API_URL=${{ secrets.VITE_API_URL }}
-          VITE_MAPBOX_ACCESS_TOKEN=${{ secrets.VITE_MAPBOX_ACCESS_TOKEN }}
-          VITE_CLERK_PUBLISHABLE_KEY=${{ secrets.VITE_CLERK_PUBLISHABLE_KEY }}
-          VITE_CLERK_SECRET_KEY=${{ secrets.VITE_CLERK_SECRET_KEY }}
-          VITE_GOOGLEMAP_ACCESS_TOKEN=${{ secrets.VITE_GOOGLEMAP_ACCESS_TOKEN }}
