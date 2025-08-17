@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 # Stage 1: Build the React application using pnpm
 FROM node:20-alpine AS build
 
@@ -16,18 +15,20 @@ RUN pnpm install --frozen-lockfile
 # Copy the rest of the application source code
 COPY . .
 
-# Build the application for production using pnpm
-# Mount secrets and export them as environment variables for the build command
-RUN --mount=type=secret,id=VITE_API_URL \
-    --mount=type=secret,id=VITE_MAPBOX_ACCESS_TOKEN \
-    --mount=type=secret,id=VITE_CLERK_PUBLISHABLE_KEY \
-    --mount=type=secret,id=VITE_CLERK_SECRET_KEY \
-    --mount=type=secret,id=VITE_GOOGLEMAP_ACCESS_TOKEN \
-    export VITE_API_URL=$(cat /run/secrets/VITE_API_URL) && \
-    export VITE_MAPBOX_ACCESS_TOKEN=$(cat /run/secrets/VITE_MAPBOX_ACCESS_TOKEN) && \
-    export VITE_CLERK_PUBLISHABLE_KEY=$(cat /run/secrets/VITE_CLERK_PUBLISHABLE_KEY) && \
-    export VITE_CLERK_SECRET_KEY=$(cat /run/secrets/VITE_CLERK_SECRET_KEY) && \
-    export VITE_GOOGLEMAP_ACCESS_TOKEN=$(cat /run/secrets/VITE_GOOGLEMAP_ACCESS_TOKEN) && \
+# Declare build-time arguments that can be passed with --build-arg
+ARG VITE_API_URL
+ARG VITE_MAPBOX_ACCESS_TOKEN
+ARG VITE_CLERK_PUBLISHABLE_KEY
+ARG VITE_CLERK_SECRET_KEY
+ARG VITE_GOOGLEMAP_ACCESS_TOKEN
+
+# Create a .env file from the build arguments and run the build.
+# Vite automatically loads variables from the .env file.
+RUN echo "VITE_API_URL=${VITE_API_URL}" > .env && \
+    echo "VITE_MAPBOX_ACCESS_TOKEN=${VITE_MAPBOX_ACCESS_TOKEN}" >> .env && \
+    echo "VITE_CLERK_PUBLISHABLE_KEY=${VITE_CLERK_PUBLISHABLE_KEY}" >> .env && \
+    echo "VITE_CLERK_SECRET_KEY=${VITE_CLERK_SECRET_KEY}" >> .env && \
+    echo "VITE_GOOGLEMAP_ACCESS_TOKEN=${VITE_GOOGLEMAP_ACCESS_TOKEN}" >> .env && \
     pnpm run build
 
 # Stage 2: Serve the application using Nginx
