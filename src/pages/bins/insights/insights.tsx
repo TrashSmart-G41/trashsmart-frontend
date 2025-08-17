@@ -13,10 +13,12 @@ import { Tabs, TabsContent } from '@/components/ui/tabs'
 // import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from 'recharts'
 import { TrendingUp } from 'lucide-react'
-import { binCount } from './data/services'
-import { FULLbinCount } from './data/services'
+// import { binCount } from './data/services'
+// import { FULLbinCount } from './data/services'
 import { requestCount } from '@/pages/bins/maintenance/data/services.tsx'
 import { useEffect, useState } from 'react'
+
+const API_URL = 'api/v1/statistics'
 
 import {
   ChartConfig,
@@ -25,6 +27,8 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { TopTen } from '../components/insights/top10'
+import { AxiosResponse } from 'axios'
+import { request } from '@/lib/axiosHelper'
 const chartData = [
   { month: 'January', desktop: 186 },
   { month: 'February', desktop: 305 },
@@ -56,24 +60,129 @@ const chartConfig2 = {
 } satisfies ChartConfig
 
 export default function Insights() {
-  const [binCounts, setBinCount] = useState(0)
-  const [fullBinCount, setFullBinCount] = useState(0)
+  // const [binCounts, setBinCount] = useState(0)
+  // const [fullBinCount, setFullBinCount] = useState(0)
   const [reqCount, setReqCount] = useState(0)
+
+  const [totalBins, setTotalBins] = useState<number>(0)
+  const [totalFullBins, setTotalFullBins] = useState<number>(0)
+  const [totalCollections, setTotalCollections] = useState<number>(0)
+  const [topOrganizations, setTopOrganizations] = useState<any[]>([])
+  const [newCommercialBins, setNewCommercialBins] = useState<number>(0)
+  const [newCommunalBin, setNewCommunalBins] = useState<number>(0)
 
   useEffect(() => {
     const loadCount = async () => {
       try {
-        const data: any = await binCount()
-        const data2: any = await FULLbinCount()
+        // const data: any = await binCount()
+        // const data2: any = await FULLbinCount()
         const data3: any = await requestCount()
-        setBinCount(data)
-        setFullBinCount(data2)
+        // setBinCount(data)
+        // setFullBinCount(data2)
         setReqCount(data3)
       } catch (error) {
         console.error('Failed to load count:', error)
       }
     }
     loadCount()
+  }, [])
+
+  // Fetch total bin count
+  useEffect(() => {
+    const fetchTotalBins = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_bins`
+        )
+        setTotalBins(response.data) // Update the state with the API data
+      } catch (error) {
+        console.error('Failed to load total users:', error)
+      }
+    }
+
+    fetchTotalBins()
+  }, [])
+
+  // Fetch total full bin count
+  useEffect(() => {
+    const fetchTotalFullBins = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_full_bins`
+        )
+        setTotalFullBins(response.data) // Update the state with the API data
+      } catch (error) {
+        console.error('Failed to load total users:', error)
+      }
+    }
+
+    fetchTotalFullBins()
+  }, [])
+
+  // Fetch total collections
+  useEffect(() => {
+    const fetchTotalCollections = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_collections`
+        )
+        setTotalCollections(response.data)
+      } catch (error) {
+        console.error('Failed to load total collections:', error)
+      }
+    }
+
+    fetchTotalCollections()
+  }, [])
+
+  // Fetch new commercial bin purchases count
+  useEffect(() => {
+    const fetchCommercialBinPurchaseCount = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_commercial_bin_purchase_count`
+        )
+        setNewCommercialBins(response.data)
+      } catch (error) {
+        console.error('Failed to load total collections:', error)
+      }
+    }
+
+    fetchCommercialBinPurchaseCount()
+  }, [])
+
+  // Fetch new communal bin establishment count
+  useEffect(() => {
+    const fetchCommunalBinEstCount = async () => {
+      try {
+        const response: AxiosResponse<number> = await request(
+          'GET',
+          `${API_URL}/total_communal_bin_est_count`
+        )
+        setNewCommunalBins(response.data)
+      } catch (error) {
+        console.error('Failed to load total collections:', error)
+      }
+    }
+
+    fetchCommunalBinEstCount()
+  }, [])
+
+  // Fetch top 10 organizations
+  useEffect(() => {
+    const fetchTopOrganizations = async () => {
+      try {
+        const response: AxiosResponse<any[]> = await request('GET', `${API_URL}/top_ten_organizations`)
+        setTopOrganizations(response.data)
+      } catch (error) {
+        console.error('Failed to load top organizations:', error)
+      }
+    }
+    fetchTopOrganizations()
   }, [])
 
   return (
@@ -94,7 +203,7 @@ export default function Insights() {
               <CardContent>
                 <div className='flex flex-row items-center'>
                   <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                    {binCounts}
+                    {totalBins}
                   </div>
                 </div>
               </CardContent>
@@ -108,7 +217,7 @@ export default function Insights() {
               <CardContent>
                 <div className='flex flex-row items-center'>
                   <div className='pr-2 text-4xl font-semibold text-primary'>
-                    {fullBinCount}
+                    {totalFullBins}
                   </div>
                 </div>
               </CardContent>
@@ -122,7 +231,7 @@ export default function Insights() {
               </CardHeader>
               <CardContent>
                 <div className='text-4xl font-semibold text-muted-foreground'>
-                  72,540
+                  {totalCollections}
                 </div>
               </CardContent>
             </Card>
@@ -178,7 +287,7 @@ export default function Insights() {
                   <CardContent className='px-0'>
                     <div className='flex flex-row items-center'>
                       <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                        124 Bins
+                        {newCommercialBins}
                       </div>
                     </div>
                   </CardContent>
@@ -246,7 +355,7 @@ export default function Insights() {
                   <CardContent className='px-0'>
                     <div className='flex flex-row items-center'>
                       <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                        35 bins
+                        {newCommunalBin}
                       </div>
                       <div className='flex flex-row items-center text-primary'>
                         <TrendingUp className='pr-1' />
@@ -306,8 +415,11 @@ export default function Insights() {
           <CardTitle>TOP 10 ORGANIZATIONS</CardTitle>
           <CardDescription>Based on no.of bins occupied</CardDescription>
         </CardHeader>
+        {/*<CardContent>*/}
+        {/*  <TopTen />*/}
+        {/*</CardContent>*/}
         <CardContent>
-          <TopTen />
+          <TopTen organizations={topOrganizations} />
         </CardContent>
       </Card>
     </>
