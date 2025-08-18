@@ -1,7 +1,13 @@
 import { Button } from '@/components/custom/button'
 import MockupImg from './assets/mockup.png'
+import { useNavigate } from 'react-router-dom'
 
 export default function About() {
+  const navigate = useNavigate()
+
+  const handleClick = () => {
+    navigate('/login')
+  }
   return (
     <>
       {/* Icon Blocks */}
@@ -57,7 +63,7 @@ export default function About() {
           </p>
         </div>
         <div className='mt-2 grid w-full gap-3 sm:inline-flex'>
-          <Button size={'lg'}>Sign Up</Button>
+          <Button size={'lg'} onClick={handleClick}>Sign Up</Button>
           {/* <Button variant={'outline'} size={'lg'}>
                         Contact sales team
                     </Button> */}
