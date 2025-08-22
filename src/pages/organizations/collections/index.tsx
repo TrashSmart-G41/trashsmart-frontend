@@ -3,8 +3,43 @@ import { columns } from './components/columns'
 import { collectionHistory } from './data/collectionHistory'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { TrendingDown, TrendingUp } from 'lucide-react'
+import { fetchOrganization } from '../data/services'
+import { useEffect, useState } from 'react'
+
+type OrganizationData = {
+  totalWaste: number
+  weeklyWaste: number
+  recyclableWaste: number
+}
 
 export default function Collections() {
+  const [organization, setOrganization] = useState<OrganizationData | null>(
+    null
+  )
+
+  useEffect(() => {
+    const url = window.location.href
+    const id = url.split('/').pop()?.slice(-3)
+    console.log('id:', id)
+
+    const loadOrganization = async () => {
+      try {
+        const data: any = await fetchOrganization(id ?? '')
+        const mappedData: OrganizationData = {
+          totalWaste: data.totalWaste,
+          weeklyWaste: data.weeklyWaste,
+          recyclableWaste: data.recyclableWaste,
+        }
+        // console.log('Organization:', data)
+        setOrganization(mappedData)
+        console.log('Organization:', organization)
+      } catch (error) {
+        console.error('Failed to load organization:', error)
+      }
+    }
+    loadOrganization()
+  }, [])
+
   return (
     <>
       <div className='mb-4 mt-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
@@ -17,7 +52,7 @@ export default function Collections() {
           <CardContent>
             <div className='flex flex-row items-center'>
               <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                1200 MT
+                {organization?.totalWaste} MT
               </div>
               {/* <div className='flex flex-row text-primary'>
                       <TrendingUp className='pr-1' />
@@ -36,7 +71,7 @@ export default function Collections() {
           <CardContent>
             <div className='flex flex-row items-center'>
               <div className='pr-2 text-4xl font-semibold text-primary'>
-                190 MT
+                {organization?.weeklyWaste} MT
               </div>
               <div className='flex flex-row text-primary'>
                 <TrendingUp className='pr-1' />
@@ -74,7 +109,7 @@ export default function Collections() {
           <CardContent>
             <div className='flex flex-row items-center'>
               <div className='pr-2 text-4xl font-semibold text-muted-foreground'>
-                238 MT
+                {organization?.recyclableWaste} MT
               </div>
               {/* <div className='flex flex-row text-destructive'>
                       <TrendingDown className='pr-1' />

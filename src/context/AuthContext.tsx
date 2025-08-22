@@ -30,6 +30,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     if (token) {
       try {
         const decoded = jwtDecode<CustomJwtPayload>(token)
+        //@ts-ignore
+        localStorage.setItem("userId",decoded.userId)
         setIsAuthenticated(true)
         if (decoded.role === 'CONTRACTOR') {
           setIsContractor(true)
@@ -52,6 +54,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = async () => {
     try {
       await axios.post('api/v1/auth/logout')
+      //@ts-ignore
+      localStorage.removeItem("userId")
       removeAuthToken()
       setIsAuthenticated(false)
       setIsContractor(false)
