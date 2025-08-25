@@ -38,6 +38,7 @@ type OrganizationData = {
   address: string
   longitude: number
   latitude: number
+  contractStartDate: string
 }
 
 export default function Organization() {
@@ -58,6 +59,7 @@ export default function Organization() {
           address: data.address,
           longitude: data.longitude,
           latitude: data.latitude,
+          contractStartDate: data.contractStartDate,
         }
         // console.log('Organization:', data)
         setOrganization(mappedData)
@@ -161,7 +163,7 @@ export default function Organization() {
                   </div>
                   <CardDescription>{organization?.address}</CardDescription>
                   <CardDescription className='pt-3 text-muted-foreground/60'>
-                    Joined on 27-03-2024 20:14 PM
+                    Joined on {organization?.contractStartDate}
                   </CardDescription>
                 </CardHeader>
               </div>
