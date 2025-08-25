@@ -16,11 +16,13 @@ import { addMaintenanceRequest } from '../../maintenance/data/services.tsx'
 
 export function CommercialDialog({ binId }: { binId: string }) {
   console.log(binId)
+  //@ts-ignore
   const [binData, setBinData] = useState<any | null>(null)
 
   useEffect(() => {
     const loadBin = async () => {
       try {
+        //@ts-ignore
         const data: any = await fetchCommercialBin(binId)
         console.log(data)
 
@@ -45,6 +47,10 @@ export function CommercialDialog({ binId }: { binId: string }) {
     }
 
     loadBin()
+
+    const intervalId = setInterval(loadBin, 100)
+
+    return () => clearInterval(intervalId)
   }, [binId])
 
   const handleDelete = async () => {

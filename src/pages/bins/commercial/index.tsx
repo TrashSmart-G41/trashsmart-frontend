@@ -53,6 +53,9 @@ export default function CommercialBins() {
     }
 
     loadCommercialBins()
+
+    const intervalId = setInterval(loadCommercialBins, 100)
+    return () => clearInterval(intervalId)
   }, [])
 
   return (
