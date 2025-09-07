@@ -29,13 +29,18 @@ export function CommunalDialog({ binId }: { binId: string }) {
         const data: any = await fetchCommunalBin(binId)
         console.log(data)
 
+        const locationName = await getLocationName(
+          data.latitude,
+          data.longitude
+        );
+
         if (!data) {
           throw new Error('Bin data is missing or invalid')
         }
 
         const mappedData = {
           bin_id: `SB-${data.id.toString().padStart(3, '0')}`,
-          location: `${data.longitude} , ${data.latitude}`,
+          location: locationName,
           type: `${data.wasteType} - ${data.binSize}`,
           installed_date: data.installationDate,
           last_maintenance_date: data.lastMaintenanceDate,
@@ -53,6 +58,25 @@ export function CommunalDialog({ binId }: { binId: string }) {
 
     loadBin()
   }, [binId])
+
+  // Function to get location name using Google Maps Geocoding API
+  async function getLocationName(latitude: number, longitude: number): Promise<string> {
+    try {
+      const apiKey = '';
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+      );
+      const result = await response.json();
+      if (result.status === 'OK' && result.results.length > 0) {
+        return result.results[0].formatted_address;
+      } else {
+        return `${latitude}, ${longitude}`; // Fallback if no result
+      }
+    } catch (error) {
+      console.error('Geocoding failed:', error);
+      return `${latitude}, ${longitude}`; // Fallback
+    }
+  }
 
   const handleDelete = async () => {
     try {

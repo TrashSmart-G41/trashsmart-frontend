@@ -25,6 +25,7 @@ export default function Collections() {
     const loadOrganization = async () => {
       try {
         const data: any = await fetchOrganization(id ?? '')
+        console.log(data)
         const mappedData: OrganizationData = {
           totalWaste: data.totalWaste,
           weeklyWaste: data.weeklyWaste,

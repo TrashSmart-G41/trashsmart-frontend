@@ -11,6 +11,8 @@ import { DataTableColumnHeader } from './data-table-column-header'
 import { Record } from '../data/schema'
 import { EditReq } from './edit-req-form'
 import { DeleteReq } from './delete-req.tsx'
+import { Button } from '@/components/custom/button.tsx'
+import React from 'react'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -74,7 +76,14 @@ export const columns: ColumnDef<Record>[] = [
         title='Type'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('type')}</div>,
+    cell: ({ row }) => {
+      const type = row.getValue('type') as string;
+      const formattedType = type
+        .replace(/_/g, ' ')
+        .toLowerCase()
+        .replace(/(^|\s)\w/g, c => c.toUpperCase());
+      return <div>{formattedType}</div>;
+    },
     // enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
@@ -93,21 +102,77 @@ export const columns: ColumnDef<Record>[] = [
     enableSorting: false,
     // enableHiding: false,
   },
+  // {
+  //   accessorKey: 'status',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader
+  //       className='text-[14px]'
+  //       column={column}
+  //       title='Status'
+  //     />
+  //   ),
+  //   cell: ({ row }) => {
+  //     const status = row.getValue('status') as string
+  //     const colorClass = status === 'TO_DO' ? 'text-primary' : ''
+  //     return <div className={colorClass}>{status}</div>
+  //   },
+  //   // enableSorting: true,
+  //   filterFn: (row, id, value) => {
+  //     return value.includes(row.getValue(id))
+  //   },
+  // },
   {
     accessorKey: 'status',
     header: ({ column }) => (
       <DataTableColumnHeader
-        className='text-[14px]'
+        className="text-[14px]"
         column={column}
-        title='Status'
+        title="Status"
       />
     ),
     cell: ({ row }) => {
       const status = row.getValue('status') as string
-      const colorClass = status === 'TO_DO' ? 'text-primary' : ''
-      return <div className={colorClass}>{status}</div>
+
+      let colorClass = ''
+      let displayText = status
+
+      switch (status.toUpperCase()) {
+        case 'TO_DO':
+          colorClass =
+            'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
+          displayText = 'TO-DO'
+          break
+        case 'COMPLETED':
+          colorClass =
+            'px-2 py-1 rounded-md bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
+          displayText = 'COMPLETED'
+          break
+        default:
+          colorClass =
+            'px-2 py-1 rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+      }
+
+      return (
+        <div className='flex'>
+          <Button
+            variant='scale_btn'
+            size='scale_btn_sm'
+            className={`text-[11px] ${colorClass}`}
+          >
+            <svg
+              className='mr-2 inline-block'
+              xmlns='http://www.w3.org/2000/svg'
+              width='6'
+              height='6'
+              viewBox='0 0 24 24'
+            >
+              <circle cx='12' cy='12' r='12' fill='currentColor' />
+            </svg>
+            {displayText as React.ReactNode}
+          </Button>
+        </div>
+      );
     },
-    // enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
