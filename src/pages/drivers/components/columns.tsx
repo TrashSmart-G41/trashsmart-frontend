@@ -111,7 +111,7 @@ export const columns: ColumnDef<Driver>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status')
       const fillColor =
-        status === 'active'
+        status === 'ACTIVE'
           ? 'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
           : 'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]'
 

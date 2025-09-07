@@ -8,85 +8,59 @@ import GoogleMap, { Marker } from '@/components/custom/googlemap'
 
 export default function CommunalBins() {
   const [communalBins, setCommunalBins] = useState([])
-
-  // const points = [
-  //   {
-  //     latitude: 6.9271,
-  //     longitude: 79.8612,
-  //     name: 'Colombo Fort',
-  //   },
-  //   {
-  //     latitude: 6.9308,
-  //     longitude: 79.8448,
-  //     name: 'Galle Face Green',
-  //     svgIcon: `
-  //       <svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" height="24" width="24">
-  //         <rect x="6" y="6" width="12" height="12" />
-  //       </svg>
-  //     `,
-  //   },
-  //   {
-  //     latitude: 6.9344,
-  //     longitude: 79.8521,
-  //     name: 'Beira Lake',
-  //     svgIcon: `
-  //       <svg xmlns="http://www.w3.org/2000/svg" fill="blue" viewBox="0 0 24 24" height="24" width="24">
-  //         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM11 14h2v2h-2v-2zm0-8h2v6h-2V6z" />
-  //       </svg>
-  //     `,
-  //   },
-  //   {
-  //     latitude: 6.9157,
-  //     longitude: 79.8636,
-  //     name: 'Viharamahadevi Park',
-  //     svgIcon: `
-  //       <svg xmlns="http://www.w3.org/2000/svg" fill="orange" viewBox="0 0 24 24" height="24" width="24">
-  //         <polygon points="12,2 15,22 12,17 9,22" />
-  //       </svg>
-  //     `,
-  //   },
-  //   {
-  //     latitude: 6.9169,
-  //     longitude: 79.8687,
-  //     name: 'National Museum of Colombo',
-  //     svgIcon: `
-  //       <svg xmlns="http://www.w3.org/2000/svg" fill="purple" viewBox="0 0 24 24" height="24" width="24">
-  //         <path d="M12 2L2 7v15h20V7L12 2zm0 2.18l8 4V20H4V8.18l8-4z" />
-  //       </svg>
-  //     `,
-  //   },
-  // ]
-
   useEffect(() => {
     const loadCommunalBins = async () => {
       try {
-        const data: any = await fetchCommunalBins()
-        console.log(data)
-        const mappedData: any = data.map((communalbin: any) => ({
-          //   const locationName = await getLocationName(
-          //   commercialbin.latitude,
-          //   commercialbin.longitude
-          // ),
+        const data: any = await fetchCommunalBins();
+        console.log(data);
+        const mappedData: any = await Promise.all(
+          data.map(async (communalbin: any) => {
+            const locationName = await getLocationName(
+              communalbin.latitude,
+              communalbin.longitude
+            );
 
-          bin_id: `SB-${communalbin.id.toString().padStart(3, '0')}`,
-          location: `${communalbin.longitude} , ${communalbin.latitude}`,
-          type: `${communalbin.wasteType} - ${communalbin.binSize}`,
-          installed_date: communalbin.installationDate,
-          fill_level: communalbin.fillLevel,
-          status: communalbin.binStatus,
-        }))
+            return {
+              bin_id: `SB-${communalbin.id.toString().padStart(3, '0')}`,
+              location: locationName,
+              type: `${communalbin.wasteType} - ${communalbin.binSize}`,
+              installed_date: communalbin.installationDate,
+              fill_level: communalbin.fillLevel,
+              status: communalbin.binStatus,
+            };
+          })
+        );
 
         const sortedData = mappedData.sort((a: any, b: any) =>
           b.bin_id.localeCompare(a.bin_id)
-        )
-        setCommunalBins(sortedData)
+        );
+        setCommunalBins(sortedData);
       } catch (error) {
-        console.error('Failed to load commercial bins:', error)
+        console.error('Failed to load commercial bins:', error);
       }
-    }
+    };
 
-    loadCommunalBins()
-  }, [])
+    loadCommunalBins();
+  }, []);
+
+// Function to get location name using Google Maps Geocoding API
+  async function getLocationName(latitude: number, longitude: number): Promise<string> {
+    try {
+      const apiKey = '';
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
+      );
+      const result = await response.json();
+      if (result.status === 'OK' && result.results.length > 0) {
+        return result.results[0].formatted_address;
+      } else {
+        return `${latitude}, ${longitude}`; // Fallback if no result
+      }
+    } catch (error) {
+      console.error('Geocoding failed:', error);
+      return `${latitude}, ${longitude}`; // Fallback
+    }
+  }
 
   const points = communalBins.map((communalbin: any) => {
     const col = communalbin.fill_level > 75 ? 'red' : 'green'
