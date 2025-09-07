@@ -102,25 +102,6 @@ export const columns: ColumnDef<Record>[] = [
     enableSorting: false,
     // enableHiding: false,
   },
-  // {
-  //   accessorKey: 'status',
-  //   header: ({ column }) => (
-  //     <DataTableColumnHeader
-  //       className='text-[14px]'
-  //       column={column}
-  //       title='Status'
-  //     />
-  //   ),
-  //   cell: ({ row }) => {
-  //     const status = row.getValue('status') as string
-  //     const colorClass = status === 'TO_DO' ? 'text-primary' : ''
-  //     return <div className={colorClass}>{status}</div>
-  //   },
-  //   // enableSorting: true,
-  //   filterFn: (row, id, value) => {
-  //     return value.includes(row.getValue(id))
-  //   },
-  // },
   {
     accessorKey: 'status',
     header: ({ column }) => (
@@ -144,12 +125,12 @@ export const columns: ColumnDef<Record>[] = [
           break
         case 'COMPLETED':
           colorClass =
-            'px-2 py-1 rounded-md bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
+            'bg-[#fff3cd] text-[#664d03] dark:bg-[#5c3c00] dark:text-[#fff3cd]'
           displayText = 'COMPLETED'
           break
         default:
           colorClass =
-            'px-2 py-1 rounded-md bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+            'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
       }
 
       return (

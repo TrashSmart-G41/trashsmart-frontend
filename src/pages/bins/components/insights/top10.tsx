@@ -137,6 +137,7 @@ import logo from '../../assests/ucsc.png'
 //   )
 // }
 
+//@ts-ignore
 export function TopTen({ organizations }) {
   // Sort organizations by bin count in descending order and assign ranks
   const sortedOrganizations = organizations
