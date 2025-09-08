@@ -48,7 +48,7 @@ export const columns: ColumnDef<CommunalBin>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'location',
+    accessorKey: 'address',
     header: ({ column }) => (
       <DataTableColumnHeader
         className='text-[14px]'
@@ -57,7 +57,7 @@ export const columns: ColumnDef<CommunalBin>[] = [
       />
     ),
     cell: ({ row }) => {
-      const location = row.getValue('location') as string
+      const location = row.getValue('address') as string
 
       return (
         <div className='max-w-[200px] truncate' title={location}>

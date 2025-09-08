@@ -49,16 +49,41 @@ export const columns: ColumnDef<Bin>[] = [
   {
     accessorKey: 'type',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Type/Capacity' />
+      <DataTableColumnHeader column={column} title='Type' />
     ),
-    cell: ({ row }) => <div>{row.getValue('type')}</div>,
+    cell: ({ row }) => {
+      const rawType = row.getValue('type'); // e.g., "NON_BIO_DEGRADABLE - GENERAL"
+      const formattedType = rawType
+        .split('-')[0]
+        .toLowerCase()
+        .replace(/_/g, ' ')
+        .replace(/\b\w/g, c => c.toUpperCase());
+      return <div>{formattedType}</div>;
+    },
     enableSorting: false,
     enableHiding: false,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
   },
-
+  {
+    accessorKey: 'size',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Capacity' />
+    ),
+    cell: ({ row }) => {
+      const rawType = row.getValue('size'); // e.g., "NON_BIO_DEGRADABLE - GENERAL"
+      const formattedType = rawType
+        .toLowerCase()
+        .replace(/\b\w/g, c => c.toUpperCase());
+      return <div>{formattedType}</div>;
+    },
+    enableSorting: false,
+    enableHiding: false,
+    filterFn: (row, id, value) => {
+      return value.includes(row.getValue(id))
+    },
+  },
   {
     accessorKey: 'purchase_date',
     header: ({ column }) => (
@@ -69,11 +94,12 @@ export const columns: ColumnDef<Bin>[] = [
     // enableHiding: false,
   },
   {
-    accessorKey: 'last_maintenance_date',
+    accessorKey: 'maintenance_date',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Last Maintenance on' />
     ),
-    cell: ({ row }) => <div>{row.getValue('last_maintenance_date')}</div>,
+    cell: ({ row }) => <div>{row.getValue('maintenance_date')}</div>,
+    enableSorting: false,
     // enableSorting: true,
     // filterFn: (row, id, value) => {
     //   return value.includes(row.getValue(id))

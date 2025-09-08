@@ -81,6 +81,17 @@ export const columns: ColumnDef<Truck>[] = [
     // enableHiding: false,
   },
   {
+    accessorKey: 'mileage',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Mileage (KM)'
+      />
+    ),
+    cell: ({ row }) => <div>{row.getValue('mileage')}</div>,
+  },
+  {
     accessorKey: 'status',
     header: ({ column }) => (
       <div className='flex'>
@@ -94,18 +105,23 @@ export const columns: ColumnDef<Truck>[] = [
     ),
     cell: ({ row }) => {
       const status = row.getValue('status')
-      if (status === 'En Route') {
+      let displayText = status
+      if (status === 'EN_ROUTE') {
         var fillColor =
           'bg-[#c0dbfe] text-[#1f40af] dark:bg-[#1f40af] dark:text-[#c0dbfe]'
-      } else if (status === 'Returning') {
+        displayText = "EN ROUTE"
+      } else if (status === 'RETURNING') {
         var fillColor =
           'bg-[#ffdcb1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#ffdcb1]'
-      } else if (status === 'Collecting') {
+        displayText = "RETURNING"
+      } else if (status === 'COLLECTING') {
         var fillColor =
           'bg-[#ccfbf1] text-[#0f5e59] dark:bg-[#0f5e59] dark:text-[#ccfbf1]'
+        displayText = "COLLECTING"
       } else {
         var fillColor =
-          'bg-[#ebebeb] text-[#0f1b2b] dark:bg-[#0f1b2b] dark:text-[#ebebeb]'
+          'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+        displayText = "IDLE"
       }
 
       return (
@@ -124,7 +140,7 @@ export const columns: ColumnDef<Truck>[] = [
             >
               <circle cx='12' cy='12' r='12' fill='currentColor' />
             </svg>
-            {status as React.ReactNode}
+            {displayText as React.ReactNode}
           </Button>
         </div>
       )
@@ -144,17 +160,6 @@ export const columns: ColumnDef<Truck>[] = [
   //   ),
   //   cell: ({ row }) => <div>{row.getValue('next_shift')}</div>,
   // },
-  {
-    accessorKey: 'mileage',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Mileage (KM)'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('mileage')}</div>,
-  },
 
   // {
   //   id: 'actions',

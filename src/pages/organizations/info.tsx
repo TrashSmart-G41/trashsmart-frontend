@@ -1,8 +1,51 @@
 import { Card, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/custom/button'
 import { DeleteOrg } from './components/info/delete-popup'
+import { useEffect, useState } from 'react'
+import { fetchOrganization } from '@/pages/organizations/data/services.tsx'
 
-const Info = () => {
+type OrganizationData = {
+  firstName: string
+  address: string
+  longitude: number
+  latitude: number
+  contractStartDate: string
+  scale: string
+  orgType: string
+}
+
+export default function Organization() {
+  const [organization, setOrganization] = useState<OrganizationData | null>(null)
+
+  useEffect(() => {
+    const url = window.location.href
+    const id = url.split('/').pop()?.slice(-3)
+    // console.log('id:', id)
+
+    const loadOrganization = async () => {
+      try {
+        const data: any = await fetchOrganization(id ?? '')
+        const mappedData: OrganizationData = {
+          firstName: data?.firstName ?? '',
+          address: data?.address ?? '',
+          longitude: data?.longitude ?? 0,
+          latitude: data?.latitude ?? 0,
+          contractStartDate: data?.contractStartDate ?? '',
+          scale: data?.scale ?? '',
+          orgType: data?.orgType
+            ? data.orgType.charAt(0).toUpperCase() + data.orgType.slice(1).toLowerCase()
+            : '',
+        }
+        // console.log('Organization:', data)
+        setOrganization(mappedData)
+        // console.log('Organization:', organization)
+      } catch (error) {
+        console.error('Failed to load organization:', error)
+      }
+    }
+    loadOrganization()
+  }, [])
+
   return (
     <Card className='rounded-xl bg-card p-4'>
       <div className='border-md relative rounded-md border p-4 '>
@@ -35,7 +78,7 @@ const Info = () => {
               Organization Name
             </CardDescription>
             <div className='mt-1 font-medium text-muted-foreground'>
-              Infinite Education Network Pvt Ltd.
+              {organization?.firstName}
             </div>
           </div>
           <div>
@@ -43,7 +86,7 @@ const Info = () => {
               Organization Type
             </CardDescription>
             <div className='mt-1 font-medium text-muted-foreground'>
-              Education
+              {organization?.orgType}
             </div>
           </div>
         </div>
@@ -82,7 +125,7 @@ const Info = () => {
                 Primary Contact Person's Name
               </CardDescription>
               <div className='mt-1 font-medium text-muted-foreground'>
-                Ranil Wickramasinghe
+                Senuri Wickramasinghe
               </div>
             </div>
             <div className='my-3'>
@@ -96,7 +139,7 @@ const Info = () => {
             <div className='my-3'>
               <CardDescription className='text-[13px]'>Address</CardDescription>
               <div className='mt-1 font-medium text-muted-foreground'>
-                789 University Avenue, Cambridge, MA, USA
+                {organization?.address}
               </div>
             </div>
           </div>
@@ -115,7 +158,7 @@ const Info = () => {
                 Email Address
               </CardDescription>
               <div className='mt-1 font-medium text-muted-foreground'>
-                supervisor@infiniteed.com
+                supervisor@fos.com
               </div>
             </div>
           </div>
@@ -154,7 +197,7 @@ const Info = () => {
                 Primary Contact Person's Name
               </CardDescription>
               <div className='mt-1 font-medium text-muted-foreground'>
-                Ranil Wickramasinghe
+                Rusara Wimalasena
               </div>
             </div>
             <div className='my-3'>
@@ -168,7 +211,7 @@ const Info = () => {
             <div className='my-3'>
               <CardDescription className='text-[13px]'>Address</CardDescription>
               <div className='mt-1 font-medium text-muted-foreground'>
-                789 University Avenue, Cambridge, MA, USA
+                {organization?.address}
               </div>
             </div>
           </div>
@@ -187,7 +230,7 @@ const Info = () => {
                 Email Address
               </CardDescription>
               <div className='mt-1 font-medium text-muted-foreground'>
-                supervisor@infiniteed.com
+                supervisor@fos.com
               </div>
             </div>
           </div>
@@ -201,5 +244,3 @@ const Info = () => {
     </Card>
   )
 }
-
-export default Info

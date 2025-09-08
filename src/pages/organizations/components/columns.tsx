@@ -66,6 +66,24 @@ export const columns: ColumnDef<Organization>[] = [
     enableHiding: false,
   },
   {
+    accessorKey: 'address',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className="text-[14px]"
+        column={column}
+        title="Address"
+      />
+    ),
+    cell: ({ row }) => {
+      const value = row.getValue('address') as string
+      const truncated =
+        value && value.length > 30 ? value.slice(0, 30) + '…' : value
+
+      return <div>{truncated}</div>
+    },
+    // enableSorting: true,
+  },
+  {
     accessorKey: 'scale',
     header: ({ column }) => (
       <DataTableColumnHeader
@@ -85,29 +103,26 @@ export const columns: ColumnDef<Organization>[] = [
     accessorKey: 'org_type',
     header: ({ column }) => (
       <DataTableColumnHeader
-        className='text-[14px]'
+        className="text-[14px]"
         column={column}
-        title='Type'
+        title="Type"
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('org_type')}</div>,
+    cell: ({ row }) => {
+      const value = row.getValue('org_type') as string
+      // Convert "SOCIAL_SERVICES" -> "Social Services"
+      const formatted =
+        value
+          .toLowerCase()
+          .replace(/_/g, ' ')
+          .replace(/\b\w/g, (char) => char.toUpperCase())
+
+      return <div>{formatted}</div>
+    },
     enableSorting: false,
-    // enableHiding: false,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
-  },
-  {
-    accessorKey: 'address',
-    header: ({ column }) => (
-      <DataTableColumnHeader
-        className='text-[14px]'
-        column={column}
-        title='Address'
-      />
-    ),
-    cell: ({ row }) => <div>{row.getValue('address')}</div>,
-    // enableSorting: true,
   },
   {
     accessorKey: 'totalWaste',

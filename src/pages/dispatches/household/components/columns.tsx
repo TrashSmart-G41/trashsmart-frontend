@@ -3,6 +3,8 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { DataTableColumnHeader } from './data-table-column-header'
 import { Dispatch } from '../data/schema'
 import { DispatchesDialog } from './dispatched_dialog'
+import { Button } from '@/components/custom/button.tsx'
+// import React from 'react'
 
 export const columns: ColumnDef<Dispatch>[] = [
   {
@@ -95,7 +97,12 @@ export const columns: ColumnDef<Dispatch>[] = [
     cell: ({ row }) => {
       const dispatchType = row.getValue('dispatchType')
       // @ts-ignore
-      const formattedDispatchType = dispatchType.charAt(0).toUpperCase() + dispatchType.slice(1).toLowerCase()
+      const formattedDispatchType = dispatchType
+        .toLowerCase()
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+
       return <div>{formattedDispatchType}</div>
     },
     enableSorting: false,
@@ -113,24 +120,47 @@ export const columns: ColumnDef<Dispatch>[] = [
     cell: ({ row }) => {
       const status = row.getValue('status')
       // @ts-ignore
-      const formattedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
-      let textColor
+      // const formattedStatus = status.charAt(0).toUpperCase() + status.slice(1).toLowerCase()
+      let fillColor
 
-      switch (formattedStatus) {
-        case 'New':
-          textColor = 'text-primary'
+      switch (status) {
+        case 'NEW':
+          fillColor =
+            'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
           break
-        case 'Cancelled':
-          textColor = 'text-destructive'
+        case 'CANCELLED':
+          fillColor =
+            'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]'
           break
-        case 'Dispatched':
-          textColor = 'text-blue-500'
+        case 'DISPATCHED':
+          fillColor =
+            'bg-[#ccfbf1] text-[#0f5e59] dark:bg-[#0f5e59] dark:text-[#ccfbf1]'
           break
         default:
-          textColor = ''
+          fillColor =
+            'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
       }
 
-      return <div className={textColor}>{formattedStatus}</div>
+      return (
+        <div className='flex '>
+          <Button
+            variant='scale_btn'
+            size='scale_btn_sm'
+            className={`text-[11px] ${fillColor}`}
+          >
+            <svg
+              className='mr-2 inline-block'
+              xmlns='http://www.w3.org/2000/svg'
+              width='6'
+              height='6'
+              viewBox='0 0 24 24'
+            >
+              <circle cx='12' cy='12' r='12' fill='currentColor' />
+            </svg>
+            {status}
+          </Button>
+        </div>
+      )
     },
     enableSorting: true,
     filterFn: (row, id, value) => {

@@ -9,6 +9,7 @@ import { DataTableColumnHeader } from './data-table-column-header'
 
 // import { statuses, regions } from '../data/data'
 import { collectionHistory } from '../data/schema'
+import { Button } from '@/components/custom/button.tsx'
 // import { Button } from '@/components/custom/button'
 // import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -38,24 +39,37 @@ export const columns: ColumnDef<collectionHistory>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'date',
+    accessorKey: 'request_date',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Date' />
+      <DataTableColumnHeader column={column} title='Request Date' />
     ),
-    cell: ({ row }) => <div>{row.getValue('date')}</div>,
+    cell: ({ row }) => {
+      const requestDate = row.getValue('request_date') as string;
+      const formattedDate = requestDate.replace('T', ' T');
+      return <div>{formattedDate}</div>;
+    },
     enableSorting: false,
     enableHiding: false,
   },
   {
-    accessorKey: 'time',
+    accessorKey: 'type',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Time' />
+      <DataTableColumnHeader column={column} title="Waste Type" />
     ),
-    cell: ({ row }) => <div>{row.getValue('time')}</div>,
+    cell: ({ row }) => {
+      const value = row.getValue<string>('type');
+      return (
+        <div>
+          {value
+            .toLowerCase()
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ')}
+        </div>
+      );
+    },
     enableSorting: false,
-    enableHiding: false,
   },
-
   {
     accessorKey: 'volume',
     header: ({ column }) => (
@@ -65,25 +79,90 @@ export const columns: ColumnDef<collectionHistory>[] = [
     enableSorting: false,
     // enableHiding: false,
   },
+  // {
+  //   accessorKey: 'truck_id',
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title='Truck ID' />
+  //   ),
+  //   cell: ({ row }) => <div>{row.getValue('truck_id')}</div>,
+  //   enableSorting: false,
+  //   // enableHiding: false,
+  // },
   {
-    accessorKey: 'type',
+    accessorKey: 'dispatch_date',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Type' />
+      <DataTableColumnHeader column={column} title='Collection Date' />
     ),
-    cell: ({ row }) => <div>{row.getValue('type')}</div>,
-    // enableSorting: true,
+    cell: ({ row }) => <div>{row.getValue('dispatch_date')}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'dispatch_time',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title='Collection Time' />
+    ),
+    cell: ({ row }) => <div>{row.getValue('dispatch_time')}</div>,
+    enableSorting: false,
+    enableHiding: false,
+  },
+  {
+    accessorKey: 'status',
+    header: ({ column }) => (
+      <DataTableColumnHeader
+        className='text-[14px]'
+        column={column}
+        title='Status'
+      />
+    ),
+    cell: ({ row }) => {
+      const status = row.getValue('status')
+      // @ts-ignore
+      let fillColor
+
+      switch (status) {
+        case 'COLLECTED':
+          fillColor =
+            'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
+          break
+        case 'MISSED':
+          fillColor =
+            'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]'
+          break
+        case 'COLLECTING':
+          fillColor =
+            'bg-[#fff3cd] text-[#664d03] dark:bg-[#5c3c00] dark:text-[#fff3cd]';
+          break
+        default:
+          fillColor =
+            'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+      }
+
+      return (
+        <div className='flex '>
+          <Button
+            variant='scale_btn'
+            size='scale_btn_sm'
+            className={`text-[11px] ${fillColor}`}
+          >
+            <svg
+              className='mr-2 inline-block'
+              xmlns='http://www.w3.org/2000/svg'
+              width='6'
+              height='6'
+              viewBox='0 0 24 24'
+            >
+              <circle cx='12' cy='12' r='12' fill='currentColor' />
+            </svg>
+            {status}
+          </Button>
+        </div>
+      )
+    },
+    enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
-  },
-  {
-    accessorKey: 'truck_id',
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title='Truck ID' />
-    ),
-    cell: ({ row }) => <div>{row.getValue('truck_id')}</div>,
-    enableSorting: false,
-    // enableHiding: false,
   },
 
   // {
