@@ -8,6 +8,7 @@ import GoogleMap, { Marker } from '@/components/custom/googlemap'
 
 export default function CommunalBins() {
   const [communalBins, setCommunalBins] = useState([])
+
   useEffect(() => {
     const loadCommunalBins = async () => {
       try {
@@ -47,7 +48,7 @@ export default function CommunalBins() {
 // Function to get location name using Google Maps Geocoding API
   async function getLocationName(latitude: number, longitude: number): Promise<string> {
     try {
-      const apiKey = '';
+      const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${apiKey}`
       );

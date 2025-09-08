@@ -42,6 +42,7 @@ export default function Tasks() {
             org.scale.slice(1).toLowerCase(),
           address: org.address,
           totalWaste: org.totalWaste.toString(),
+          org_type: org.orgType,
         }))
         // setOrganizations(mappedData)
         const sortedData = mappedData.sort((a: any, b: any) =>
