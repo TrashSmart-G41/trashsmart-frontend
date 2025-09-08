@@ -22,7 +22,8 @@ export default function CommunalBins() {
 
             return {
               bin_id: `SB-${communalbin.id.toString().padStart(3, '0')}`,
-              location: locationName,
+              location: `${communalbin.longitude} , ${communalbin.latitude}`,
+              address: locationName,
               type: `${communalbin.wasteType} - ${communalbin.binSize}`,
               installed_date: communalbin.installationDate,
               fill_level: communalbin.fillLevel,

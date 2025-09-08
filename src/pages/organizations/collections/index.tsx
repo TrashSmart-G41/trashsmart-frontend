@@ -1,10 +1,11 @@
 import { DataTable } from './components/data-table'
 import { columns } from './components/columns'
-import { collectionHistory } from './data/collectionHistory'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 import { fetchOrganization } from '../data/services'
 import { useEffect, useState } from 'react'
+import { AxiosResponse } from 'axios'
+import { request } from '@/lib/axiosHelper.ts'
 
 type OrganizationData = {
   totalWaste: number
@@ -12,20 +13,23 @@ type OrganizationData = {
   recyclableWaste: number
 }
 
+const API_URL = 'api/v1/organization'
+
 export default function Collections() {
   const [organization, setOrganization] = useState<OrganizationData | null>(
     null
   )
+  const [collectionHistory, setCollectionHistory] = useState<any[]>([]);
 
   useEffect(() => {
     const url = window.location.href
     const id = url.split('/').pop()?.slice(-3)
-    console.log('id:', id)
+    // console.log('id:', id)
 
     const loadOrganization = async () => {
       try {
         const data: any = await fetchOrganization(id ?? '')
-        console.log(data)
+        // console.log(data)
         const mappedData: OrganizationData = {
           totalWaste: data.totalWaste,
           weeklyWaste: data.weeklyWaste,
@@ -33,12 +37,30 @@ export default function Collections() {
         }
         // console.log('Organization:', data)
         setOrganization(mappedData)
-        console.log('Organization:', organization)
+        // console.log('Organization:', organization)
       } catch (error) {
         console.error('Failed to load organization:', error)
       }
     }
     loadOrganization()
+  }, [])
+
+  useEffect(() => {
+    const url = window.location.href;
+    const id = url.split('/').pop()?.slice(-3)
+    const loadCollections = async () => {
+      try {
+        const response: AxiosResponse<{ request_date: string; volume: number; type: string; status: string; dispatch_date: string; dispatch_time: string }[]> = await request(
+          'GET',
+          `${API_URL}/fetch_collections/${id}`
+        )
+        // console.log(response.data)
+        setCollectionHistory(response.data)
+      } catch (error) {
+        console.error('Failed to load monthly recyclable waste:', error)
+      }
+    }
+    loadCollections()
   }, [])
 
   return (

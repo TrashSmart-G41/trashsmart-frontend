@@ -39,6 +39,7 @@ type OrganizationData = {
   longitude: number
   latitude: number
   contractStartDate: string
+  scale: string
 }
 
 export default function Organization() {
@@ -60,6 +61,7 @@ export default function Organization() {
           longitude: data.longitude,
           latitude: data.latitude,
           contractStartDate: data.contractStartDate,
+          scale: data.scale,
         }
         // console.log('Organization:', data)
         setOrganization(mappedData)
@@ -84,16 +86,6 @@ export default function Organization() {
 `,
       name: organization?.firstName,
     },
-    // {
-    //   latitude: 6.9308,
-    //   longitude: 79.8448,
-    //   name: 'Galle Face Green',
-    //   svgIcon: `
-    //     <svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" height="24" width="24">
-    //       <rect x="6" y="6" width="12" height="12" />
-    //     </svg>
-    //   `,
-    // },
   ]
   return (
     <>
@@ -158,7 +150,7 @@ export default function Organization() {
                       >
                         <circle cx='12' cy='12' r='12' fill='currentColor' />
                       </svg>
-                      Large Scale
+                      {organization?.scale.charAt(0)}{organization?.scale.slice(1).toLowerCase()} Scale
                     </Button>
                   </div>
                   <CardDescription>{organization?.address}</CardDescription>

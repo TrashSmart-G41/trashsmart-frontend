@@ -40,14 +40,12 @@ export function CommunalDialog({ binId }: { binId: string }) {
 
         const mappedData = {
           bin_id: `SB-${data.id.toString().padStart(3, '0')}`,
-          location: locationName,
+          address: locationName,
           type: `${data.wasteType} - ${data.binSize}`,
           installed_date: data.installationDate,
           last_maintenance_date: data.lastMaintenanceDate,
           fill_level: data.fillLevel,
           last_collection_date: data.lastCollectionDate,
-          longitude: data.longitude,
-          latitude: data.latitude,
         }
 
         setBinData(mappedData)
@@ -156,7 +154,7 @@ export function CommunalDialog({ binId }: { binId: string }) {
                   Location
                 </div>
                 <div className='text-sm font-medium text-muted-foreground '>
-                  {binData.location}
+                  {binData.address}
                 </div>
               </div>
               <div className='flex items-center justify-center'>

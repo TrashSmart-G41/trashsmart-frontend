@@ -127,7 +127,50 @@ export const columns: ColumnDef<AllAuctions>[] = [
         title='Status'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('status')}</div>,
+    cell: ({ row }) => {
+      const status = row.getValue('status')
+      // @ts-ignore
+      let fillColor
+
+      switch (status) {
+        case 'LIVE':
+          fillColor =
+            'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
+          break
+        case 'CANCELLED':
+          fillColor =
+            'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]'
+          break
+        case 'UPCOMING':
+          fillColor =
+            'bg-[#ccfbf1] text-[#0f5e59] dark:bg-[#0f5e59] dark:text-[#ccfbf1]'
+          break
+        default:
+          fillColor =
+            'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+      }
+
+      return (
+        <div className='flex '>
+          <Button
+            variant='scale_btn'
+            size='scale_btn_sm'
+            className={`text-[11px] ${fillColor}`}
+          >
+            <svg
+              className='mr-2 inline-block'
+              xmlns='http://www.w3.org/2000/svg'
+              width='6'
+              height='6'
+              viewBox='0 0 24 24'
+            >
+              <circle cx='12' cy='12' r='12' fill='currentColor' />
+            </svg>
+            {status}
+          </Button>
+        </div>
+      )
+    },
     enableSorting: false,
     enableHiding: false,
   },

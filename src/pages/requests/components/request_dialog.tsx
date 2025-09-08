@@ -33,9 +33,11 @@ export function RequestDialog({ contId }: { contId: string }) {
 
         const mappedData = {
           id: `WCR-${data.createdTimeStamp.replace(/-/g, '').slice(2, 8)}-${data.id.toString().padStart(3, '0')}`,
-          wasteType:
-            data.wasteType.charAt(0).toUpperCase() +
-            data.wasteType.slice(1).toLowerCase(),
+          wasteType: data.wasteType
+            .toLowerCase()
+            .split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' '),
           accumulatedVolume: `${data.accumulatedVolume} CBM`,
           date: data.createdTimeStamp.slice(0, 10),
         }

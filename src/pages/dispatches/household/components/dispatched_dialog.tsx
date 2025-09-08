@@ -143,8 +143,11 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
                   Waste type
                 </div>
                 <div className='muted-foreground text-sm font-medium'>
-                  {dispData?.wasteType.charAt(0).toUpperCase() +
-                    dispData?.wasteType.slice(1).toLowerCase()}
+                  {dispData?.wasteType
+                    .toLowerCase()
+                    .split('_')
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')}
                 </div>
               </div>
             </div>

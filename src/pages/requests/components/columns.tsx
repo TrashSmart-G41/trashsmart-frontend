@@ -9,6 +9,7 @@ import { DataTableColumnHeader } from './data-table-column-header'
 // import { Button } from '@/components/custom/button'
 // import { DataTableRowActions } from './data-table-row-actions'
 import { RequestDialog } from './request_dialog'
+import { Button } from '@/components/custom/button.tsx'
 
 type Request = {
   id: string
@@ -91,10 +92,15 @@ export const columns: ColumnDef<Request>[] = [
         title='Type'
       />
     ),
-    cell: ({ row }) => <div>{row.getValue('wasteType')}</div>,
-    // enableSorting: true,
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id))
+    cell: ({ row }) => {
+      const rawValue = row.getValue('wasteType') as string
+      const formatted = rawValue
+        ?.toLowerCase()
+        .split('_')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+
+      return <div>{formatted}</div>
     },
   },
   {
@@ -108,30 +114,53 @@ export const columns: ColumnDef<Request>[] = [
     ),
     cell: ({ row }) => {
       const status = row.getValue('status')
-      let textColor
+      // let textColor
+      let fillColor = ''
 
       switch (status) {
         case 'NEW':
-          textColor = 'text-primary'
+          fillColor =
+            'bg-[#ccfbf1] text-[#115E59] dark:bg-[#0f766e] dark:text-[#ccfbf1]'
           break
         case 'MISSED':
-          textColor = 'text-destructive'
+          fillColor =
+            'bg-[#fde2e1] text-[#981b1b] dark:bg-[#7f1d1d] dark:text-[#fde2e1]'
           break
         case 'COLLECTED':
-          textColor = 'text-blue-500'
+          fillColor =
+            'bg-[#fff3cd] text-[#664d03] dark:bg-[#5c3c00] dark:text-[#fff3cd]'
           break
         default:
-          textColor = ''
+          fillColor =
+            'bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
       }
 
-      return <div className={textColor}>{status as React.ReactNode}</div>
+      return (
+        <div className='flex'>
+          <Button
+            variant='scale_btn'
+            size='scale_btn_sm'
+            className={`text-[11px] ${fillColor}`}
+          >
+            <svg
+              className='mr-2 inline-block'
+              xmlns='http://www.w3.org/2000/svg'
+              width='6'
+              height='6'
+              viewBox='0 0 24 24'
+            >
+              <circle cx='12' cy='12' r='12' fill='currentColor' />
+            </svg>
+            {status as React.ReactNode}
+          </Button>
+        </div>
+      )
     },
     // enableSorting: true,
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id))
     },
   },
-
   {
     id: 'actions',
     cell: ({ row }) => {
