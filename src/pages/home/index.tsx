@@ -4,7 +4,7 @@ import Features from './features'
 import { MarqueeDemo } from './marquee'
 import About from './about'
 import Footer from './footer'
-import Frame from './assets/Frame.png'
+import Frame from './assets/Frame2.png'
 import { useNavigate } from 'react-router-dom'
 
 export default function Index() {
