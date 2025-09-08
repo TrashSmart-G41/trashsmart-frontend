@@ -154,7 +154,7 @@ export const columns: ColumnDef<collectionHistory>[] = [
             >
               <circle cx='12' cy='12' r='12' fill='currentColor' />
             </svg>
-            {status}
+            {status as string}
           </Button>
         </div>
       )

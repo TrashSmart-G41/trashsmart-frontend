@@ -53,6 +53,7 @@ export const columns: ColumnDef<Bin>[] = [
     ),
     cell: ({ row }) => {
       const rawType = row.getValue('type'); // e.g., "NON_BIO_DEGRADABLE - GENERAL"
+      // @ts-ignore
       const formattedType = rawType
         .split('-')[0]
         .toLowerCase()
@@ -73,6 +74,7 @@ export const columns: ColumnDef<Bin>[] = [
     ),
     cell: ({ row }) => {
       const rawType = row.getValue('size'); // e.g., "NON_BIO_DEGRADABLE - GENERAL"
+      // @ts-ignore
       const formattedType = rawType
         .toLowerCase()
         .replace(/\b\w/g, c => c.toUpperCase());
