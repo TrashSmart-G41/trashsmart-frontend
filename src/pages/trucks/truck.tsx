@@ -32,6 +32,8 @@ import {
 import CollectionData from './collection_data'
 // import GoogleMap from '../../components/custom/map'
 import GoogleMap, { Marker } from '@/components/custom/googlemap'
+import TruckRouteMap from '@/pages/trucks/truckroutemap.tsx'
+
 
 export default function Truck() {
   const url = window.location.href
@@ -149,17 +151,21 @@ export default function Truck() {
             {/* <img className='w-full object-cover h-[388px]' src={map} alt="Map" /> */}
             {/* <GoogleMap /> */}
 
-            <GoogleMap width='100%' height={500}>
-              {points.map((point, index) => (
-                <Marker
-                  key={index}
-                  latitude={point.latitude}
-                  longitude={point.longitude}
-                  svgIcon={point.svgIcon}
-                  name={point.name}
-                />
-              ))}
-            </GoogleMap>
+            {truck.status === "IDLE" ? (
+              <GoogleMap width='100%' height={500}>
+                {points.map((point, index) => (
+                  <Marker
+                    key={index}
+                    latitude={point.latitude}
+                    longitude={point.longitude}
+                    svgIcon={point.svgIcon}
+                    name={point.name}
+                  />
+                ))}
+              </GoogleMap>
+            ) : (
+              <TruckRouteMap />
+            )}
           </div>
 
           <div className='grid grid-cols-1 gap-4 lg:grid-cols-2 '>
