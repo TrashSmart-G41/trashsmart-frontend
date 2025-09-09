@@ -36,13 +36,13 @@ export function DispatchesDialog({ dispId }: { dispId: string }) {
         }
 
         const mappedData = {
-          disp_id: `SB-${data.id.toString().padStart(3, '0')}`,
+          disp_id: `DR-${data.id.toString().padStart(3, '0')}`,
           dateTime: data.dateTime, //2024-12-03T22:18:28.194426
           date: data.dateTime.split('T')[0],
           time: data.dateTime.split('T')[1].split('.')[0],
           dispatchStatus: data.dispatchStatus,
           dispatchType: data.dispatchType,
-          wasteType: data.wasteType,
+          wasteType: data.wasteType.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
           createdDateTime: data.createdDateTime,
           wasteCollectionRequests: data.wasteCollectionRequestList.map(
             (request: any) => ({
