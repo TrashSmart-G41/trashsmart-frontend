@@ -128,7 +128,7 @@ const Footer = () => {
                         </a> */}
           </div>
           <p className='mt-8 text-center text-base leading-6 text-muted-foreground'>
-            © 2021 TrashSmart, Inc. All rights reserved.
+            © 2025 TrashSmart, Inc. All rights reserved.
           </p>
         </div>
       </section>
