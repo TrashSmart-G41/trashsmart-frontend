@@ -19,14 +19,12 @@ export default function TruckRouteMap() {
   useEffect(() => {
     if (!google || !google.maps) return
 
-    // Initialize Map
     const map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-      zoom: 15, // initial zoom
+      zoom: 25,
       center: circularRoutePoints[0],
     })
     mapRef.current = map
 
-    // Initialize Truck Marker
     truckRef.current = new google.maps.Marker({
       position: circularRoutePoints[0],
       map,
@@ -42,11 +40,23 @@ export default function TruckRouteMap() {
     circularRoutePoints.forEach((point, idx) => {
       let iconSvg = ""
       if (idx === 0) {
-        iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 16 16" height="24" width="24"><path fill-rule="evenodd" d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 01.75-.75h2.5a.75.75 0 01.75.75v1.25h2.25a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25h-8.5a.25.25 0 00-.25.25v12.5zM1.75 16A1.75 1.75 0 010 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 00.25-.25V8.285a.25.25 0 00-.111-.208l-1.055-.703a.75.75 0 11.832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0114.25 16h-3.5a.75.75 0 01-.197-.026c-.099.017-.2.026-.303.026h-3a.75.75 0 01-.75-.75V14h-1v1.25a.75.75 0 01-.75.75h-3zM3 3.75A.75.75 0 013.75 3h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 3.75zM3.75 6a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM3 9.75A.75.75 0 013.75 9h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 9.75zM7.75 9a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM7 6.75A.75.75 0 017.75 6h.5a.75.75 0 010 1.5h-.5A.75.75 0 017 6.75zM7.75 3a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5z"/></svg>`
+        iconSvg= `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" height="24" width="24">
+  <path
+    fill-rule="evenodd"
+    d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 01.75-.75h2.5a.75.75 0 01.75.75v1.25h2.25a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25h-8.5a.25.25 0 00-.25.25v12.5zM1.75 16A1.75 1.75 0 010 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 00.25-.25V8.285a.25.25 0 00-.111-.208l-1.055-.703a.75.75 0 11.832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0114.25 16h-3.5a.75.75 0 01-.197-.026c-.099.017-.2.026-.303.026h-3a.75.75 0 01-.75-.75V14h-1v1.25a.75.75 0 01-.75.75h-3zM3 3.75A.75.75 0 013.75 3h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 3.75zM3.75 6a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM3 9.75A.75.75 0 013.75 9h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 9.75zM7.75 9a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM7 6.75A.75.75 0 017.75 6h.5a.75.75 0 010 1.5h-.5A.75.75 0 017 6.75zM7.75 3a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5z"
+  />
+</svg>
+`
       } else if (idx === circularRoutePoints.length - 1) {
-        // iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="red" viewBox="0 0 16 16" height="24" width="24"><circle cx="8" cy="8" r="6"/></svg>`
+        //
       } else {
-        iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" height="24" width="24"><path fill-rule="evenodd" d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 01.75-.75h2.5a.75.75 0 01.75.75v1.25h2.25a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25h-8.5a.25.25 0 00-.25.25v12.5zM1.75 16A1.75 1.75 0 010 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 00.25-.25V8.285a.25.25 0 00-.111-.208l-1.055-.703a.75.75 0 11.832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0114.25 16h-3.5a.75.75 0 01-.197-.026c-.099.017-.2.026-.303.026h-3a.75.75 0 01-.75-.75V14h-1v1.25a.75.75 0 01-.75.75h-3zM3 3.75A.75.75 0 013.75 3h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 3.75zM3.75 6a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM3 9.75A.75.75 0 013.75 9h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 9.75zM7.75 9a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM7 6.75A.75.75 0 017.75 6h.5a.75.75 0 010 1.5h-.5A.75.75 0 017 6.75zM7.75 3a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5z"/></svg>`
+        iconSvg= `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16" height="24" width="24">
+  <path
+    fill-rule="evenodd"
+    d="M1.5 14.25c0 .138.112.25.25.25H4v-1.25a.75.75 0 01.75-.75h2.5a.75.75 0 01.75.75v1.25h2.25a.25.25 0 00.25-.25V1.75a.25.25 0 00-.25-.25h-8.5a.25.25 0 00-.25.25v12.5zM1.75 16A1.75 1.75 0 010 14.25V1.75C0 .784.784 0 1.75 0h8.5C11.216 0 12 .784 12 1.75v12.5c0 .085-.006.168-.018.25h2.268a.25.25 0 00.25-.25V8.285a.25.25 0 00-.111-.208l-1.055-.703a.75.75 0 11.832-1.248l1.055.703c.487.325.779.871.779 1.456v5.965A1.75 1.75 0 0114.25 16h-3.5a.75.75 0 01-.197-.026c-.099.017-.2.026-.303.026h-3a.75.75 0 01-.75-.75V14h-1v1.25a.75.75 0 01-.75.75h-3zM3 3.75A.75.75 0 013.75 3h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 3.75zM3.75 6a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM3 9.75A.75.75 0 013.75 9h.5a.75.75 0 010 1.5h-.5A.75.75 0 013 9.75zM7.75 9a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5zM7 6.75A.75.75 0 017.75 6h.5a.75.75 0 010 1.5h-.5A.75.75 0 017 6.75zM7.75 3a.75.75 0 000 1.5h.5a.75.75 0 000-1.5h-.5z"
+  />
+</svg>
+`
       }
 
       new google.maps.Marker({
@@ -56,18 +66,16 @@ export default function TruckRouteMap() {
           url: `data:image/svg+xml,${encodeURIComponent(iconSvg)}`,
           scaledSize: new google.maps.Size(20, 20),
         },
+        // label: idx === 0 ? "Start" : idx === circularRoutePoints.length - 1 ? "End" : `${idx}`,
       })
     })
 
-    // Directions Service
     const directionsService = new google.maps.DirectionsService()
     const directionsRenderer = new google.maps.DirectionsRenderer({
       suppressMarkers: true,
       polylineOptions: { strokeColor: "green", strokeWeight: 5 },
     })
     directionsRenderer.setMap(map)
-
-    let animationId: number
 
     directionsService.route(
       {
@@ -80,43 +88,37 @@ export default function TruckRouteMap() {
         if (status === "OK" && result) {
           directionsRenderer.setDirections(result)
           const routePath = result.routes[0].overview_path
-
-          let step = Math.random() * (routePath.length - 2)
-          const speed = 0.005
-
-          function moveTruck() {
-            if (!truckRef.current || !mapRef.current) return
-
-            step += speed
-            if (step >= routePath.length - 1) step = 0
-
-            const index = Math.floor(step)
-            const frac = step - index
-            const start = routePath[index]
-            const end = routePath[index + 1]
-
-            const lat = start.lat() + (end.lat() - start.lat()) * frac
-            const lng = start.lng() + (end.lng() - start.lng()) * frac
-
-            const position = new google.maps.LatLng(lat, lng)
-            truckRef.current.setPosition(position)
-            mapRef.current.setCenter(position)
-
-            animationId = requestAnimationFrame(moveTruck)
-          }
-
-          animationId = requestAnimationFrame(moveTruck)
+          startTruckAnimation(routePath)
         }
       }
     )
-
-    // CLEANUP
-    return () => {
-      if (animationId) cancelAnimationFrame(animationId)
-      if (truckRef.current) truckRef.current.setMap(null)
-      mapRef.current = null
-    }
   }, [])
+
+  function startTruckAnimation(routePath: google.maps.LatLng[]) {
+    // Random start along the route
+    let step = Math.random() * (routePath.length - 2)
+    const speed = 0.005 // adjust truck speed
+
+    function moveTruck() {
+      if (!truckRef.current) return
+
+      step += speed
+      if (step >= routePath.length - 1) step = 0
+
+      const index = Math.floor(step)
+      const frac = step - index
+      const start = routePath[index]
+      const end = routePath[index + 1]
+
+      const lat = start.lat() + (end.lat() - start.lat()) * frac
+      const lng = start.lng() + (end.lng() - start.lng()) * frac
+
+      truckRef.current.setPosition(new google.maps.LatLng(lat, lng))
+      requestAnimationFrame(moveTruck)
+    }
+
+    requestAnimationFrame(moveTruck)
+  }
 
   return <div id="map" className="w-full h-[600px] rounded-lg shadow" />
 }
