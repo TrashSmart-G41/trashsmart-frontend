@@ -120,5 +120,5 @@ export default function TruckRouteMap() {
     requestAnimationFrame(moveTruck)
   }
 
-  return <div id="map" className="w-full h-[600px] rounded-lg shadow" />
+  return <div id="map" className="w-full h-[500px] rounded-lg shadow" />
 }
