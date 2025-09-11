@@ -160,7 +160,7 @@ export function TopTen({ organizations }) {
             <TableHead>Organization</TableHead>
             <TableHead>NO.OF.BINS</TableHead>
             <TableHead className='text-right'>
-              WASTE ACCUMULATION (LAST 07 DAYS)
+              TOTAL WASTE ACCUMULATION
             </TableHead>
           </TableRow>
         </TableHeader>
@@ -194,12 +194,12 @@ export function TopTen({ organizations }) {
                   {/*    </div>*/}
                   {/*  )}*/}
                   {/*</div>*/}
-                  <span>{`${org.firstName} ${org.lastName}`}</span>
+                  <span>{`${org.firstName}`}</span>
                 </div>
               </TableCell>
               <TableCell>{org.noOfBins}</TableCell>
               <TableCell className='text-center'>
-                {org.wasteAccumulation}MT
+                {org.totalWaste}MT
               </TableCell>
             </TableRow>
           ))}
